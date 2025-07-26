@@ -1,0 +1,19 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+static class Noodles.1
+implements Runnable {
+    Noodles.1() {
+    }
+
+    @Override
+    public void run() {
+        try {
+            Noodles window = new Noodles();
+            window.frame.setVisible(true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,41 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+private class GUI_DashTap.ButtonHandler
+implements KeyListener {
+    private GUI_DashTap.ButtonHandler() {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (!GUI_DashTap.this.firstClick) {
+            GUI_DashTap.this.firstClick = true;
+            GUI_DashTap.this.nextLevel();
+            GUI_DashTap.this.subGUI.updater.start();
+            GUI_DashTap.this.start = GUI_DashTap.this.start + 1000L;
+        }
+        if (key == 37) {
+            GUI_DashTap.this.inputKey("L");
+        } else if (key == 39) {
+            GUI_DashTap.this.inputKey("R");
+        } else if (key == 38) {
+            GUI_DashTap.this.inputKey("U");
+        } else if (key == 40) {
+            GUI_DashTap.this.inputKey("D");
+        } else if (key == 32) {
+            GUI_DashTap.this.inputKey((String)GUI_DashTap.this.board.get(GUI_DashTap.this.arrIndex++));
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+}

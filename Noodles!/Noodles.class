@@ -1,0 +1,1300 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+
+public class Noodles {
+    private JFrame frame;
+    private NoodleBlock[][] gameBoard = new NoodleBlock[5][5];
+    private JTextField txtCreateNewGame;
+    private boolean turning_changingBlock = true;
+    private File f = new File("boards");
+    private ArrayList<String> folderNames = new ArrayList<String>(Arrays.asList(this.f.list()));
+    private String[] folderNames2 = this.folderNames.toArray(new String[this.folderNames.size()]);
+    private JComboBox<String> gameComboBox = new JComboBox<String>(this.folderNames2);
+    private ImageIcon[] images = new ImageIcon[66];
+    private int numMoves = 0;
+    private JLabel lblMoves = new JLabel();
+    private JButton btnBlock;
+    private JButton btnBlock_1;
+    private JButton btnBlock_2;
+    private JButton btnBlock_3;
+    private JButton btnBlock_4;
+    private JButton btnBlock_5;
+    private JButton btnBlock_6;
+    private JButton btnBlock_7;
+    private JButton btnBlock_8;
+    private JButton btnBlock_9;
+    private JButton btnBlock_10;
+    private JButton btnBlock_11;
+    private JButton btnBlock_12;
+    private JButton btnBlock_13;
+    private JButton btnBlock_14;
+    private JButton btnBlock_15;
+    private JButton btnBlock_16;
+    private JButton btnBlock_17;
+    private JButton btnBlock_18;
+    private JButton btnBlock_19;
+    private JButton btnBlock_20;
+    private JButton btnBlock_21;
+    private JButton btnBlock_22;
+    private JButton btnBlock_23;
+    private JButton btnBlock_24;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable(){
+
+            @Override
+            public void run() {
+                try {
+                    Noodles window = new Noodles();
+                    window.frame.setVisible(true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void createBoard(String s) {
+        if (!s.contains(".txt")) {
+            s = String.valueOf(s) + ".txt";
+        }
+        try {
+            Throwable throwable = null;
+            Object var3_5 = null;
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter((OutputStream)new FileOutputStream("boards//" + s), StandardCharsets.UTF_8));){
+                int r = 0;
+                while (r < this.gameBoard.length) {
+                    int c = 0;
+                    while (c < this.gameBoard[r].length) {
+                        writer.write(this.gameBoard[r][c] + " ");
+                        ++c;
+                    }
+                    ++r;
+                }
+            }
+            catch (Throwable throwable2) {
+                if (throwable == null) {
+                    throwable = throwable2;
+                } else if (throwable != throwable2) {
+                    throwable.addSuppressed(throwable2);
+                }
+                throw throwable;
+            }
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void setBoard(String s) throws IOException {
+        if (!s.substring(s.length() - 4, s.length()).equals(".txt")) {
+            s = String.valueOf(s) + ".txt";
+        }
+        Scanner scan = new Scanner(new File("boards//" + s));
+        int r = 0;
+        while (r < 5) {
+            int c = 0;
+            while (c < 5) {
+                String a = scan.next();
+                this.gameBoard[r][c] = new NoodleBlock(a);
+                ++c;
+            }
+            ++r;
+        }
+        this.rotateAllBlocksRandom();
+        scan.close();
+    }
+
+    public void deleteBoard(String s) throws IOException {
+        File f = new File("boards//" + s);
+        f.delete();
+    }
+
+    public void printBoard() {
+        int i = 0;
+        while (i < this.gameBoard.length) {
+            int j = 0;
+            while (j < this.gameBoard[i].length) {
+                System.out.print(this.gameBoard[i][j] + ":" + this.gameBoard[i][j].isConnected() + " ");
+                ++j;
+            }
+            System.out.println("");
+            ++i;
+        }
+        System.out.println();
+    }
+
+    public int readIcon(NoodleBlock n) throws IOException {
+        String s = String.valueOf(n.getTurned()) + n.getName();
+        if (n.isConnected()) {
+            s = String.valueOf(s) + ".";
+        }
+        switch (s) {
+            case "0A": {
+                return 1;
+            }
+            case "0B": {
+                return 2;
+            }
+            case "0C": {
+                return 3;
+            }
+            case "0D": {
+                return 4;
+            }
+            case "0A!": {
+                return 5;
+            }
+            case "0B!": {
+                return 6;
+            }
+            case "0C!": {
+                return 7;
+            }
+            case "0D!": {
+                return 8;
+            }
+            case "1A": {
+                return 9;
+            }
+            case "1B": {
+                return 10;
+            }
+            case "1C": {
+                return 11;
+            }
+            case "1D": {
+                return 12;
+            }
+            case "1A!": {
+                return 13;
+            }
+            case "1B!": {
+                return 14;
+            }
+            case "1C!": {
+                return 15;
+            }
+            case "1D!": {
+                return 16;
+            }
+            case "2A": {
+                return 17;
+            }
+            case "2B": {
+                return 18;
+            }
+            case "2C": {
+                return 19;
+            }
+            case "2D": {
+                return 20;
+            }
+            case "2A!": {
+                return 21;
+            }
+            case "2B!": {
+                return 22;
+            }
+            case "2C!": {
+                return 23;
+            }
+            case "2D!": {
+                return 24;
+            }
+            case "3A": {
+                return 25;
+            }
+            case "3B": {
+                return 26;
+            }
+            case "3C": {
+                return 27;
+            }
+            case "3D": {
+                return 28;
+            }
+            case "3A!": {
+                return 29;
+            }
+            case "3B!": {
+                return 30;
+            }
+            case "3C!": {
+                return 31;
+            }
+            case "3D!": {
+                return 32;
+            }
+            case "0E.": {
+                return 33;
+            }
+            case "0A.": {
+                return 34;
+            }
+            case "0B.": {
+                return 35;
+            }
+            case "0C.": {
+                return 36;
+            }
+            case "0D.": {
+                return 37;
+            }
+            case "0A!.": {
+                return 38;
+            }
+            case "0B!.": {
+                return 39;
+            }
+            case "0C!.": {
+                return 40;
+            }
+            case "0D!.": {
+                return 41;
+            }
+            case "1A.": {
+                return 42;
+            }
+            case "1B.": {
+                return 43;
+            }
+            case "1C.": {
+                return 44;
+            }
+            case "1D.": {
+                return 45;
+            }
+            case "1A!.": {
+                return 46;
+            }
+            case "1B!.": {
+                return 47;
+            }
+            case "1C!.": {
+                return 48;
+            }
+            case "1D!.": {
+                return 49;
+            }
+            case "2A.": {
+                return 50;
+            }
+            case "2B.": {
+                return 51;
+            }
+            case "2C.": {
+                return 52;
+            }
+            case "2D.": {
+                return 53;
+            }
+            case "2A!.": {
+                return 54;
+            }
+            case "2B!.": {
+                return 55;
+            }
+            case "2C!.": {
+                return 56;
+            }
+            case "2D!.": {
+                return 57;
+            }
+            case "3A.": {
+                return 58;
+            }
+            case "3B.": {
+                return 59;
+            }
+            case "3C.": {
+                return 60;
+            }
+            case "3D.": {
+                return 61;
+            }
+            case "3A!.": {
+                return 62;
+            }
+            case "3B!.": {
+                return 63;
+            }
+            case "3C!.": {
+                return 64;
+            }
+            case "3D!.": {
+                return 65;
+            }
+        }
+        return 0;
+    }
+
+    public void setIcon() throws IOException {
+        BufferedImage img = ImageIO.read(new File("pictures/0E.png"));
+        this.images[0] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0A.png"));
+        this.images[1] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0B.png"));
+        this.images[2] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0C.png"));
+        this.images[3] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0D.png"));
+        this.images[4] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0A!.png"));
+        this.images[5] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0B!.png"));
+        this.images[6] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0C!.png"));
+        this.images[7] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0D!.png"));
+        this.images[8] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1A.png"));
+        this.images[9] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1B.png"));
+        this.images[10] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1C.png"));
+        this.images[11] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1D.png"));
+        this.images[12] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1A!.png"));
+        this.images[13] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1B!.png"));
+        this.images[14] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1C!.png"));
+        this.images[15] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1D!.png"));
+        this.images[16] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2A.png"));
+        this.images[17] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2B.png"));
+        this.images[18] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2C.png"));
+        this.images[19] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2D.png"));
+        this.images[20] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2A!.png"));
+        this.images[21] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2B!.png"));
+        this.images[22] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2C!.png"));
+        this.images[23] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2D!.png"));
+        this.images[24] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3A.png"));
+        this.images[25] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3B.png"));
+        this.images[26] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3C.png"));
+        this.images[27] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3D.png"));
+        this.images[28] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3A!.png"));
+        this.images[29] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3B!.png"));
+        this.images[30] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3C!.png"));
+        this.images[31] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3D!.png"));
+        this.images[32] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0E..png"));
+        this.images[33] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0A..png"));
+        this.images[34] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0B..png"));
+        this.images[35] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0C..png"));
+        this.images[36] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0D..png"));
+        this.images[37] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0A!..png"));
+        this.images[38] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0B!..png"));
+        this.images[39] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0C!..png"));
+        this.images[40] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/0D!..png"));
+        this.images[41] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1A..png"));
+        this.images[42] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1B..png"));
+        this.images[43] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1C..png"));
+        this.images[44] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1D..png"));
+        this.images[45] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1A!..png"));
+        this.images[46] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1B!..png"));
+        this.images[47] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1C!..png"));
+        this.images[48] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/1D!..png"));
+        this.images[49] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2A..png"));
+        this.images[50] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2B..png"));
+        this.images[51] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2C..png"));
+        this.images[52] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2D..png"));
+        this.images[53] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2A!..png"));
+        this.images[54] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2B!..png"));
+        this.images[55] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2C!..png"));
+        this.images[56] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/2D!..png"));
+        this.images[57] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3A..png"));
+        this.images[58] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3B..png"));
+        this.images[59] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3C..png"));
+        this.images[60] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3D..png"));
+        this.images[61] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3A!..png"));
+        this.images[62] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3B!..png"));
+        this.images[63] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3C!..png"));
+        this.images[64] = new ImageIcon(img);
+        img = ImageIO.read(new File("pictures/3D!..png"));
+        this.images[65] = new ImageIcon(img);
+        this.setimages();
+    }
+
+    public void setimages() {
+        int i = 0;
+        while (i < this.images.length) {
+            ImageIcon img = new ImageIcon();
+            this.images[i] = img = this.images[i];
+            ++i;
+        }
+    }
+
+    public void updateAllIcon() {
+        ++this.numMoves;
+        this.updateConnected();
+        this.lblMoves.setText("Moves: " + this.numMoves);
+        try {
+            this.btnBlock.setIcon(this.images[this.readIcon(this.gameBoard[0][0])]);
+            this.btnBlock_1.setIcon(this.images[this.readIcon(this.gameBoard[0][1])]);
+            this.btnBlock_2.setIcon(this.images[this.readIcon(this.gameBoard[0][2])]);
+            this.btnBlock_3.setIcon(this.images[this.readIcon(this.gameBoard[0][3])]);
+            this.btnBlock_4.setIcon(this.images[this.readIcon(this.gameBoard[0][4])]);
+            this.btnBlock_5.setIcon(this.images[this.readIcon(this.gameBoard[1][0])]);
+            this.btnBlock_6.setIcon(this.images[this.readIcon(this.gameBoard[1][1])]);
+            this.btnBlock_7.setIcon(this.images[this.readIcon(this.gameBoard[1][2])]);
+            this.btnBlock_8.setIcon(this.images[this.readIcon(this.gameBoard[1][3])]);
+            this.btnBlock_9.setIcon(this.images[this.readIcon(this.gameBoard[1][4])]);
+            this.btnBlock_10.setIcon(this.images[this.readIcon(this.gameBoard[2][0])]);
+            this.btnBlock_11.setIcon(this.images[this.readIcon(this.gameBoard[2][1])]);
+            this.btnBlock_12.setIcon(this.images[this.readIcon(this.gameBoard[2][2])]);
+            this.btnBlock_13.setIcon(this.images[this.readIcon(this.gameBoard[2][3])]);
+            this.btnBlock_14.setIcon(this.images[this.readIcon(this.gameBoard[2][4])]);
+            this.btnBlock_15.setIcon(this.images[this.readIcon(this.gameBoard[3][0])]);
+            this.btnBlock_16.setIcon(this.images[this.readIcon(this.gameBoard[3][1])]);
+            this.btnBlock_17.setIcon(this.images[this.readIcon(this.gameBoard[3][2])]);
+            this.btnBlock_18.setIcon(this.images[this.readIcon(this.gameBoard[3][3])]);
+            this.btnBlock_19.setIcon(this.images[this.readIcon(this.gameBoard[3][4])]);
+            this.btnBlock_20.setIcon(this.images[this.readIcon(this.gameBoard[4][0])]);
+            this.btnBlock_21.setIcon(this.images[this.readIcon(this.gameBoard[4][1])]);
+            this.btnBlock_22.setIcon(this.images[this.readIcon(this.gameBoard[4][2])]);
+            this.btnBlock_23.setIcon(this.images[this.readIcon(this.gameBoard[4][3])]);
+            this.btnBlock_24.setIcon(this.images[this.readIcon(this.gameBoard[4][4])]);
+            this.checkGameWin();
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void checkGameWin() {
+        boolean win = true;
+        int r = 0;
+        while (r < this.gameBoard.length) {
+            int c = 0;
+            while (c < this.gameBoard[r].length) {
+                if (!this.gameBoard[r][c].isConnected()) {
+                    win = false;
+                }
+                ++c;
+            }
+            ++r;
+        }
+        if (win && this.checkAllConnected()) {
+            JOptionPane.showMessageDialog(new JFrame(), "You completed the Noodle! Your score is " + this.numMoves + " moves!");
+        }
+    }
+
+    public void updateComboBox() {
+        this.folderNames = new ArrayList<String>(Arrays.asList(this.f.list()));
+        int i = 0;
+        while (i < this.folderNames.size()) {
+            String fileName = this.folderNames.get(i);
+            this.folderNames.set(i, fileName.substring(0, fileName.indexOf(".")));
+            ++i;
+        }
+        this.folderNames2 = this.folderNames.toArray(new String[this.folderNames.size()]);
+        this.gameComboBox.setFont(new Font("Century", 0, 12));
+        this.gameComboBox.setModel(new DefaultComboBoxModel<String>(this.folderNames2));
+    }
+
+    public void rotateAllBlocksRandom() {
+        int r = 0;
+        while (r < this.gameBoard.length) {
+            int c = 0;
+            while (c < this.gameBoard[r].length) {
+                this.gameBoard[r][c].rotateRandom();
+                ++c;
+            }
+            ++r;
+        }
+    }
+
+    public void updateConnected() {
+        int r = 0;
+        while (r < this.gameBoard.length) {
+            int c = 0;
+            while (c < this.gameBoard[r].length) {
+                if (!this.gameBoard[r][c].getName().contains("!")) {
+                    this.gameBoard[r][c].setConnected(false);
+                }
+                ++c;
+            }
+            ++r;
+        }
+        int i = 0;
+        while (i < this.gameBoard.length * this.gameBoard.length - 1) {
+            int c;
+            NoodleBlock selectedBlock = new NoodleBlock();
+            NoodleBlock topBlock = new NoodleBlock();
+            NoodleBlock rightBlock = new NoodleBlock();
+            NoodleBlock botBlock = new NoodleBlock();
+            NoodleBlock leftBlock = new NoodleBlock();
+            int r2 = 0;
+            while (r2 < this.gameBoard.length - 1) {
+                c = 0;
+                while (c < this.gameBoard[r2].length) {
+                    selectedBlock = this.gameBoard[r2][c];
+                    botBlock = this.gameBoard[r2 + 1][c];
+                    if (selectedBlock.isConnected() && selectedBlock.getBottom() && botBlock.getTop()) {
+                        botBlock.setConnected(true);
+                        this.gameBoard[r2 + 1][c] = botBlock;
+                    }
+                    ++c;
+                }
+                ++r2;
+            }
+            r2 = 0;
+            while (r2 < this.gameBoard.length) {
+                c = 0;
+                while (c < this.gameBoard[r2].length - 1) {
+                    selectedBlock = this.gameBoard[r2][c];
+                    rightBlock = this.gameBoard[r2][c + 1];
+                    if (selectedBlock.isConnected() && selectedBlock.getRight() && rightBlock.getLeft()) {
+                        rightBlock.setConnected(true);
+                        this.gameBoard[r2][c + 1] = rightBlock;
+                    }
+                    ++c;
+                }
+                ++r2;
+            }
+            r2 = this.gameBoard.length - 1;
+            while (r2 > 0) {
+                c = 0;
+                while (c < this.gameBoard[r2].length) {
+                    selectedBlock = this.gameBoard[r2][c];
+                    topBlock = this.gameBoard[r2 - 1][c];
+                    if (selectedBlock.isConnected() && selectedBlock.getTop() && topBlock.getBottom()) {
+                        topBlock.setConnected(true);
+                        this.gameBoard[r2 - 1][c] = topBlock;
+                    }
+                    ++c;
+                }
+                --r2;
+            }
+            r2 = 0;
+            while (r2 < this.gameBoard.length) {
+                c = this.gameBoard[r2].length - 1;
+                while (c > 0) {
+                    selectedBlock = this.gameBoard[r2][c];
+                    leftBlock = this.gameBoard[r2][c - 1];
+                    if (selectedBlock.isConnected() && selectedBlock.getLeft() && leftBlock.getRight()) {
+                        leftBlock.setConnected(true);
+                        this.gameBoard[r2][c - 1] = leftBlock;
+                    }
+                    --c;
+                }
+                ++r2;
+            }
+            ++i;
+        }
+    }
+
+    public boolean checkAllConnected() {
+        int c;
+        NoodleBlock selectedBlock = new NoodleBlock();
+        NoodleBlock topBlock = new NoodleBlock();
+        NoodleBlock rightBlock = new NoodleBlock();
+        NoodleBlock botBlock = new NoodleBlock();
+        NoodleBlock leftBlock = new NoodleBlock();
+        int r = 0;
+        while (r < this.gameBoard.length - 1) {
+            c = 0;
+            while (c < this.gameBoard[r].length) {
+                selectedBlock = this.gameBoard[r][c];
+                botBlock = this.gameBoard[r + 1][c];
+                if (selectedBlock.getBottom() ^ botBlock.getTop()) {
+                    return false;
+                }
+                ++c;
+            }
+            ++r;
+        }
+        r = 0;
+        while (r < this.gameBoard.length) {
+            c = 0;
+            while (c < this.gameBoard[r].length - 1) {
+                selectedBlock = this.gameBoard[r][c];
+                rightBlock = this.gameBoard[r][c + 1];
+                if (selectedBlock.getRight() ^ rightBlock.getLeft()) {
+                    return false;
+                }
+                ++c;
+            }
+            ++r;
+        }
+        r = this.gameBoard.length - 1;
+        while (r > 0) {
+            c = 0;
+            while (c < this.gameBoard[r].length) {
+                selectedBlock = this.gameBoard[r][c];
+                topBlock = this.gameBoard[r - 1][c];
+                if (selectedBlock.getTop() ^ topBlock.getBottom()) {
+                    return false;
+                }
+                ++c;
+            }
+            --r;
+        }
+        r = 0;
+        while (r < this.gameBoard.length) {
+            c = this.gameBoard[r].length - 1;
+            while (c > 0) {
+                selectedBlock = this.gameBoard[r][c];
+                leftBlock = this.gameBoard[r][c - 1];
+                if (selectedBlock.getLeft() ^ leftBlock.getRight()) {
+                    return false;
+                }
+                --c;
+            }
+            ++r;
+        }
+        int c2 = 0;
+        while (c2 < this.gameBoard[0].length) {
+            selectedBlock = this.gameBoard[0][c2];
+            if (selectedBlock.getTop()) {
+                return false;
+            }
+            ++c2;
+        }
+        r = 0;
+        while (r < this.gameBoard.length) {
+            selectedBlock = this.gameBoard[r][0];
+            if (selectedBlock.getLeft()) {
+                return false;
+            }
+            ++r;
+        }
+        r = 0;
+        while (r < this.gameBoard.length) {
+            selectedBlock = this.gameBoard[r][this.gameBoard[r].length - 1];
+            if (selectedBlock.getRight()) {
+                return false;
+            }
+            ++r;
+        }
+        c2 = 0;
+        while (c2 < this.gameBoard[0].length) {
+            selectedBlock = this.gameBoard[this.gameBoard.length - 1][c2];
+            if (selectedBlock.getBottom()) {
+                return false;
+            }
+            ++c2;
+        }
+        return true;
+    }
+
+    public Noodles() {
+        this.initialize();
+    }
+
+    private void initialize() {
+        this.frame = new JFrame();
+        this.frame.setTitle("Noodles!");
+        this.frame.setResizable(false);
+        this.frame.setBounds(0, 0, (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2.0), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.0));
+        this.frame.setDefaultCloseOperation(3);
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[2];
+        gridBagLayout.rowHeights = new int[2];
+        gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+        this.frame.getContentPane().setLayout(gridBagLayout);
+        JDesktopPane gamePanel = new JDesktopPane();
+        GridBagConstraints gbc_gamePanel = new GridBagConstraints();
+        gbc_gamePanel.fill = 1;
+        gbc_gamePanel.gridx = 0;
+        gbc_gamePanel.gridy = 0;
+        this.frame.getContentPane().add((Component)gamePanel, gbc_gamePanel);
+        JPanel gameBoardPanel = new JPanel();
+        gameBoardPanel.setBounds(25, 25, 300, 300);
+        gamePanel.add(gameBoardPanel);
+        gameBoardPanel.setLayout(new GridLayout(5, 5, 0, 0));
+        int r = 0;
+        while (r < this.gameBoard.length) {
+            int c = 0;
+            while (c < this.gameBoard[r].length) {
+                this.gameBoard[r][c] = new NoodleBlock();
+                ++c;
+            }
+            ++r;
+        }
+        this.btnBlock = new JButton("");
+        this.btnBlock_1 = new JButton("");
+        this.btnBlock_2 = new JButton("");
+        this.btnBlock_3 = new JButton("");
+        this.btnBlock_4 = new JButton("");
+        this.btnBlock_5 = new JButton("");
+        this.btnBlock_6 = new JButton("");
+        this.btnBlock_7 = new JButton("");
+        this.btnBlock_8 = new JButton("");
+        this.btnBlock_9 = new JButton("");
+        this.btnBlock_10 = new JButton("");
+        this.btnBlock_11 = new JButton("");
+        this.btnBlock_12 = new JButton("");
+        this.btnBlock_13 = new JButton("");
+        this.btnBlock_14 = new JButton("");
+        this.btnBlock_15 = new JButton("");
+        this.btnBlock_16 = new JButton("");
+        this.btnBlock_17 = new JButton("");
+        this.btnBlock_18 = new JButton("");
+        this.btnBlock_19 = new JButton("");
+        this.btnBlock_20 = new JButton("");
+        this.btnBlock_21 = new JButton("");
+        this.btnBlock_22 = new JButton("");
+        this.btnBlock_23 = new JButton("");
+        this.btnBlock_24 = new JButton("");
+        try {
+            this.setIcon();
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        this.updateAllIcon();
+        this.btnBlock.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[0][0].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[0][0].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock);
+        this.btnBlock_1.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[0][1].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[0][1].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_1);
+        this.btnBlock_2.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[0][2].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[0][2].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_2);
+        this.btnBlock_3.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[0][3].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[0][3].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_3);
+        this.btnBlock_4.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[0][4].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[0][4].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_4);
+        this.btnBlock_5.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[1][0].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[1][0].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_5);
+        this.btnBlock_6.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[1][1].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[1][1].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_6);
+        this.btnBlock_7.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[1][2].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[1][2].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_7);
+        this.btnBlock_8.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[1][3].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[1][3].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_8);
+        this.btnBlock_9.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[1][4].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[1][4].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_9);
+        this.btnBlock_10.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[2][0].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[2][0].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_10);
+        this.btnBlock_11.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[2][1].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[2][1].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_11);
+        this.btnBlock_12.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[2][2].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[2][2].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_12);
+        this.btnBlock_13.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[2][3].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[2][3].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_13);
+        this.btnBlock_14.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[2][4].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[2][4].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_14);
+        this.btnBlock_15.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[3][0].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[3][0].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_15);
+        this.btnBlock_16.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[3][1].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[3][1].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_16);
+        this.btnBlock_17.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[3][2].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[3][2].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_17);
+        this.btnBlock_18.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[3][3].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[3][3].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_18);
+        this.btnBlock_19.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[3][4].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[3][4].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_19);
+        this.btnBlock_20.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[4][0].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[4][0].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_20);
+        this.btnBlock_21.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[4][1].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[4][1].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_21);
+        this.btnBlock_22.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[4][2].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[4][2].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_22);
+        this.btnBlock_23.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[4][3].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[4][3].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_23);
+        this.btnBlock_24.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Noodles.this.turning_changingBlock) {
+                    Noodles.this.gameBoard[4][4].rotateClockwise();
+                } else {
+                    Noodles.this.gameBoard[4][4].changeOnce();
+                }
+                Noodles.this.updateAllIcon();
+            }
+        });
+        gameBoardPanel.add(this.btnBlock_24);
+        JPanel settingPanel = new JPanel();
+        settingPanel.setBounds(350, 25, 300, 300);
+        gamePanel.add(settingPanel);
+        GridBagLayout gbl_settingPanel = new GridBagLayout();
+        gbl_settingPanel.columnWidths = new int[4];
+        gbl_settingPanel.rowHeights = new int[12];
+        gbl_settingPanel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+        gbl_settingPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        settingPanel.setLayout(gbl_settingPanel);
+        final JToggleButton tglbtnTurningBlocks = new JToggleButton("Turning");
+        tglbtnTurningBlocks.setFont(new Font("Century", 0, 12));
+        tglbtnTurningBlocks.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                Noodles.this.turning_changingBlock = !Noodles.this.turning_changingBlock;
+                if (Noodles.this.turning_changingBlock) {
+                    tglbtnTurningBlocks.setText("Turning");
+                } else {
+                    tglbtnTurningBlocks.setText("Changing");
+                }
+            }
+        });
+        this.lblMoves = new JLabel("Moves: 0");
+        this.lblMoves.setFont(new Font("Century", 0, 12));
+        GridBagConstraints gbc_lblMoves = new GridBagConstraints();
+        gbc_lblMoves.fill = 3;
+        gbc_lblMoves.insets = new Insets(0, 0, 5, 5);
+        gbc_lblMoves.gridx = 1;
+        gbc_lblMoves.gridy = 1;
+        settingPanel.add((Component)this.lblMoves, gbc_lblMoves);
+        GridBagConstraints gbc_tglbtnTurningBlocks = new GridBagConstraints();
+        gbc_tglbtnTurningBlocks.fill = 2;
+        gbc_tglbtnTurningBlocks.insets = new Insets(0, 0, 5, 5);
+        gbc_tglbtnTurningBlocks.gridx = 1;
+        gbc_tglbtnTurningBlocks.gridy = 2;
+        settingPanel.add((Component)tglbtnTurningBlocks, gbc_tglbtnTurningBlocks);
+        JLabel lblCreateNewGame = new JLabel("Create New Game Board: ");
+        lblCreateNewGame.setFont(new Font("Century", 0, 12));
+        GridBagConstraints gbc_lblCreateNewGame = new GridBagConstraints();
+        gbc_lblCreateNewGame.fill = 1;
+        gbc_lblCreateNewGame.insets = new Insets(0, 0, 5, 5);
+        gbc_lblCreateNewGame.gridx = 1;
+        gbc_lblCreateNewGame.gridy = 3;
+        settingPanel.add((Component)lblCreateNewGame, gbc_lblCreateNewGame);
+        this.txtCreateNewGame = new JTextField();
+        this.txtCreateNewGame.setFont(new Font("Century", 0, 12));
+        this.txtCreateNewGame.setText("Game Name");
+        GridBagConstraints gbc_txtCreateNewGame = new GridBagConstraints();
+        gbc_txtCreateNewGame.fill = 2;
+        gbc_txtCreateNewGame.insets = new Insets(0, 0, 5, 5);
+        gbc_txtCreateNewGame.gridx = 1;
+        gbc_txtCreateNewGame.gridy = 4;
+        settingPanel.add((Component)this.txtCreateNewGame, gbc_txtCreateNewGame);
+        this.txtCreateNewGame.setColumns(10);
+        JButton btnCreateNewGame = new JButton("Create New Game Board");
+        btnCreateNewGame.setFont(new Font("Century", 0, 12));
+        btnCreateNewGame.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String s = Noodles.this.txtCreateNewGame.getText();
+                s = s.replaceAll("\\W", "");
+                Noodles.this.createBoard(s);
+                Noodles.this.updateComboBox();
+            }
+        });
+        GridBagConstraints gbc_btnCreateNewGame = new GridBagConstraints();
+        gbc_btnCreateNewGame.fill = 2;
+        gbc_btnCreateNewGame.insets = new Insets(0, 0, 5, 5);
+        gbc_btnCreateNewGame.gridx = 1;
+        gbc_btnCreateNewGame.gridy = 5;
+        settingPanel.add((Component)btnCreateNewGame, gbc_btnCreateNewGame);
+        JLabel lblSelectNewGame = new JLabel("Select Game Board:");
+        lblSelectNewGame.setFont(new Font("Century", 0, 12));
+        GridBagConstraints gbc_lblSelectNewGame = new GridBagConstraints();
+        gbc_lblSelectNewGame.fill = 1;
+        gbc_lblSelectNewGame.insets = new Insets(0, 0, 5, 5);
+        gbc_lblSelectNewGame.gridx = 1;
+        gbc_lblSelectNewGame.gridy = 6;
+        settingPanel.add((Component)lblSelectNewGame, gbc_lblSelectNewGame);
+        GridBagConstraints gbc_gameComboBox = new GridBagConstraints();
+        gbc_gameComboBox.insets = new Insets(0, 0, 5, 5);
+        gbc_gameComboBox.fill = 2;
+        gbc_gameComboBox.gridx = 1;
+        gbc_gameComboBox.gridy = 7;
+        settingPanel.add(this.gameComboBox, gbc_gameComboBox);
+        this.updateComboBox();
+        JButton btnPlaySelectedGame = new JButton("Play Selected Game Board");
+        btnPlaySelectedGame.setFont(new Font("Century", 0, 12));
+        btnPlaySelectedGame.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                String s = (String)Noodles.this.gameComboBox.getSelectedItem();
+                try {
+                    Noodles.this.setBoard(s);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Noodles.this.numMoves = -1;
+                Noodles.this.updateAllIcon();
+            }
+        });
+        GridBagConstraints gbc_btnPlaySelectedGame = new GridBagConstraints();
+        gbc_btnPlaySelectedGame.fill = 2;
+        gbc_btnPlaySelectedGame.insets = new Insets(0, 0, 5, 5);
+        gbc_btnPlaySelectedGame.gridx = 1;
+        gbc_btnPlaySelectedGame.gridy = 8;
+        settingPanel.add((Component)btnPlaySelectedGame, gbc_btnPlaySelectedGame);
+        JButton btnDeleteSelectedGame = new JButton("Delete Selected Game Board");
+        btnDeleteSelectedGame.setFont(new Font("Century", 0, 12));
+        btnDeleteSelectedGame.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String s = (String)Noodles.this.gameComboBox.getSelectedItem();
+                try {
+                    Noodles.this.deleteBoard(String.valueOf(s) + ".txt");
+                }
+                catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                Noodles.this.folderNames = new ArrayList<String>(Arrays.asList(Noodles.this.f.list()));
+                int i = 0;
+                while (i < Noodles.this.folderNames.size()) {
+                    String fileName = (String)Noodles.this.folderNames.get(i);
+                    Noodles.this.folderNames.set(i, fileName.substring(0, fileName.indexOf(".")));
+                    ++i;
+                }
+                Noodles.this.folderNames2 = Noodles.this.folderNames.toArray(new String[Noodles.this.folderNames.size()]);
+                Noodles.this.gameComboBox.setModel(new DefaultComboBoxModel<String>(Noodles.this.folderNames2));
+            }
+        });
+        GridBagConstraints gbc_btnDeleteSelectedGame = new GridBagConstraints();
+        gbc_btnDeleteSelectedGame.fill = 2;
+        gbc_btnDeleteSelectedGame.insets = new Insets(0, 0, 5, 5);
+        gbc_btnDeleteSelectedGame.gridx = 1;
+        gbc_btnDeleteSelectedGame.gridy = 9;
+        settingPanel.add((Component)btnDeleteSelectedGame, gbc_btnDeleteSelectedGame);
+    }
+}

@@ -1,0 +1,17 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class Sudoku.13
+implements ActionListener {
+    Sudoku.13() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        Sudoku.this.perm = new int[9][9];
+        Sudoku.this.updatePerm();
+    }
+}

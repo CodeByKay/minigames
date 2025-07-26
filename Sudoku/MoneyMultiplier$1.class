@@ -1,0 +1,19 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+static class MoneyMultiplier.1
+implements Runnable {
+    MoneyMultiplier.1() {
+    }
+
+    @Override
+    public void run() {
+        try {
+            MoneyMultiplier window = new MoneyMultiplier();
+            window.frame.setVisible(true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

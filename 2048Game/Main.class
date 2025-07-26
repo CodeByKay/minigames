@@ -1,0 +1,622 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+public class Main
+extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private int[][] board = new int[4][4];
+    private List<Integer> unusedRow = new ArrayList<Integer>();
+    private List<Integer> unusedCol = new ArrayList<Integer>();
+    private int[][] lastMove = new int[4][4];
+    private int score;
+    private int lastScore;
+    private JLabel textScore;
+    private JLabel numScore;
+    private JLabel BLANK;
+    private JLabel tile0;
+    private JLabel tile1;
+    private JLabel tile2;
+    private JLabel tile3;
+    private JLabel tile4;
+    private JLabel tile5;
+    private JLabel tile6;
+    private JLabel tile7;
+    private JLabel tile8;
+    private JLabel tile9;
+    private JLabel tile10;
+    private JLabel tile11;
+    private JLabel tile12;
+    private JLabel tile13;
+    private JLabel tile14;
+    private JLabel tile15;
+    private JLabel undo;
+
+    public Main() {
+        super("2048");
+        this.setLayout(new GridLayout(5, 4, 20, 20));
+        this.score = 0;
+        int Tile1row = (int)(Math.random() * 4.0);
+        int Tile1col = (int)(Math.random() * 2.0);
+        int Tile2row = (int)(Math.random() * 4.0);
+        int Tile2col = (int)(Math.random() * 2.0 + 2.0);
+        this.board[Tile1row][Tile1col] = 2;
+        this.board[Tile2row][Tile2col] = 2;
+        this.textScore = new JLabel("Score: ", 4);
+        this.textScore.setFont(new Font(this.textScore.getName(), 0, 20));
+        this.numScore = new JLabel("", 2);
+        this.numScore.setFont(new Font(this.numScore.getName(), 0, 20));
+        this.BLANK = new JLabel();
+        this.tile0 = new JLabel("", 0);
+        this.tile1 = new JLabel("", 0);
+        this.tile2 = new JLabel("", 0);
+        this.tile3 = new JLabel("", 0);
+        this.tile4 = new JLabel("", 0);
+        this.tile5 = new JLabel("", 0);
+        this.tile6 = new JLabel("", 0);
+        this.tile7 = new JLabel("", 0);
+        this.tile8 = new JLabel("", 0);
+        this.tile9 = new JLabel("", 0);
+        this.tile10 = new JLabel("", 0);
+        this.tile11 = new JLabel("", 0);
+        this.tile12 = new JLabel("", 0);
+        this.tile13 = new JLabel("", 0);
+        this.tile14 = new JLabel("", 0);
+        this.tile15 = new JLabel("", 0);
+        this.undo = new JLabel("<html>Hit Back Space to Undo Once!</html>");
+        ButtonListener listener = new ButtonListener();
+        this.addKeyListener(listener);
+        this.setFocusable(true);
+        this.add(this.tile0);
+        this.add(this.tile1);
+        this.add(this.tile2);
+        this.add(this.tile3);
+        this.add(this.tile4);
+        this.add(this.tile5);
+        this.add(this.tile6);
+        this.add(this.tile7);
+        this.add(this.tile8);
+        this.add(this.tile9);
+        this.add(this.tile10);
+        this.add(this.tile11);
+        this.add(this.tile12);
+        this.add(this.tile13);
+        this.add(this.tile14);
+        this.add(this.tile15);
+        this.add(this.textScore);
+        this.add(this.numScore);
+        this.add(this.BLANK);
+        this.add(this.undo);
+        this.updateUnused();
+        this.updateBoard();
+    }
+
+    public int[][] copyBoard(int[][] b) {
+        int[][] temp = new int[b.length][b[0].length];
+        int r = 0;
+        while (r < temp.length) {
+            int c = 0;
+            while (c < temp[r].length) {
+                temp[r][c] = b[r][c];
+                ++c;
+            }
+            ++r;
+        }
+        return temp;
+    }
+
+    public void updateUnused() {
+        this.unusedRow.clear();
+        this.unusedCol.clear();
+        int a = 0;
+        while (a < 4) {
+            int b = 0;
+            while (b < 4) {
+                if (this.board[a][b] == 0) {
+                    this.unusedRow.add(a);
+                    this.unusedCol.add(b);
+                }
+                ++b;
+            }
+            ++a;
+        }
+    }
+
+    public void updateBoard() {
+        this.tile0.setText(Integer.toString(this.board[0][0]));
+        this.tile1.setText(Integer.toString(this.board[0][1]));
+        this.tile2.setText(Integer.toString(this.board[0][2]));
+        this.tile3.setText(Integer.toString(this.board[0][3]));
+        this.tile4.setText(Integer.toString(this.board[1][0]));
+        this.tile5.setText(Integer.toString(this.board[1][1]));
+        this.tile6.setText(Integer.toString(this.board[1][2]));
+        this.tile7.setText(Integer.toString(this.board[1][3]));
+        this.tile8.setText(Integer.toString(this.board[2][0]));
+        this.tile9.setText(Integer.toString(this.board[2][1]));
+        this.tile10.setText(Integer.toString(this.board[2][2]));
+        this.tile11.setText(Integer.toString(this.board[2][3]));
+        this.tile12.setText(Integer.toString(this.board[3][0]));
+        this.tile13.setText(Integer.toString(this.board[3][1]));
+        this.tile14.setText(Integer.toString(this.board[3][2]));
+        this.tile15.setText(Integer.toString(this.board[3][3]));
+        this.numScore.setText(Integer.toString(this.score));
+        this.setTileColor(this.tile0);
+        this.setTileColor(this.tile1);
+        this.setTileColor(this.tile2);
+        this.setTileColor(this.tile3);
+        this.setTileColor(this.tile4);
+        this.setTileColor(this.tile5);
+        this.setTileColor(this.tile6);
+        this.setTileColor(this.tile7);
+        this.setTileColor(this.tile8);
+        this.setTileColor(this.tile9);
+        this.setTileColor(this.tile10);
+        this.setTileColor(this.tile11);
+        this.setTileColor(this.tile12);
+        this.setTileColor(this.tile13);
+        this.setTileColor(this.tile14);
+        this.setTileColor(this.tile15);
+    }
+
+    public void setTileColor(JLabel l) {
+        int value = Integer.parseInt(l.getText());
+        l.setOpaque(true);
+        if (value == 0) {
+            l.setBackground(new Color(207, 193, 184));
+            l.setOpaque(false);
+            l.setFont(new Font(l.getName(), 0, 0));
+        } else if (value == 2) {
+            l.setBackground(new Color(238, 228, 218));
+            l.setFont(new Font(l.getName(), 0, 30));
+        } else if (value == 4) {
+            l.setBackground(new Color(236, 224, 200));
+            l.setFont(new Font(l.getName(), 0, 30));
+        } else if (value == 8) {
+            l.setBackground(new Color(243, 176, 121));
+            l.setFont(new Font(l.getName(), 0, 30));
+        } else if (value == 16) {
+            l.setBackground(new Color(246, 148, 101));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 32) {
+            l.setBackground(new Color(252, 123, 101));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 64) {
+            l.setBackground(new Color(243, 89, 63));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 128) {
+            l.setBackground(new Color(239, 206, 113));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 256) {
+            l.setBackground(new Color(239, 206, 113));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 512) {
+            l.setBackground(new Color(236, 200, 80));
+            l.setFont(new Font(l.getName(), 0, 28));
+        } else if (value == 1024) {
+            l.setBackground(new Color(226, 185, 19));
+            l.setFont(new Font(l.getName(), 0, 26));
+        } else if (value == 2048) {
+            l.setBackground(new Color(226, 185, 19));
+            l.setFont(new Font(l.getName(), 0, 26));
+        }
+    }
+
+    public void run(String s) {
+        if (this.canMove()) {
+            if (s.equals("LEFT") && this.canShiftHorizontal()) {
+                this.lastMove = this.copyBoard(this.board);
+                this.lastScore = this.score;
+                if (this.shiftLeft()) {
+                    this.addTile();
+                }
+            } else if (s.equals("RIGHT") && this.canShiftHorizontal()) {
+                this.lastMove = this.copyBoard(this.board);
+                this.lastScore = this.score;
+                if (this.shiftRight()) {
+                    this.addTile();
+                }
+            } else if (s.equals("UP") && this.canShiftVertical()) {
+                this.lastMove = this.copyBoard(this.board);
+                this.lastScore = this.score;
+                if (this.shiftUp()) {
+                    this.addTile();
+                }
+            } else if (s.equals("DOWN") && this.canShiftVertical()) {
+                this.lastMove = this.copyBoard(this.board);
+                this.lastScore = this.score;
+                if (this.shiftDown()) {
+                    this.addTile();
+                }
+            } else if (s.equals("UNDO")) {
+                this.board = this.copyBoard(this.lastMove);
+                this.score = this.lastScore;
+            }
+            this.updateUnused();
+            this.updateBoard();
+        }
+        if (this.has2048()) {
+            this.gameWin();
+        }
+        if (!this.canMove()) {
+            this.gameLose();
+        }
+    }
+
+    public boolean shiftLeft() {
+        boolean change = false;
+        int loop = 0;
+        while (loop < 3) {
+            int r = 0;
+            while (r < this.board.length) {
+                int c = 0;
+                while (c < this.board[r].length - 1) {
+                    if (!this.hasTile(r, c)) {
+                        this.setTile(r, c, this.getTile(r, c + 1));
+                        this.setTile(r, c + 1, 0);
+                        if (this.board[r][c] != 0) {
+                            change = true;
+                        }
+                    }
+                    ++c;
+                }
+                ++r;
+            }
+            ++loop;
+        }
+        int r = 0;
+        while (r < this.board.length) {
+            if (this.board[r][0] == this.board[r][1]) {
+                this.setTile(r, 0, this.getTile(r, 0) * 2);
+                this.setTile(r, 1, 0);
+                this.score += this.getTile(r, 0);
+                if (this.board[r][2] == this.board[r][3]) {
+                    this.setTile(r, 1, this.getTile(r, 2) * 2);
+                    this.setTile(r, 2, 0);
+                    this.setTile(r, 3, 0);
+                    this.score += this.getTile(r, 1);
+                } else {
+                    this.setTile(r, 1, this.getTile(r, 2));
+                    this.setTile(r, 2, this.getTile(r, 3));
+                    this.setTile(r, 3, 0);
+                }
+                if (this.board[r][0] != 0) {
+                    change = true;
+                }
+            } else if (this.board[r][1] == this.board[r][2]) {
+                this.setTile(r, 1, this.getTile(r, 1) * 2);
+                this.setTile(r, 2, this.getTile(r, 3));
+                this.setTile(r, 3, 0);
+                this.score += this.getTile(r, 1);
+                if (this.board[r][1] != 0) {
+                    change = true;
+                }
+            } else if (this.board[r][2] == this.board[r][3]) {
+                this.setTile(r, 2, this.getTile(r, 2) * 2);
+                this.setTile(r, 3, 0);
+                this.score += this.getTile(r, 2);
+                if (this.board[r][2] != 0) {
+                    change = true;
+                }
+            }
+            ++r;
+        }
+        return change;
+    }
+
+    public boolean shiftRight() {
+        boolean change = false;
+        int loop = 0;
+        while (loop < 3) {
+            int r = 0;
+            while (r < this.board.length) {
+                int c = this.board[r].length - 1;
+                while (c > 0) {
+                    if (!this.hasTile(r, c)) {
+                        this.setTile(r, c, this.getTile(r, c - 1));
+                        this.setTile(r, c - 1, 0);
+                        if (this.board[r][c] != 0) {
+                            change = true;
+                        }
+                    }
+                    --c;
+                }
+                ++r;
+            }
+            ++loop;
+        }
+        int r = 0;
+        while (r < this.board.length) {
+            if (this.board[r][3] == this.board[r][2]) {
+                this.setTile(r, 3, this.getTile(r, 3) * 2);
+                this.setTile(r, 2, 0);
+                this.score += this.getTile(r, 3);
+                if (this.board[r][1] == this.board[r][0]) {
+                    this.setTile(r, 2, this.getTile(r, 1) * 2);
+                    this.setTile(r, 1, 0);
+                    this.setTile(r, 0, 0);
+                    this.score += this.getTile(r, 2);
+                } else {
+                    this.setTile(r, 2, this.getTile(r, 1));
+                    this.setTile(r, 1, this.getTile(r, 0));
+                    this.setTile(r, 0, 0);
+                }
+                if (this.board[r][3] != 0) {
+                    change = true;
+                }
+            } else if (this.board[r][2] == this.board[r][1]) {
+                this.setTile(r, 2, this.getTile(r, 1) * 2);
+                this.setTile(r, 1, this.getTile(r, 0));
+                this.setTile(r, 0, 0);
+                this.score += this.getTile(r, 1);
+                if (this.board[r][2] != 0) {
+                    change = true;
+                }
+            } else if (this.board[r][1] == this.board[r][0]) {
+                this.setTile(r, 1, this.getTile(r, 1) * 2);
+                this.setTile(r, 0, 0);
+                this.score += this.getTile(r, 1);
+                if (this.board[r][1] != 0) {
+                    change = true;
+                }
+            }
+            ++r;
+        }
+        return change;
+    }
+
+    public boolean shiftUp() {
+        boolean change = false;
+        int loop = 0;
+        while (loop < 3) {
+            int r = 0;
+            while (r < this.board.length - 1) {
+                int c = 0;
+                while (c < this.board[r].length) {
+                    if (!this.hasTile(r, c)) {
+                        this.setTile(r, c, this.getTile(r + 1, c));
+                        this.setTile(r + 1, c, 0);
+                        if (this.board[r][c] != 0) {
+                            change = true;
+                        }
+                    }
+                    ++c;
+                }
+                ++r;
+            }
+            ++loop;
+        }
+        int c = 0;
+        while (c < this.board[0].length) {
+            if (this.board[0][c] == this.board[1][c]) {
+                this.setTile(0, c, this.getTile(0, c) * 2);
+                this.setTile(1, c, 0);
+                this.score += this.getTile(0, c);
+                if (this.board[2][c] == this.board[3][c]) {
+                    this.setTile(1, c, this.getTile(2, c) * 2);
+                    this.setTile(2, c, 0);
+                    this.setTile(3, c, 0);
+                    this.score += this.getTile(1, c);
+                } else {
+                    this.setTile(1, c, this.getTile(2, c));
+                    this.setTile(2, c, this.getTile(3, c));
+                    this.setTile(3, c, 0);
+                }
+                if (this.board[0][c] != 0) {
+                    change = true;
+                }
+            } else if (this.board[1][c] == this.board[2][c]) {
+                this.setTile(1, c, this.getTile(1, c) * 2);
+                this.setTile(2, c, this.getTile(3, c));
+                this.setTile(3, c, 0);
+                this.score += this.getTile(1, c);
+                if (this.board[1][c] != 0) {
+                    change = true;
+                }
+            } else if (this.board[2][c] == this.board[3][c]) {
+                this.setTile(2, c, this.getTile(2, c) * 2);
+                this.setTile(3, c, 0);
+                this.score += this.getTile(2, c);
+                if (this.board[2][c] != 0) {
+                    change = true;
+                }
+            }
+            ++c;
+        }
+        return change;
+    }
+
+    public boolean shiftDown() {
+        boolean change = false;
+        int loop = 0;
+        while (loop < 3) {
+            int r = this.board.length - 1;
+            while (r > 0) {
+                int c = 0;
+                while (c < this.board[r].length) {
+                    if (!this.hasTile(r, c)) {
+                        this.setTile(r, c, this.getTile(r - 1, c));
+                        this.setTile(r - 1, c, 0);
+                        if (this.board[r][c] != 0) {
+                            change = true;
+                        }
+                    }
+                    ++c;
+                }
+                --r;
+            }
+            ++loop;
+        }
+        int c = 0;
+        while (c < this.board[0].length) {
+            if (this.board[3][c] == this.board[2][c]) {
+                this.setTile(3, c, this.getTile(3, c) * 2);
+                this.setTile(2, c, 0);
+                this.score += this.getTile(3, c);
+                if (this.board[1][c] == this.board[0][c]) {
+                    this.setTile(2, c, this.getTile(1, c) * 2);
+                    this.setTile(1, c, 0);
+                    this.setTile(0, c, 0);
+                    this.score += this.getTile(2, c);
+                } else {
+                    this.setTile(2, c, this.getTile(1, c));
+                    this.setTile(1, c, this.getTile(0, c));
+                    this.setTile(0, c, 0);
+                }
+                if (this.board[3][c] != 0) {
+                    change = true;
+                }
+            } else if (this.board[2][c] == this.board[1][c]) {
+                this.setTile(2, c, this.getTile(2, c) * 2);
+                this.setTile(1, c, this.getTile(0, c));
+                this.setTile(0, c, 0);
+                this.score += this.getTile(2, c);
+                if (this.board[2][c] != 0) {
+                    change = true;
+                }
+            } else if (this.board[1][c] == this.board[0][c]) {
+                this.setTile(1, c, this.getTile(1, c) * 2);
+                this.setTile(0, c, 0);
+                this.score += this.getTile(1, c);
+                if (this.board[1][c] != 0) {
+                    change = true;
+                }
+            }
+            ++c;
+        }
+        return change;
+    }
+
+    public boolean canShiftHorizontal() {
+        int r = 0;
+        while (r < this.board.length) {
+            int c = 0;
+            while (c < this.board[r].length - 1) {
+                if (this.getTile(r, c) == 0) {
+                    return true;
+                }
+                if (this.getTile(r, c) == this.getTile(r, c + 1)) {
+                    return true;
+                }
+                ++c;
+            }
+            if (this.getTile(r, 3) == 0) {
+                return true;
+            }
+            ++r;
+        }
+        return false;
+    }
+
+    public boolean canShiftVertical() {
+        int c = 0;
+        while (c < this.board[0].length) {
+            int r = 0;
+            while (r < this.board[r].length - 1) {
+                if (this.getTile(r, c) == 0) {
+                    return true;
+                }
+                if (this.getTile(r, c) == this.getTile(r + 1, c)) {
+                    return true;
+                }
+                ++r;
+            }
+            if (this.getTile(3, c) == 0) {
+                return true;
+            }
+            ++c;
+        }
+        return false;
+    }
+
+    public boolean canMove() {
+        return this.canShiftHorizontal() || this.canShiftVertical();
+    }
+
+    public void addTile() {
+        this.updateUnused();
+        if (this.unusedRow.size() > 0) {
+            int index = (int)(Math.random() * (double)this.unusedRow.size());
+            int twoORfour = (int)(Math.random() * 4.0);
+            this.board[this.unusedRow.get((int)index).intValue()][this.unusedCol.get((int)index).intValue()] = twoORfour < 3 ? 2 : 4;
+        }
+        this.updateUnused();
+        this.updateBoard();
+    }
+
+    public int getTile(int r, int c) {
+        return this.board[r][c];
+    }
+
+    public boolean hasTile(int r, int c) {
+        return this.board[r][c] != 0;
+    }
+
+    public void setTile(int r, int c, int tile) {
+        this.board[r][c] = tile;
+    }
+
+    public void gameLose() {
+        JOptionPane.showMessageDialog(new JFrame(), "Game Over! Score: " + this.score);
+        System.exit(0);
+    }
+
+    public boolean has2048() {
+        int a = 0;
+        while (a < this.board.length) {
+            int b = 0;
+            while (b < this.board[a].length) {
+                if (this.board[a][b] == 2048) {
+                    return true;
+                }
+                ++b;
+            }
+            ++a;
+        }
+        return false;
+    }
+
+    public void gameWin() {
+        JOptionPane.showMessageDialog(new JFrame(), "You made 2048! Score: " + this.score);
+        System.exit(0);
+    }
+
+    private class ButtonListener
+    implements KeyListener {
+        private ButtonListener() {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == 37) {
+                Main.this.run("LEFT");
+            } else if (key == 39) {
+                Main.this.run("RIGHT");
+            } else if (key == 38) {
+                Main.this.run("UP");
+            } else if (key == 40) {
+                Main.this.run("DOWN");
+            } else if (key == 8) {
+                Main.this.run("UNDO");
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+    }
+}

@@ -1,0 +1,478 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+public class GUI_DashTap
+extends JFrame {
+    private ArrayList<String> board = new ArrayList();
+    private JLabel arr1;
+    private JLabel key1;
+    private JLabel arr2;
+    private JLabel key2;
+    private JLabel arr3;
+    private JLabel key3;
+    private JLabel arr4;
+    private JLabel key4;
+    private JLabel arr5;
+    private JLabel key5;
+    private JLabel arr6;
+    private JLabel key6;
+    private JLabel arr7;
+    private JLabel key7;
+    private JLabel arr8;
+    private JLabel key8;
+    private int gameLevel;
+    private int numArr;
+    private int arrIndex;
+    private JLabel time1;
+    private JLabel time2;
+    private JLabel time3;
+    private JLabel time4;
+    private JLabel time5;
+    private JLabel score;
+    private Color c;
+    private long start;
+    private int elapsed;
+    private boolean firstClick;
+    private JLabel time;
+    private TimeGUI subGUI;
+    private ImageIcon LEFT;
+    private ImageIcon RIGHT;
+    private ImageIcon UP;
+    private ImageIcon DOWN;
+    private ImageIcon NULL;
+
+    public GUI_DashTap() {
+        super("DashTap");
+        this.setLayout(new GridLayout(2, 8, 1, 1));
+        this.arr1 = new JLabel("", 0);
+        this.key1 = new JLabel("", 0);
+        this.arr2 = new JLabel("", 0);
+        this.key2 = new JLabel("", 0);
+        this.arr3 = new JLabel("", 0);
+        this.key3 = new JLabel("", 0);
+        this.arr4 = new JLabel("", 0);
+        this.key4 = new JLabel("", 0);
+        this.arr5 = new JLabel("", 0);
+        this.key5 = new JLabel("", 0);
+        this.arr6 = new JLabel("", 0);
+        this.key6 = new JLabel("", 0);
+        this.arr7 = new JLabel("", 0);
+        this.key7 = new JLabel("", 0);
+        this.arr8 = new JLabel("", 0);
+        this.key8 = new JLabel("", 0);
+        this.arr1.setFont(new Font(this.arr1.getName(), 0, 0));
+        this.key1.setFont(new Font(this.key1.getName(), 0, 0));
+        this.arr2.setFont(new Font(this.arr2.getName(), 0, 0));
+        this.key2.setFont(new Font(this.key2.getName(), 0, 0));
+        this.arr3.setFont(new Font(this.arr3.getName(), 0, 0));
+        this.key3.setFont(new Font(this.key3.getName(), 0, 0));
+        this.arr4.setFont(new Font(this.arr4.getName(), 0, 0));
+        this.key4.setFont(new Font(this.key4.getName(), 0, 0));
+        this.arr5.setFont(new Font(this.arr5.getName(), 0, 0));
+        this.key5.setFont(new Font(this.key5.getName(), 0, 0));
+        this.arr6.setFont(new Font(this.arr6.getName(), 0, 0));
+        this.key6.setFont(new Font(this.key6.getName(), 0, 0));
+        this.arr7.setFont(new Font(this.arr7.getName(), 0, 0));
+        this.key7.setFont(new Font(this.key7.getName(), 0, 0));
+        this.arr8.setFont(new Font(this.arr8.getName(), 0, 0));
+        this.key8.setFont(new Font(this.key8.getName(), 0, 0));
+        ButtonHandler listener = new ButtonHandler();
+        this.addKeyListener(listener);
+        this.add(this.arr1);
+        this.add(this.arr2);
+        this.add(this.arr3);
+        this.add(this.arr4);
+        this.add(this.arr5);
+        this.add(this.arr6);
+        this.add(this.arr7);
+        this.add(this.arr8);
+        this.add(this.key1);
+        this.add(this.key2);
+        this.add(this.key3);
+        this.add(this.key4);
+        this.add(this.key5);
+        this.add(this.key6);
+        this.add(this.key7);
+        this.add(this.key8);
+        try {
+            this.LEFT = new ImageIcon(ImageIO.read(new File("LeftArrow.png")));
+            this.RIGHT = new ImageIcon(ImageIO.read(new File("RightArrow.png")));
+            this.UP = new ImageIcon(ImageIO.read(new File("UpArrow.png")));
+            this.DOWN = new ImageIcon(ImageIO.read(new File("DownArrow.png")));
+            this.NULL = new ImageIcon(ImageIO.read(new File("NullArrow.png")));
+        }
+        catch (IOException e) {
+            System.out.println("File to Image Error.");
+        }
+        this.gameLevel = 0;
+        this.time1 = new JLabel();
+        this.time2 = new JLabel();
+        this.time3 = new JLabel();
+        this.time4 = new JLabel();
+        this.time5 = new JLabel();
+        this.score = new JLabel("LEVEL: ");
+        this.score.setFont(new Font(this.score.getName(), 1, 20));
+        this.firstClick = false;
+        this.time = new JLabel();
+        this.time.setHorizontalAlignment(0);
+        this.subGUI = new TimeGUI();
+        this.subGUI.setDefaultCloseOperation(1);
+        this.subGUI.setSize(850, 75);
+        this.subGUI.setLocation(0, 230);
+        this.subGUI.setVisible(true);
+    }
+
+    public void nextLevel() {
+        this.arrIndex = 0;
+        this.clearAllBoards();
+        this.c = this.randomColor();
+        ++this.gameLevel;
+        this.score.setText("LEVEL: " + this.gameLevel);
+        this.start = System.currentTimeMillis();
+        this.start -= (long)((int)Math.pow(Math.log(this.gameLevel * 10), 4.0));
+        this.numArr = this.gameLevel < 10 ? (int)(Math.random() * 3.0) + 3 : (this.gameLevel < 20 ? (int)(Math.random() * 4.0) + 5 : 8);
+        for (int i = 0; i < this.numArr; ++i) {
+            int direct = (int)(Math.random() * 4.0);
+            if (direct == 0) {
+                this.board.add("L");
+                continue;
+            }
+            if (direct == 1) {
+                this.board.add("R");
+                continue;
+            }
+            if (direct == 2) {
+                this.board.add("U");
+                continue;
+            }
+            if (direct != 3) continue;
+            this.board.add("D");
+        }
+        this.updateArrowBoard();
+    }
+
+    public void updateArrowBoard() {
+        for (int a = 0; a < this.board.size(); ++a) {
+            if (a == 0) {
+                this.arr1.setText(this.board.get(a));
+                this.updateIcon(this.arr1);
+                continue;
+            }
+            if (a == 1) {
+                this.arr2.setText(this.board.get(a));
+                this.updateIcon(this.arr2);
+                continue;
+            }
+            if (a == 2) {
+                this.arr3.setText(this.board.get(a));
+                this.updateIcon(this.arr3);
+                continue;
+            }
+            if (a == 3) {
+                this.arr4.setText(this.board.get(a));
+                this.updateIcon(this.arr4);
+                continue;
+            }
+            if (a == 4) {
+                this.arr5.setText(this.board.get(a));
+                this.updateIcon(this.arr5);
+                continue;
+            }
+            if (a == 5) {
+                this.arr6.setText(this.board.get(a));
+                this.updateIcon(this.arr6);
+                continue;
+            }
+            if (a == 6) {
+                this.arr7.setText(this.board.get(a));
+                this.updateIcon(this.arr7);
+                continue;
+            }
+            if (a != 7) continue;
+            this.arr8.setText(this.board.get(a));
+            this.updateIcon(this.arr8);
+        }
+    }
+
+    public void clearAllBoards() {
+        this.clearArrBoard();
+        this.clearKeyBoard();
+    }
+
+    public void clearArrBoard() {
+        this.board.clear();
+        this.arr1.setText("");
+        this.arr2.setText("");
+        this.arr3.setText("");
+        this.arr4.setText("");
+        this.arr5.setText("");
+        this.arr6.setText("");
+        this.arr7.setText("");
+        this.arr8.setText("");
+        this.arr1.setIcon(this.NULL);
+        this.arr2.setIcon(this.NULL);
+        this.arr3.setIcon(this.NULL);
+        this.arr4.setIcon(this.NULL);
+        this.arr5.setIcon(this.NULL);
+        this.arr6.setIcon(this.NULL);
+        this.arr7.setIcon(this.NULL);
+        this.arr8.setIcon(this.NULL);
+    }
+
+    public void clearKeyBoard() {
+        this.key1.setText("");
+        this.key2.setText("");
+        this.key3.setText("");
+        this.key4.setText("");
+        this.key5.setText("");
+        this.key6.setText("");
+        this.key7.setText("");
+        this.key8.setText("");
+        this.key1.setIcon(this.NULL);
+        this.key2.setIcon(this.NULL);
+        this.key3.setIcon(this.NULL);
+        this.key4.setIcon(this.NULL);
+        this.key5.setIcon(this.NULL);
+        this.key6.setIcon(this.NULL);
+        this.key7.setIcon(this.NULL);
+        this.key8.setIcon(this.NULL);
+    }
+
+    public void updateIcon(JLabel l) {
+        if (l.getText().equals("L")) {
+            l.setIcon(this.LEFT);
+        } else if (l.getText().equals("R")) {
+            l.setIcon(this.RIGHT);
+        } else if (l.getText().equals("U")) {
+            l.setIcon(this.UP);
+        } else if (l.getText().equals("D")) {
+            l.setIcon(this.DOWN);
+        }
+    }
+
+    public void inputKey(String s) {
+        if (this.key1.getText().equals("")) {
+            this.key1.setText(s);
+            this.updateIcon(this.key1);
+        } else if (this.key2.getText().equals("")) {
+            this.key2.setText(s);
+            this.updateIcon(this.key2);
+        } else if (this.key3.getText().equals("")) {
+            this.key3.setText(s);
+            this.updateIcon(this.key3);
+        } else if (this.key4.getText().equals("")) {
+            this.key4.setText(s);
+            this.updateIcon(this.key4);
+        } else if (this.key5.getText().equals("")) {
+            this.key5.setText(s);
+            this.updateIcon(this.key5);
+        } else if (this.key6.getText().equals("")) {
+            this.key6.setText(s);
+            this.updateIcon(this.key6);
+        } else if (this.key7.getText().equals("")) {
+            this.key7.setText(s);
+            this.updateIcon(this.key7);
+        } else if (this.key8.getText().equals("")) {
+            this.key8.setText(s);
+            this.updateIcon(this.key8);
+        }
+        this.checkKey();
+    }
+
+    public void checkKey() {
+        if (!this.key1.getText().equals("") && !this.arr1.getText().equals(this.key1.getText())) {
+            this.key1.setText("");
+            this.key1.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key2.getText().equals("") && !this.arr2.getText().equals(this.key2.getText())) {
+            this.key2.setText("");
+            this.key2.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key3.getText().equals("") && !this.arr3.getText().equals(this.key3.getText())) {
+            this.key3.setText("");
+            this.key3.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key4.getText().equals("") && !this.arr4.getText().equals(this.key4.getText())) {
+            this.key4.setText("");
+            this.key4.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key5.getText().equals("") && !this.arr5.getText().equals(this.key5.getText())) {
+            this.key5.setText("");
+            this.key5.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key6.getText().equals("") && !this.arr6.getText().equals(this.key6.getText())) {
+            this.key6.setText("");
+            this.key6.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key7.getText().equals("") && !this.arr7.getText().equals(this.key7.getText())) {
+            this.key7.setText("");
+            this.key7.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (!this.key8.getText().equals("") && !this.arr8.getText().equals(this.key8.getText())) {
+            this.key8.setText("");
+            this.key8.setIcon(this.NULL);
+            this.start -= 1000L;
+        }
+        if (this.arr1.getText().equals(this.key1.getText()) && this.arr2.getText().equals(this.key2.getText()) && this.arr3.getText().equals(this.key3.getText()) && this.arr4.getText().equals(this.key4.getText()) && this.arr5.getText().equals(this.key5.getText()) && this.arr6.getText().equals(this.key6.getText()) && this.arr7.getText().equals(this.key7.getText()) && this.arr8.getText().equals(this.key8.getText())) {
+            this.nextLevel();
+        }
+    }
+
+    public Color randomColor() {
+        int r = (int)(Math.random() * 245.0);
+        int g = (int)(Math.random() * 245.0);
+        int b = (int)(Math.random() * 245.0);
+        return new Color(r, g, b);
+    }
+
+    public static void main(String[] args) {
+        GUI_DashTap game = new GUI_DashTap();
+        game.setDefaultCloseOperation(3);
+        game.setSize(850, 260);
+        game.setVisible(true);
+    }
+
+    private class TimeGUI
+    extends JFrame {
+        private Thread updater;
+
+        public TimeGUI() {
+            super("Time");
+            this.setLayout(new GridLayout(1, 6));
+            this.updater = new Thread(new timer());
+            this.add(GUI_DashTap.this.time1);
+            this.add(GUI_DashTap.this.time2);
+            this.add(GUI_DashTap.this.time3);
+            this.add(GUI_DashTap.this.time4);
+            this.add(GUI_DashTap.this.time5);
+            this.add(GUI_DashTap.this.score);
+            GUI_DashTap.this.time5.setOpaque(true);
+            GUI_DashTap.this.time4.setOpaque(true);
+            GUI_DashTap.this.time3.setOpaque(true);
+            GUI_DashTap.this.time2.setOpaque(true);
+            GUI_DashTap.this.time1.setOpaque(true);
+        }
+
+        private class timer
+        implements Runnable {
+            private timer() {
+            }
+
+            @Override
+            public void run() {
+                GUI_DashTap.this.elapsed = (int)(System.currentTimeMillis() - GUI_DashTap.this.start) / 1000;
+                GUI_DashTap.this.elapsed = 5 - GUI_DashTap.this.elapsed;
+                this.updateTime();
+                if (GUI_DashTap.this.elapsed <= 0) {
+                    JOptionPane.showMessageDialog(new JFrame(), "You Lose! You reached level " + GUI_DashTap.this.gameLevel);
+                    System.exit(0);
+                } else {
+                    try {
+                        Thread.sleep(100L);
+                    }
+                    catch (InterruptedException interruptedException) {
+                        // empty catch block
+                    }
+                    this.run();
+                }
+            }
+
+            public void updateTime() {
+                if (GUI_DashTap.this.elapsed == 5) {
+                    GUI_DashTap.this.time5.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time4.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+                } else if (GUI_DashTap.this.elapsed == 4) {
+                    GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time4.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+                } else if (GUI_DashTap.this.elapsed == 3) {
+                    GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+                } else if (GUI_DashTap.this.elapsed == 2) {
+                    GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                    GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+                } else if (GUI_DashTap.this.elapsed == 1) {
+                    GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time2.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+                } else if (GUI_DashTap.this.elapsed == 0) {
+                    GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time2.setBackground(Color.WHITE);
+                    GUI_DashTap.this.time1.setBackground(Color.WHITE);
+                }
+            }
+        }
+    }
+
+    private class ButtonHandler
+    implements KeyListener {
+        private ButtonHandler() {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (!GUI_DashTap.this.firstClick) {
+                GUI_DashTap.this.firstClick = true;
+                GUI_DashTap.this.nextLevel();
+                GUI_DashTap.this.subGUI.updater.start();
+                GUI_DashTap.this.start = GUI_DashTap.this.start + 1000L;
+            }
+            if (key == 37) {
+                GUI_DashTap.this.inputKey("L");
+            } else if (key == 39) {
+                GUI_DashTap.this.inputKey("R");
+            } else if (key == 38) {
+                GUI_DashTap.this.inputKey("U");
+            } else if (key == 40) {
+                GUI_DashTap.this.inputKey("D");
+            } else if (key == 32) {
+                GUI_DashTap.this.inputKey((String)GUI_DashTap.this.board.get(GUI_DashTap.this.arrIndex++));
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+    }
+}

@@ -1,0 +1,46 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class MoneyMultiplier.3
+implements ActionListener {
+    MoneyMultiplier.3() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        MoneyMultiplier.this.total = 0.0;
+        try {
+            MoneyMultiplier.this.initial = Double.parseDouble(MoneyMultiplier.this.txtInitialChangeIn.getText());
+            if (!MoneyMultiplier.this.who) {
+                MoneyMultiplier moneyMultiplier = MoneyMultiplier.this;
+                moneyMultiplier.total = moneyMultiplier.total + MoneyMultiplier.this.initial;
+            }
+            MoneyMultiplier.this.reserve = Double.parseDouble(MoneyMultiplier.this.txtReserveRatio.getText());
+            MoneyMultiplier.this.transaction = Integer.parseInt(MoneyMultiplier.this.txtNumberOfTransactions.getText());
+            if (MoneyMultiplier.this.who) {
+                MoneyMultiplier.this.textArea.setText("Initial deposit: $" + (int)MoneyMultiplier.this.initial + "\nReserve ratio: " + MoneyMultiplier.this.reserve + "\nMaximum increase in loans: $" + (int)(MoneyMultiplier.this.initial / MoneyMultiplier.this.reserve - MoneyMultiplier.this.initial) + "\n");
+            } else {
+                MoneyMultiplier.this.textArea.setText("Initial deposit: $" + (int)MoneyMultiplier.this.initial + "\nReserve ratio: " + MoneyMultiplier.this.reserve + "\nMaximum increase in loans: $" + (int)(MoneyMultiplier.this.initial / MoneyMultiplier.this.reserve) + "\n");
+            }
+            int i = 1;
+            while (i <= MoneyMultiplier.this.transaction) {
+                MoneyMultiplier moneyMultiplier = MoneyMultiplier.this;
+                moneyMultiplier.initial = moneyMultiplier.initial * (1.0 - MoneyMultiplier.this.reserve);
+                MoneyMultiplier moneyMultiplier2 = MoneyMultiplier.this;
+                moneyMultiplier2.total = moneyMultiplier2.total + MoneyMultiplier.this.initial;
+                if (MoneyMultiplier.this.initial >= 1.0) {
+                    MoneyMultiplier.this.textArea.setText(String.valueOf(MoneyMultiplier.this.textArea.getText()) + "\n" + i + ": Deposit: $" + (int)MoneyMultiplier.this.initial + " Total: $" + (int)MoneyMultiplier.this.total);
+                } else {
+                    MoneyMultiplier.this.textArea.setText(String.valueOf(MoneyMultiplier.this.textArea.getText()) + "\n" + i + ": Deposit: < $1" + " Total: $" + (int)MoneyMultiplier.this.total);
+                }
+                ++i;
+            }
+        }
+        catch (Exception exception) {
+            // empty catch block
+        }
+    }
+}

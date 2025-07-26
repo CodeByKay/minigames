@@ -1,0 +1,518 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+private class Minesweeper.ButtonHandler
+implements ActionListener {
+    private Minesweeper.ButtonHandler() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!Minesweeper.this.firstClick) {
+            Minesweeper.this.firstClick = true;
+            Minesweeper.this.start = System.currentTimeMillis();
+        }
+        if (e.getSource() == Minesweeper.this.flagButton) {
+            Minesweeper.this.flagClick = !Minesweeper.this.flagClick;
+        }
+        if (Minesweeper.this.flagClick) {
+            Minesweeper.this.flagButton.setBackground(Color.RED);
+            if (e.getSource() == Minesweeper.this.tile00) {
+                Minesweeper.this.board[0][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile01) {
+                Minesweeper.this.board[0][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile02) {
+                Minesweeper.this.board[0][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile03) {
+                Minesweeper.this.board[0][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile04) {
+                Minesweeper.this.board[0][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile05) {
+                Minesweeper.this.board[0][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile06) {
+                Minesweeper.this.board[0][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile07) {
+                Minesweeper.this.board[0][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile08) {
+                Minesweeper.this.board[0][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile10) {
+                Minesweeper.this.board[1][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile11) {
+                Minesweeper.this.board[1][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile12) {
+                Minesweeper.this.board[1][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile13) {
+                Minesweeper.this.board[1][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile14) {
+                Minesweeper.this.board[1][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile15) {
+                Minesweeper.this.board[1][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile16) {
+                Minesweeper.this.board[1][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile17) {
+                Minesweeper.this.board[1][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile18) {
+                Minesweeper.this.board[1][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile20) {
+                Minesweeper.this.board[2][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile21) {
+                Minesweeper.this.board[2][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile22) {
+                Minesweeper.this.board[2][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile23) {
+                Minesweeper.this.board[2][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile24) {
+                Minesweeper.this.board[2][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile25) {
+                Minesweeper.this.board[2][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile26) {
+                Minesweeper.this.board[2][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile27) {
+                Minesweeper.this.board[2][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile28) {
+                Minesweeper.this.board[2][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile30) {
+                Minesweeper.this.board[3][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile31) {
+                Minesweeper.this.board[3][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile32) {
+                Minesweeper.this.board[3][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile33) {
+                Minesweeper.this.board[3][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile34) {
+                Minesweeper.this.board[3][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile35) {
+                Minesweeper.this.board[3][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile36) {
+                Minesweeper.this.board[3][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile37) {
+                Minesweeper.this.board[3][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile38) {
+                Minesweeper.this.board[3][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile40) {
+                Minesweeper.this.board[4][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile41) {
+                Minesweeper.this.board[4][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile42) {
+                Minesweeper.this.board[4][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile43) {
+                Minesweeper.this.board[4][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile44) {
+                Minesweeper.this.board[4][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile45) {
+                Minesweeper.this.board[4][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile46) {
+                Minesweeper.this.board[4][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile47) {
+                Minesweeper.this.board[4][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile48) {
+                Minesweeper.this.board[4][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile50) {
+                Minesweeper.this.board[5][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile51) {
+                Minesweeper.this.board[5][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile52) {
+                Minesweeper.this.board[5][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile53) {
+                Minesweeper.this.board[5][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile54) {
+                Minesweeper.this.board[5][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile55) {
+                Minesweeper.this.board[5][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile56) {
+                Minesweeper.this.board[5][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile57) {
+                Minesweeper.this.board[5][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile58) {
+                Minesweeper.this.board[5][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile60) {
+                Minesweeper.this.board[6][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile61) {
+                Minesweeper.this.board[6][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile62) {
+                Minesweeper.this.board[6][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile63) {
+                Minesweeper.this.board[6][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile64) {
+                Minesweeper.this.board[6][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile65) {
+                Minesweeper.this.board[6][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile66) {
+                Minesweeper.this.board[6][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile67) {
+                Minesweeper.this.board[6][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile68) {
+                Minesweeper.this.board[6][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile70) {
+                Minesweeper.this.board[7][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile71) {
+                Minesweeper.this.board[7][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile72) {
+                Minesweeper.this.board[7][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile73) {
+                Minesweeper.this.board[7][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile74) {
+                Minesweeper.this.board[7][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile75) {
+                Minesweeper.this.board[7][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile76) {
+                Minesweeper.this.board[7][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile77) {
+                Minesweeper.this.board[7][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile78) {
+                Minesweeper.this.board[7][8].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile80) {
+                Minesweeper.this.board[8][0].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile81) {
+                Minesweeper.this.board[8][1].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile82) {
+                Minesweeper.this.board[8][2].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile83) {
+                Minesweeper.this.board[8][3].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile84) {
+                Minesweeper.this.board[8][4].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile85) {
+                Minesweeper.this.board[8][5].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile86) {
+                Minesweeper.this.board[8][6].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile87) {
+                Minesweeper.this.board[8][7].alternateFlag();
+            } else if (e.getSource() == Minesweeper.this.tile88) {
+                Minesweeper.this.board[8][8].alternateFlag();
+            }
+        } else {
+            Minesweeper.this.flagButton.setBackground(Color.WHITE);
+            if (e.getSource() == Minesweeper.this.tile00) {
+                if (!Minesweeper.this.board[0][0].getFlag()) {
+                    Minesweeper.this.board[0][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile01) {
+                if (!Minesweeper.this.board[0][1].getFlag()) {
+                    Minesweeper.this.board[0][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile02) {
+                if (!Minesweeper.this.board[0][2].getFlag()) {
+                    Minesweeper.this.board[0][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile03) {
+                if (!Minesweeper.this.board[0][3].getFlag()) {
+                    Minesweeper.this.board[0][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile04) {
+                if (!Minesweeper.this.board[0][4].getFlag()) {
+                    Minesweeper.this.board[0][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile05) {
+                if (!Minesweeper.this.board[0][5].getFlag()) {
+                    Minesweeper.this.board[0][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile06) {
+                if (!Minesweeper.this.board[0][6].getFlag()) {
+                    Minesweeper.this.board[0][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile07) {
+                if (!Minesweeper.this.board[0][7].getFlag()) {
+                    Minesweeper.this.board[0][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile08) {
+                if (!Minesweeper.this.board[0][8].getFlag()) {
+                    Minesweeper.this.board[0][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile10) {
+                if (!Minesweeper.this.board[1][0].getFlag()) {
+                    Minesweeper.this.board[1][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile11) {
+                if (!Minesweeper.this.board[1][1].getFlag()) {
+                    Minesweeper.this.board[1][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile12) {
+                if (!Minesweeper.this.board[1][2].getFlag()) {
+                    Minesweeper.this.board[1][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile13) {
+                if (!Minesweeper.this.board[1][3].getFlag()) {
+                    Minesweeper.this.board[1][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile14) {
+                if (!Minesweeper.this.board[1][4].getFlag()) {
+                    Minesweeper.this.board[1][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile15) {
+                if (!Minesweeper.this.board[1][5].getFlag()) {
+                    Minesweeper.this.board[1][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile16) {
+                if (!Minesweeper.this.board[1][6].getFlag()) {
+                    Minesweeper.this.board[1][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile17) {
+                if (!Minesweeper.this.board[1][7].getFlag()) {
+                    Minesweeper.this.board[1][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile18) {
+                if (!Minesweeper.this.board[1][8].getFlag()) {
+                    Minesweeper.this.board[1][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile20) {
+                if (!Minesweeper.this.board[2][0].getFlag()) {
+                    Minesweeper.this.board[2][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile21) {
+                if (!Minesweeper.this.board[2][1].getFlag()) {
+                    Minesweeper.this.board[2][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile22) {
+                if (!Minesweeper.this.board[2][2].getFlag()) {
+                    Minesweeper.this.board[2][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile23) {
+                if (!Minesweeper.this.board[2][3].getFlag()) {
+                    Minesweeper.this.board[2][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile24) {
+                if (!Minesweeper.this.board[2][4].getFlag()) {
+                    Minesweeper.this.board[2][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile25) {
+                if (!Minesweeper.this.board[2][5].getFlag()) {
+                    Minesweeper.this.board[2][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile26) {
+                if (!Minesweeper.this.board[2][6].getFlag()) {
+                    Minesweeper.this.board[2][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile27) {
+                if (!Minesweeper.this.board[2][7].getFlag()) {
+                    Minesweeper.this.board[2][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile28) {
+                if (!Minesweeper.this.board[2][8].getFlag()) {
+                    Minesweeper.this.board[2][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile30) {
+                if (!Minesweeper.this.board[3][0].getFlag()) {
+                    Minesweeper.this.board[3][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile31) {
+                if (!Minesweeper.this.board[3][1].getFlag()) {
+                    Minesweeper.this.board[3][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile32) {
+                if (!Minesweeper.this.board[3][2].getFlag()) {
+                    Minesweeper.this.board[3][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile33) {
+                if (!Minesweeper.this.board[3][3].getFlag()) {
+                    Minesweeper.this.board[3][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile34) {
+                if (!Minesweeper.this.board[3][4].getFlag()) {
+                    Minesweeper.this.board[3][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile35) {
+                if (!Minesweeper.this.board[3][5].getFlag()) {
+                    Minesweeper.this.board[3][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile36) {
+                if (!Minesweeper.this.board[3][6].getFlag()) {
+                    Minesweeper.this.board[3][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile37) {
+                if (!Minesweeper.this.board[3][7].getFlag()) {
+                    Minesweeper.this.board[3][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile38) {
+                if (!Minesweeper.this.board[3][8].getFlag()) {
+                    Minesweeper.this.board[3][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile40) {
+                if (!Minesweeper.this.board[4][0].getFlag()) {
+                    Minesweeper.this.board[4][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile41) {
+                if (!Minesweeper.this.board[4][1].getFlag()) {
+                    Minesweeper.this.board[4][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile42) {
+                if (!Minesweeper.this.board[4][2].getFlag()) {
+                    Minesweeper.this.board[4][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile43) {
+                if (!Minesweeper.this.board[4][3].getFlag()) {
+                    Minesweeper.this.board[4][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile44) {
+                if (!Minesweeper.this.board[4][4].getFlag()) {
+                    Minesweeper.this.board[4][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile45) {
+                if (!Minesweeper.this.board[4][5].getFlag()) {
+                    Minesweeper.this.board[4][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile46) {
+                if (!Minesweeper.this.board[4][6].getFlag()) {
+                    Minesweeper.this.board[4][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile47) {
+                if (!Minesweeper.this.board[4][7].getFlag()) {
+                    Minesweeper.this.board[4][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile48) {
+                if (!Minesweeper.this.board[4][8].getFlag()) {
+                    Minesweeper.this.board[4][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile50) {
+                if (!Minesweeper.this.board[5][0].getFlag()) {
+                    Minesweeper.this.board[5][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile51) {
+                if (!Minesweeper.this.board[5][1].getFlag()) {
+                    Minesweeper.this.board[5][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile52) {
+                if (!Minesweeper.this.board[5][2].getFlag()) {
+                    Minesweeper.this.board[5][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile53) {
+                if (!Minesweeper.this.board[5][3].getFlag()) {
+                    Minesweeper.this.board[5][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile54) {
+                if (!Minesweeper.this.board[5][4].getFlag()) {
+                    Minesweeper.this.board[5][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile55) {
+                if (!Minesweeper.this.board[5][5].getFlag()) {
+                    Minesweeper.this.board[5][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile56) {
+                if (!Minesweeper.this.board[5][6].getFlag()) {
+                    Minesweeper.this.board[5][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile57) {
+                if (!Minesweeper.this.board[5][7].getFlag()) {
+                    Minesweeper.this.board[5][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile58) {
+                if (!Minesweeper.this.board[5][8].getFlag()) {
+                    Minesweeper.this.board[5][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile60) {
+                if (!Minesweeper.this.board[6][0].getFlag()) {
+                    Minesweeper.this.board[6][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile61) {
+                if (!Minesweeper.this.board[6][1].getFlag()) {
+                    Minesweeper.this.board[6][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile62) {
+                if (!Minesweeper.this.board[6][2].getFlag()) {
+                    Minesweeper.this.board[6][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile63) {
+                if (!Minesweeper.this.board[6][3].getFlag()) {
+                    Minesweeper.this.board[6][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile64) {
+                if (!Minesweeper.this.board[6][4].getFlag()) {
+                    Minesweeper.this.board[6][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile65) {
+                if (!Minesweeper.this.board[6][5].getFlag()) {
+                    Minesweeper.this.board[6][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile66) {
+                if (!Minesweeper.this.board[6][6].getFlag()) {
+                    Minesweeper.this.board[6][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile67) {
+                if (!Minesweeper.this.board[6][7].getFlag()) {
+                    Minesweeper.this.board[6][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile68) {
+                if (!Minesweeper.this.board[6][8].getFlag()) {
+                    Minesweeper.this.board[6][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile70) {
+                if (!Minesweeper.this.board[7][0].getFlag()) {
+                    Minesweeper.this.board[7][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile71) {
+                if (!Minesweeper.this.board[7][1].getFlag()) {
+                    Minesweeper.this.board[7][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile72) {
+                if (!Minesweeper.this.board[7][2].getFlag()) {
+                    Minesweeper.this.board[7][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile73) {
+                if (!Minesweeper.this.board[7][3].getFlag()) {
+                    Minesweeper.this.board[7][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile74) {
+                if (!Minesweeper.this.board[7][4].getFlag()) {
+                    Minesweeper.this.board[7][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile75) {
+                if (!Minesweeper.this.board[7][5].getFlag()) {
+                    Minesweeper.this.board[7][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile76) {
+                if (!Minesweeper.this.board[7][6].getFlag()) {
+                    Minesweeper.this.board[7][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile77) {
+                if (!Minesweeper.this.board[7][7].getFlag()) {
+                    Minesweeper.this.board[7][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile78) {
+                if (!Minesweeper.this.board[7][8].getFlag()) {
+                    Minesweeper.this.board[7][8].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile80) {
+                if (!Minesweeper.this.board[8][0].getFlag()) {
+                    Minesweeper.this.board[8][0].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile81) {
+                if (!Minesweeper.this.board[8][1].getFlag()) {
+                    Minesweeper.this.board[8][1].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile82) {
+                if (!Minesweeper.this.board[8][2].getFlag()) {
+                    Minesweeper.this.board[8][2].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile83) {
+                if (!Minesweeper.this.board[8][3].getFlag()) {
+                    Minesweeper.this.board[8][3].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile84) {
+                if (!Minesweeper.this.board[8][4].getFlag()) {
+                    Minesweeper.this.board[8][4].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile85) {
+                if (!Minesweeper.this.board[8][5].getFlag()) {
+                    Minesweeper.this.board[8][5].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile86) {
+                if (!Minesweeper.this.board[8][6].getFlag()) {
+                    Minesweeper.this.board[8][6].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile87) {
+                if (!Minesweeper.this.board[8][7].getFlag()) {
+                    Minesweeper.this.board[8][7].setClicked();
+                }
+            } else if (e.getSource() == Minesweeper.this.tile88 && !Minesweeper.this.board[8][8].getFlag()) {
+                Minesweeper.this.board[8][8].setClicked();
+            }
+        }
+        Minesweeper.this.updateBoard();
+        if (Minesweeper.this.boardComplete()) {
+            Minesweeper.this.gameWin();
+        }
+    }
+}

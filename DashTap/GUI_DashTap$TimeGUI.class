@@ -1,0 +1,98 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+private class GUI_DashTap.TimeGUI
+extends JFrame {
+    private Thread updater;
+
+    public GUI_DashTap.TimeGUI() {
+        super("Time");
+        this.setLayout(new GridLayout(1, 6));
+        this.updater = new Thread(new timer());
+        this.add(GUI_DashTap.this.time1);
+        this.add(GUI_DashTap.this.time2);
+        this.add(GUI_DashTap.this.time3);
+        this.add(GUI_DashTap.this.time4);
+        this.add(GUI_DashTap.this.time5);
+        this.add(GUI_DashTap.this.score);
+        GUI_DashTap.this.time5.setOpaque(true);
+        GUI_DashTap.this.time4.setOpaque(true);
+        GUI_DashTap.this.time3.setOpaque(true);
+        GUI_DashTap.this.time2.setOpaque(true);
+        GUI_DashTap.this.time1.setOpaque(true);
+    }
+
+    static /* synthetic */ Thread access$300(GUI_DashTap.TimeGUI x0) {
+        return x0.updater;
+    }
+
+    private class timer
+    implements Runnable {
+        private timer() {
+        }
+
+        @Override
+        public void run() {
+            GUI_DashTap.this.elapsed = (int)(System.currentTimeMillis() - GUI_DashTap.this.start) / 1000;
+            GUI_DashTap.this.elapsed = 5 - GUI_DashTap.this.elapsed;
+            this.updateTime();
+            if (GUI_DashTap.this.elapsed <= 0) {
+                JOptionPane.showMessageDialog(new JFrame(), "You Lose! You reached level " + GUI_DashTap.this.gameLevel);
+                System.exit(0);
+            } else {
+                try {
+                    Thread.sleep(100L);
+                }
+                catch (InterruptedException interruptedException) {
+                    // empty catch block
+                }
+                this.run();
+            }
+        }
+
+        public void updateTime() {
+            if (GUI_DashTap.this.elapsed == 5) {
+                GUI_DashTap.this.time5.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time4.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+            } else if (GUI_DashTap.this.elapsed == 4) {
+                GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                GUI_DashTap.this.time4.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+            } else if (GUI_DashTap.this.elapsed == 3) {
+                GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                GUI_DashTap.this.time3.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+            } else if (GUI_DashTap.this.elapsed == 2) {
+                GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                GUI_DashTap.this.time2.setBackground(GUI_DashTap.this.c);
+                GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+            } else if (GUI_DashTap.this.elapsed == 1) {
+                GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                GUI_DashTap.this.time2.setBackground(Color.WHITE);
+                GUI_DashTap.this.time1.setBackground(GUI_DashTap.this.c);
+            } else if (GUI_DashTap.this.elapsed == 0) {
+                GUI_DashTap.this.time5.setBackground(Color.WHITE);
+                GUI_DashTap.this.time4.setBackground(Color.WHITE);
+                GUI_DashTap.this.time3.setBackground(Color.WHITE);
+                GUI_DashTap.this.time2.setBackground(Color.WHITE);
+                GUI_DashTap.this.time1.setBackground(Color.WHITE);
+            }
+        }
+    }
+}

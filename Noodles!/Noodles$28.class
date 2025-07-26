@@ -1,0 +1,19 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+class Noodles.28
+extends MouseAdapter {
+    Noodles.28() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        String s = Noodles.this.txtCreateNewGame.getText();
+        s = s.replaceAll("\\W", "");
+        Noodles.this.createBoard(s);
+        Noodles.this.updateComboBox();
+    }
+}

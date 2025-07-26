@@ -1,0 +1,524 @@
+/*
+ * Decompiled with CFR 0.152.
+ * 
+ * Could not load the following classes:
+ *  GUI_Minesweeper
+ */
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/*
+ * Exception performing whole class analysis ignored.
+ */
+private class GUI_Minesweeper.ButtonHandler
+implements ActionListener {
+    private GUI_Minesweeper.ButtonHandler() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!GUI_Minesweeper.access$400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+            GUI_Minesweeper.access$402((GUI_Minesweeper)GUI_Minesweeper.this, (boolean)true);
+            GUI_Minesweeper.access$502((GUI_Minesweeper)GUI_Minesweeper.this, (long)System.currentTimeMillis());
+        }
+        if (e.getSource() == GUI_Minesweeper.access$200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+            GUI_Minesweeper.access$802((GUI_Minesweeper)GUI_Minesweeper.this, (!GUI_Minesweeper.access$800((GUI_Minesweeper)GUI_Minesweeper.this) ? 1 : 0) != 0);
+        }
+        if (GUI_Minesweeper.access$800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+            GUI_Minesweeper.access$200((GUI_Minesweeper)GUI_Minesweeper.this).setBackground(Color.RED);
+            if (e.getSource() == GUI_Minesweeper.access$900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$1900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$2900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$3900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$4900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$5900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$6900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$7900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][8].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][0].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][1].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][2].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][3].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][4].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][5].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][6].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$8900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][7].alternateFlag();
+            } else if (e.getSource() == GUI_Minesweeper.access$9000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][8].alternateFlag();
+            }
+        } else {
+            GUI_Minesweeper.access$200((GUI_Minesweeper)GUI_Minesweeper.this).setBackground(Color.WHITE);
+            if (e.getSource() == GUI_Minesweeper.access$900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[0][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$1900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[1][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$2900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[2][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$3900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[3][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$4900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[4][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$5900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[5][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$6900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[6][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$7900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8000((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8100((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][8].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[7][8].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8200((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][0].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][0].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8300((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][1].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][1].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][2].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][2].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8500((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][3].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][3].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8600((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][4].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][4].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8700((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][5].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][5].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8800((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][6].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][6].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$8900((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                if (!GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][7].getFlag()) {
+                    GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][7].setClicked();
+                }
+            } else if (e.getSource() == GUI_Minesweeper.access$9000((GUI_Minesweeper)GUI_Minesweeper.this) && !GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][8].getFlag()) {
+                GUI_Minesweeper.access$1000((GUI_Minesweeper)GUI_Minesweeper.this)[8][8].setClicked();
+            }
+        }
+        GUI_Minesweeper.this.updateBoard();
+        if (GUI_Minesweeper.this.boardComplete()) {
+            GUI_Minesweeper.this.gameWin();
+        }
+    }
+}

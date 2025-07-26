@@ -1,0 +1,25 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JToggleButton;
+
+class Noodles.27
+extends MouseAdapter {
+    private final /* synthetic */ JToggleButton val$tglbtnTurningBlocks;
+
+    Noodles.27(JToggleButton jToggleButton) {
+        this.val$tglbtnTurningBlocks = jToggleButton;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        Noodles.this.turning_changingBlock = !Noodles.this.turning_changingBlock;
+        if (Noodles.this.turning_changingBlock) {
+            this.val$tglbtnTurningBlocks.setText("Turning");
+        } else {
+            this.val$tglbtnTurningBlocks.setText("Changing");
+        }
+    }
+}

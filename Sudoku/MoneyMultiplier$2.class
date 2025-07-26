@@ -1,0 +1,25 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
+class MoneyMultiplier.2
+implements ActionListener {
+    private final /* synthetic */ JButton val$btnWho;
+
+    MoneyMultiplier.2(JButton jButton) {
+        this.val$btnWho = jButton;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        MoneyMultiplier.this.who = !MoneyMultiplier.this.who;
+        if (MoneyMultiplier.this.who) {
+            this.val$btnWho.setText("People");
+        } else {
+            this.val$btnWho.setText("Federal Reserve");
+        }
+    }
+}

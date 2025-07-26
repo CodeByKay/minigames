@@ -1,0 +1,17 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+class Sudoku.10
+extends MouseAdapter {
+    Sudoku.10() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Sudoku.this.selectedNum = 9;
+        Sudoku.this.selectNum();
+    }
+}

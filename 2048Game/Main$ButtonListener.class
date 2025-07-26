@@ -1,0 +1,35 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+private class Main.ButtonListener
+implements KeyListener {
+    private Main.ButtonListener() {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == 37) {
+            Main.this.run("LEFT");
+        } else if (key == 39) {
+            Main.this.run("RIGHT");
+        } else if (key == 38) {
+            Main.this.run("UP");
+        } else if (key == 40) {
+            Main.this.run("DOWN");
+        } else if (key == 8) {
+            Main.this.run("UNDO");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+}

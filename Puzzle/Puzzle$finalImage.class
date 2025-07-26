@@ -1,0 +1,20 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+private class Puzzle.finalImage
+extends JFrame {
+    private JLabel background;
+
+    public Puzzle.finalImage() {
+        super("What It Looks Like");
+        this.background = new JLabel(new ImageIcon(Puzzle.this.pic));
+        this.setLayout(new FlowLayout());
+        this.background.setVerticalAlignment(1);
+        this.add(this.background);
+    }
+}

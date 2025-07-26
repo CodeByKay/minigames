@@ -1,0 +1,2825 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Scrollbar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
+public class Sudoku {
+    private JFrame frame;
+    private int[][] board = new int[9][9];
+    private int[][] perm = new int[9][9];
+    private int selectedNum = 1;
+    private JButton button_1;
+    private JButton button_2;
+    private JButton button_3;
+    private JButton button_4;
+    private JButton button_5;
+    private JButton button_6;
+    private JButton button_7;
+    private JButton button_8;
+    private JButton button_9;
+    private JLabel lblResult;
+    private JButton button_00;
+    private JButton button_10;
+    private JButton button_20;
+    private JButton button_30;
+    private JButton button_40;
+    private JButton button_50;
+    private JButton button_60;
+    private JButton button_70;
+    private JButton button_80;
+    private JButton button_01;
+    private JButton button_11;
+    private JButton button_21;
+    private JButton button_31;
+    private JButton button_41;
+    private JButton button_51;
+    private JButton button_61;
+    private JButton button_71;
+    private JButton button_81;
+    private JButton button_02;
+    private JButton button_12;
+    private JButton button_22;
+    private JButton button_32;
+    private JButton button_42;
+    private JButton button_52;
+    private JButton button_62;
+    private JButton button_72;
+    private JButton button_82;
+    private JButton button_03;
+    private JButton button_13;
+    private JButton button_23;
+    private JButton button_33;
+    private JButton button_43;
+    private JButton button_53;
+    private JButton button_63;
+    private JButton button_73;
+    private JButton button_83;
+    private JButton button_04;
+    private JButton button_14;
+    private JButton button_24;
+    private JButton button_34;
+    private JButton button_44;
+    private JButton button_54;
+    private JButton button_64;
+    private JButton button_74;
+    private JButton button_84;
+    private JButton button_05;
+    private JButton button_15;
+    private JButton button_25;
+    private JButton button_35;
+    private JButton button_45;
+    private JButton button_55;
+    private JButton button_65;
+    private JButton button_75;
+    private JButton button_85;
+    private JButton button_06;
+    private JButton button_16;
+    private JButton button_26;
+    private JButton button_36;
+    private JButton button_46;
+    private JButton button_56;
+    private JButton button_66;
+    private JButton button_76;
+    private JButton button_86;
+    private JButton button_07;
+    private JButton button_17;
+    private JButton button_27;
+    private JButton button_37;
+    private JButton button_47;
+    private JButton button_57;
+    private JButton button_67;
+    private JButton button_77;
+    private JButton button_87;
+    private JButton button_08;
+    private JButton button_18;
+    private JButton button_28;
+    private JButton button_38;
+    private JButton button_48;
+    private JButton button_58;
+    private JButton button_68;
+    private JButton button_78;
+    private JButton button_88;
+    private JButton btnPermanent;
+    private Scrollbar scrollbar;
+    private Scrollbar scrollbar_1;
+    private Scrollbar scrollbar_2;
+    private Scrollbar scrollbar_3;
+    private Scrollbar scrollbar_4;
+    private Scrollbar scrollbar_5;
+    private Scrollbar scrollbar_6;
+    private Scrollbar scrollbar_7;
+    private Scrollbar scrollbar_8;
+    private Scrollbar scrollbar_9;
+    private Scrollbar scrollbar_10;
+    private Scrollbar scrollbar_11;
+    private JButton btnDepermanent;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable(){
+
+            @Override
+            public void run() {
+                try {
+                    Sudoku window = new Sudoku();
+                    window.frame.setVisible(true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public Sudoku() {
+        this.initialize();
+    }
+
+    public void checkBoard() {
+        boolean canCheck = true;
+        int r = 0;
+        while (r < this.board.length) {
+            int c = 0;
+            while (c < this.board.length) {
+                if (this.board[r][c] == 0) {
+                    canCheck = false;
+                }
+                ++c;
+            }
+            ++r;
+        }
+        if (canCheck) {
+            if (this.checkSquares() & this.checkColumns() & this.checkRows()) {
+                this.lblResult.setText("Correct");
+            } else {
+                this.lblResult.setText("Incorrect");
+            }
+        } else {
+            this.lblResult.setText("");
+        }
+    }
+
+    public void createRandomBoard() {
+        this.board = new int[9][9];
+        int shift = 0;
+        int count = 1;
+        int r = 0;
+        while (r < 9) {
+            if (r == 3 || r == 6) {
+                // empty if block
+            }
+            int c = ++shift;
+            while (c < 9 + shift) {
+                int index = c % 9;
+                this.board[r][index] = count++;
+                ++c;
+            }
+            count = 1;
+            shift += 3;
+            ++r;
+        }
+        this.interchangeRowGroup();
+        this.interchangeColGroup();
+        this.rotateGroups();
+        this.reflexGroups();
+        this.removeRandom();
+        this.setPerm();
+    }
+
+    public void interchangeRowGroup() {
+        int i = 0;
+        while (i < 8) {
+            int r = 0;
+            while (r < 3) {
+                int[] temp = this.board[i + r];
+                int randrow = i + (int)(Math.random() * (double)r);
+                this.board[i + r] = this.board[randrow];
+                this.board[randrow] = temp;
+                ++r;
+            }
+            i += 3;
+        }
+    }
+
+    public void interchangeColGroup() {
+        int i = 0;
+        while (i < 8) {
+            int c = 0;
+            while (c < 3) {
+                int[] temp = new int[this.board[0].length];
+                int a = 0;
+                while (a < this.board.length) {
+                    temp[a] = this.board[a][i + c];
+                    ++a;
+                }
+                int randcol = i + (int)(Math.random() * (double)c);
+                int a2 = 0;
+                while (a2 < this.board.length) {
+                    this.board[a2][i + c] = this.board[a2][randcol];
+                    ++a2;
+                }
+                a2 = 0;
+                while (a2 < this.board.length) {
+                    this.board[a2][randcol] = temp[a2];
+                    ++a2;
+                }
+                ++c;
+            }
+            i += 3;
+        }
+    }
+
+    public void reflexGroups() {
+        int c;
+        int[][] temp = new int[this.board.length][this.board[0].length];
+        int r = 0;
+        while (r < this.board.length) {
+            c = 0;
+            while (c < this.board[r].length) {
+                temp[r][c] = this.board[c][r];
+                ++c;
+            }
+            ++r;
+        }
+        r = 0;
+        while (r < this.board.length) {
+            c = 0;
+            while (c < this.board[r].length) {
+                this.board[r][c] = temp[r][c];
+                ++c;
+            }
+            ++r;
+        }
+    }
+
+    public void rotateGroup() {
+        int c;
+        int[][] temp = new int[this.board.length][this.board[0].length];
+        int r = 0;
+        while (r < this.board.length) {
+            c = 0;
+            while (c < this.board[r].length) {
+                temp[r][c] = this.board[this.board[r].length - c - 1][r];
+                ++c;
+            }
+            ++r;
+        }
+        r = 0;
+        while (r < this.board.length) {
+            c = 0;
+            while (c < this.board[r].length) {
+                this.board[r][c] = temp[r][c];
+                ++c;
+            }
+            ++r;
+        }
+    }
+
+    public void rotateGroups() {
+        int j = (int)(Math.random() * 4.0);
+        int i = 0;
+        while (i < j) {
+            this.rotateGroup();
+            ++i;
+        }
+    }
+
+    public void removeRandom() {
+        int i = 81;
+        while (i >= 35) {
+            int c;
+            int r = (int)(Math.random() * (double)this.board.length);
+            if (this.board[r][c = (int)(Math.random() * (double)this.board[0].length)] == 0) continue;
+            this.board[r][c] = 0;
+            --i;
+        }
+    }
+
+    public void setPerm() {
+        this.perm = new int[9][9];
+        int r = 0;
+        while (r < this.perm.length) {
+            int c = 0;
+            while (c < this.perm[r].length) {
+                if (this.board[r][c] != 0) {
+                    this.perm[r][c] = this.board[r][c];
+                }
+                ++c;
+            }
+            ++r;
+        }
+    }
+
+    public void updatePerm() {
+        this.button_00.setBackground(Color.WHITE);
+        this.button_01.setBackground(Color.WHITE);
+        this.button_02.setBackground(Color.WHITE);
+        this.button_03.setBackground(Color.WHITE);
+        this.button_04.setBackground(Color.WHITE);
+        this.button_05.setBackground(Color.WHITE);
+        this.button_06.setBackground(Color.WHITE);
+        this.button_07.setBackground(Color.WHITE);
+        this.button_08.setBackground(Color.WHITE);
+        this.button_10.setBackground(Color.WHITE);
+        this.button_11.setBackground(Color.WHITE);
+        this.button_12.setBackground(Color.WHITE);
+        this.button_13.setBackground(Color.WHITE);
+        this.button_14.setBackground(Color.WHITE);
+        this.button_15.setBackground(Color.WHITE);
+        this.button_16.setBackground(Color.WHITE);
+        this.button_17.setBackground(Color.WHITE);
+        this.button_18.setBackground(Color.WHITE);
+        this.button_20.setBackground(Color.WHITE);
+        this.button_21.setBackground(Color.WHITE);
+        this.button_22.setBackground(Color.WHITE);
+        this.button_23.setBackground(Color.WHITE);
+        this.button_24.setBackground(Color.WHITE);
+        this.button_25.setBackground(Color.WHITE);
+        this.button_26.setBackground(Color.WHITE);
+        this.button_27.setBackground(Color.WHITE);
+        this.button_28.setBackground(Color.WHITE);
+        this.button_30.setBackground(Color.WHITE);
+        this.button_31.setBackground(Color.WHITE);
+        this.button_32.setBackground(Color.WHITE);
+        this.button_33.setBackground(Color.WHITE);
+        this.button_34.setBackground(Color.WHITE);
+        this.button_35.setBackground(Color.WHITE);
+        this.button_36.setBackground(Color.WHITE);
+        this.button_37.setBackground(Color.WHITE);
+        this.button_38.setBackground(Color.WHITE);
+        this.button_40.setBackground(Color.WHITE);
+        this.button_41.setBackground(Color.WHITE);
+        this.button_42.setBackground(Color.WHITE);
+        this.button_43.setBackground(Color.WHITE);
+        this.button_44.setBackground(Color.WHITE);
+        this.button_45.setBackground(Color.WHITE);
+        this.button_46.setBackground(Color.WHITE);
+        this.button_47.setBackground(Color.WHITE);
+        this.button_48.setBackground(Color.WHITE);
+        this.button_50.setBackground(Color.WHITE);
+        this.button_51.setBackground(Color.WHITE);
+        this.button_52.setBackground(Color.WHITE);
+        this.button_53.setBackground(Color.WHITE);
+        this.button_54.setBackground(Color.WHITE);
+        this.button_55.setBackground(Color.WHITE);
+        this.button_56.setBackground(Color.WHITE);
+        this.button_57.setBackground(Color.WHITE);
+        this.button_58.setBackground(Color.WHITE);
+        this.button_60.setBackground(Color.WHITE);
+        this.button_61.setBackground(Color.WHITE);
+        this.button_62.setBackground(Color.WHITE);
+        this.button_63.setBackground(Color.WHITE);
+        this.button_64.setBackground(Color.WHITE);
+        this.button_65.setBackground(Color.WHITE);
+        this.button_66.setBackground(Color.WHITE);
+        this.button_67.setBackground(Color.WHITE);
+        this.button_68.setBackground(Color.WHITE);
+        this.button_70.setBackground(Color.WHITE);
+        this.button_71.setBackground(Color.WHITE);
+        this.button_72.setBackground(Color.WHITE);
+        this.button_73.setBackground(Color.WHITE);
+        this.button_74.setBackground(Color.WHITE);
+        this.button_75.setBackground(Color.WHITE);
+        this.button_76.setBackground(Color.WHITE);
+        this.button_77.setBackground(Color.WHITE);
+        this.button_78.setBackground(Color.WHITE);
+        this.button_80.setBackground(Color.WHITE);
+        this.button_81.setBackground(Color.WHITE);
+        this.button_82.setBackground(Color.WHITE);
+        this.button_83.setBackground(Color.WHITE);
+        this.button_84.setBackground(Color.WHITE);
+        this.button_85.setBackground(Color.WHITE);
+        this.button_86.setBackground(Color.WHITE);
+        this.button_87.setBackground(Color.WHITE);
+        this.button_88.setBackground(Color.WHITE);
+        if (this.perm[0][0] != 0) {
+            this.button_00.setText("" + this.perm[0][0]);
+            this.button_00.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][1] != 0) {
+            this.button_01.setText("" + this.perm[0][1]);
+            this.button_01.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][2] != 0) {
+            this.button_02.setText("" + this.perm[0][2]);
+            this.button_02.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][3] != 0) {
+            this.button_03.setText("" + this.perm[0][3]);
+            this.button_03.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][4] != 0) {
+            this.button_04.setText("" + this.perm[0][4]);
+            this.button_04.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][5] != 0) {
+            this.button_05.setText("" + this.perm[0][5]);
+            this.button_05.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][6] != 0) {
+            this.button_06.setText("" + this.perm[0][6]);
+            this.button_06.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][7] != 0) {
+            this.button_07.setText("" + this.perm[0][7]);
+            this.button_07.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[0][8] != 0) {
+            this.button_08.setText("" + this.perm[0][8]);
+            this.button_08.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][0] != 0) {
+            this.button_10.setText("" + this.perm[1][0]);
+            this.button_10.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][1] != 0) {
+            this.button_11.setText("" + this.perm[1][1]);
+            this.button_11.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][2] != 0) {
+            this.button_12.setText("" + this.perm[1][2]);
+            this.button_12.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][3] != 0) {
+            this.button_13.setText("" + this.perm[1][3]);
+            this.button_13.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][4] != 0) {
+            this.button_14.setText("" + this.perm[1][4]);
+            this.button_14.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][5] != 0) {
+            this.button_15.setText("" + this.perm[1][5]);
+            this.button_15.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][6] != 0) {
+            this.button_16.setText("" + this.perm[1][6]);
+            this.button_16.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][7] != 0) {
+            this.button_17.setText("" + this.perm[1][7]);
+            this.button_17.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[1][8] != 0) {
+            this.button_18.setText("" + this.perm[1][8]);
+            this.button_18.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][0] != 0) {
+            this.button_20.setText("" + this.perm[2][0]);
+            this.button_20.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][1] != 0) {
+            this.button_21.setText("" + this.perm[2][1]);
+            this.button_21.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][2] != 0) {
+            this.button_22.setText("" + this.perm[2][2]);
+            this.button_22.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][3] != 0) {
+            this.button_23.setText("" + this.perm[2][3]);
+            this.button_23.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][4] != 0) {
+            this.button_24.setText("" + this.perm[2][4]);
+            this.button_24.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][5] != 0) {
+            this.button_25.setText("" + this.perm[2][5]);
+            this.button_25.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][6] != 0) {
+            this.button_26.setText("" + this.perm[2][6]);
+            this.button_26.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][7] != 0) {
+            this.button_27.setText("" + this.perm[2][7]);
+            this.button_27.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[2][8] != 0) {
+            this.button_28.setText("" + this.perm[2][8]);
+            this.button_28.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][0] != 0) {
+            this.button_30.setText("" + this.perm[3][0]);
+            this.button_30.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][1] != 0) {
+            this.button_31.setText("" + this.perm[3][1]);
+            this.button_31.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][2] != 0) {
+            this.button_32.setText("" + this.perm[3][2]);
+            this.button_32.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][3] != 0) {
+            this.button_33.setText("" + this.perm[3][3]);
+            this.button_33.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][4] != 0) {
+            this.button_34.setText("" + this.perm[3][4]);
+            this.button_34.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][5] != 0) {
+            this.button_35.setText("" + this.perm[3][5]);
+            this.button_35.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][6] != 0) {
+            this.button_36.setText("" + this.perm[3][6]);
+            this.button_36.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][7] != 0) {
+            this.button_37.setText("" + this.perm[3][7]);
+            this.button_37.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[3][8] != 0) {
+            this.button_38.setText("" + this.perm[3][8]);
+            this.button_38.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][0] != 0) {
+            this.button_40.setText("" + this.perm[4][0]);
+            this.button_40.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][1] != 0) {
+            this.button_41.setText("" + this.perm[4][1]);
+            this.button_41.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][2] != 0) {
+            this.button_42.setText("" + this.perm[4][2]);
+            this.button_42.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][3] != 0) {
+            this.button_43.setText("" + this.perm[4][3]);
+            this.button_43.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][4] != 0) {
+            this.button_44.setText("" + this.perm[4][4]);
+            this.button_44.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][5] != 0) {
+            this.button_45.setText("" + this.perm[4][5]);
+            this.button_45.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][6] != 0) {
+            this.button_46.setText("" + this.perm[4][6]);
+            this.button_46.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][7] != 0) {
+            this.button_47.setText("" + this.perm[4][7]);
+            this.button_47.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[4][8] != 0) {
+            this.button_48.setText("" + this.perm[4][8]);
+            this.button_48.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][0] != 0) {
+            this.button_50.setText("" + this.perm[5][0]);
+            this.button_50.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][1] != 0) {
+            this.button_51.setText("" + this.perm[5][1]);
+            this.button_51.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][2] != 0) {
+            this.button_52.setText("" + this.perm[5][2]);
+            this.button_52.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][3] != 0) {
+            this.button_53.setText("" + this.perm[5][3]);
+            this.button_53.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][4] != 0) {
+            this.button_54.setText("" + this.perm[5][4]);
+            this.button_54.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][5] != 0) {
+            this.button_55.setText("" + this.perm[5][5]);
+            this.button_55.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][6] != 0) {
+            this.button_56.setText("" + this.perm[5][6]);
+            this.button_56.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][7] != 0) {
+            this.button_57.setText("" + this.perm[5][7]);
+            this.button_57.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[5][8] != 0) {
+            this.button_58.setText("" + this.perm[5][8]);
+            this.button_58.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][0] != 0) {
+            this.button_60.setText("" + this.perm[6][0]);
+            this.button_60.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][1] != 0) {
+            this.button_61.setText("" + this.perm[6][1]);
+            this.button_61.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][2] != 0) {
+            this.button_62.setText("" + this.perm[6][2]);
+            this.button_62.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][3] != 0) {
+            this.button_63.setText("" + this.perm[6][3]);
+            this.button_63.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][4] != 0) {
+            this.button_64.setText("" + this.perm[6][4]);
+            this.button_64.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][5] != 0) {
+            this.button_65.setText("" + this.perm[6][5]);
+            this.button_65.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][6] != 0) {
+            this.button_66.setText("" + this.perm[6][6]);
+            this.button_66.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][7] != 0) {
+            this.button_67.setText("" + this.perm[6][7]);
+            this.button_67.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[6][8] != 0) {
+            this.button_68.setText("" + this.perm[6][8]);
+            this.button_68.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][0] != 0) {
+            this.button_70.setText("" + this.perm[7][0]);
+            this.button_70.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][1] != 0) {
+            this.button_71.setText("" + this.perm[7][1]);
+            this.button_71.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][2] != 0) {
+            this.button_72.setText("" + this.perm[7][2]);
+            this.button_72.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][3] != 0) {
+            this.button_73.setText("" + this.perm[7][3]);
+            this.button_73.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][4] != 0) {
+            this.button_74.setText("" + this.perm[7][4]);
+            this.button_74.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][5] != 0) {
+            this.button_75.setText("" + this.perm[7][5]);
+            this.button_75.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][6] != 0) {
+            this.button_76.setText("" + this.perm[7][6]);
+            this.button_76.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][7] != 0) {
+            this.button_77.setText("" + this.perm[7][7]);
+            this.button_77.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[7][8] != 0) {
+            this.button_78.setText("" + this.perm[7][8]);
+            this.button_78.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][0] != 0) {
+            this.button_80.setText("" + this.perm[8][0]);
+            this.button_80.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][1] != 0) {
+            this.button_81.setText("" + this.perm[8][1]);
+            this.button_81.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][2] != 0) {
+            this.button_82.setText("" + this.perm[8][2]);
+            this.button_82.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][3] != 0) {
+            this.button_83.setText("" + this.perm[8][3]);
+            this.button_83.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][4] != 0) {
+            this.button_84.setText("" + this.perm[8][4]);
+            this.button_84.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][5] != 0) {
+            this.button_85.setText("" + this.perm[8][5]);
+            this.button_85.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][6] != 0) {
+            this.button_86.setText("" + this.perm[8][6]);
+            this.button_86.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][7] != 0) {
+            this.button_87.setText("" + this.perm[8][7]);
+            this.button_87.setBackground(Color.LIGHT_GRAY);
+        }
+        if (this.perm[8][8] != 0) {
+            this.button_88.setText("" + this.perm[8][8]);
+            this.button_88.setBackground(Color.LIGHT_GRAY);
+        }
+        int r = 0;
+        while (r < this.perm.length) {
+            int c = 0;
+            while (c < this.perm[r].length) {
+                if (this.perm[r][c] != 0) {
+                    this.board[r][c] = this.perm[r][c];
+                }
+                ++c;
+            }
+            ++r;
+        }
+    }
+
+    public void updateBoard() {
+        this.selectNum();
+        if (this.board[0][0] == 0) {
+            this.button_00.setText(" ");
+        } else {
+            this.button_00.setText("" + this.board[0][0]);
+        }
+        if (this.board[0][1] == 0) {
+            this.button_01.setText(" ");
+        } else {
+            this.button_01.setText("" + this.board[0][1]);
+        }
+        if (this.board[0][2] == 0) {
+            this.button_02.setText(" ");
+        } else {
+            this.button_02.setText("" + this.board[0][2]);
+        }
+        if (this.board[0][3] == 0) {
+            this.button_03.setText(" ");
+        } else {
+            this.button_03.setText("" + this.board[0][3]);
+        }
+        if (this.board[0][4] == 0) {
+            this.button_04.setText(" ");
+        } else {
+            this.button_04.setText("" + this.board[0][4]);
+        }
+        if (this.board[0][5] == 0) {
+            this.button_05.setText(" ");
+        } else {
+            this.button_05.setText("" + this.board[0][5]);
+        }
+        if (this.board[0][6] == 0) {
+            this.button_06.setText(" ");
+        } else {
+            this.button_06.setText("" + this.board[0][6]);
+        }
+        if (this.board[0][7] == 0) {
+            this.button_07.setText(" ");
+        } else {
+            this.button_07.setText("" + this.board[0][7]);
+        }
+        if (this.board[0][8] == 0) {
+            this.button_08.setText(" ");
+        } else {
+            this.button_08.setText("" + this.board[0][8]);
+        }
+        if (this.board[1][0] == 0) {
+            this.button_10.setText(" ");
+        } else {
+            this.button_10.setText("" + this.board[1][0]);
+        }
+        if (this.board[1][1] == 0) {
+            this.button_11.setText(" ");
+        } else {
+            this.button_11.setText("" + this.board[1][1]);
+        }
+        if (this.board[1][2] == 0) {
+            this.button_12.setText(" ");
+        } else {
+            this.button_12.setText("" + this.board[1][2]);
+        }
+        if (this.board[1][3] == 0) {
+            this.button_13.setText(" ");
+        } else {
+            this.button_13.setText("" + this.board[1][3]);
+        }
+        if (this.board[1][4] == 0) {
+            this.button_14.setText(" ");
+        } else {
+            this.button_14.setText("" + this.board[1][4]);
+        }
+        if (this.board[1][5] == 0) {
+            this.button_15.setText(" ");
+        } else {
+            this.button_15.setText("" + this.board[1][5]);
+        }
+        if (this.board[1][6] == 0) {
+            this.button_16.setText(" ");
+        } else {
+            this.button_16.setText("" + this.board[1][6]);
+        }
+        if (this.board[1][7] == 0) {
+            this.button_17.setText(" ");
+        } else {
+            this.button_17.setText("" + this.board[1][7]);
+        }
+        if (this.board[1][8] == 0) {
+            this.button_18.setText(" ");
+        } else {
+            this.button_18.setText("" + this.board[1][8]);
+        }
+        if (this.board[2][0] == 0) {
+            this.button_20.setText(" ");
+        } else {
+            this.button_20.setText("" + this.board[2][0]);
+        }
+        if (this.board[2][1] == 0) {
+            this.button_21.setText(" ");
+        } else {
+            this.button_21.setText("" + this.board[2][1]);
+        }
+        if (this.board[2][2] == 0) {
+            this.button_22.setText(" ");
+        } else {
+            this.button_22.setText("" + this.board[2][2]);
+        }
+        if (this.board[2][3] == 0) {
+            this.button_23.setText(" ");
+        } else {
+            this.button_23.setText("" + this.board[2][3]);
+        }
+        if (this.board[2][4] == 0) {
+            this.button_24.setText(" ");
+        } else {
+            this.button_24.setText("" + this.board[2][4]);
+        }
+        if (this.board[2][5] == 0) {
+            this.button_25.setText(" ");
+        } else {
+            this.button_25.setText("" + this.board[2][5]);
+        }
+        if (this.board[2][6] == 0) {
+            this.button_26.setText(" ");
+        } else {
+            this.button_26.setText("" + this.board[2][6]);
+        }
+        if (this.board[2][7] == 0) {
+            this.button_27.setText(" ");
+        } else {
+            this.button_27.setText("" + this.board[2][7]);
+        }
+        if (this.board[2][8] == 0) {
+            this.button_28.setText(" ");
+        } else {
+            this.button_28.setText("" + this.board[2][8]);
+        }
+        if (this.board[3][0] == 0) {
+            this.button_30.setText(" ");
+        } else {
+            this.button_30.setText("" + this.board[3][0]);
+        }
+        if (this.board[3][1] == 0) {
+            this.button_31.setText(" ");
+        } else {
+            this.button_31.setText("" + this.board[3][1]);
+        }
+        if (this.board[3][2] == 0) {
+            this.button_32.setText(" ");
+        } else {
+            this.button_32.setText("" + this.board[3][2]);
+        }
+        if (this.board[3][3] == 0) {
+            this.button_33.setText(" ");
+        } else {
+            this.button_33.setText("" + this.board[3][3]);
+        }
+        if (this.board[3][4] == 0) {
+            this.button_34.setText(" ");
+        } else {
+            this.button_34.setText("" + this.board[3][4]);
+        }
+        if (this.board[3][5] == 0) {
+            this.button_35.setText(" ");
+        } else {
+            this.button_35.setText("" + this.board[3][5]);
+        }
+        if (this.board[3][6] == 0) {
+            this.button_36.setText(" ");
+        } else {
+            this.button_36.setText("" + this.board[3][6]);
+        }
+        if (this.board[3][7] == 0) {
+            this.button_37.setText(" ");
+        } else {
+            this.button_37.setText("" + this.board[3][7]);
+        }
+        if (this.board[3][8] == 0) {
+            this.button_38.setText(" ");
+        } else {
+            this.button_38.setText("" + this.board[3][8]);
+        }
+        if (this.board[4][0] == 0) {
+            this.button_40.setText(" ");
+        } else {
+            this.button_40.setText("" + this.board[4][0]);
+        }
+        if (this.board[4][1] == 0) {
+            this.button_41.setText(" ");
+        } else {
+            this.button_41.setText("" + this.board[4][1]);
+        }
+        if (this.board[4][2] == 0) {
+            this.button_42.setText(" ");
+        } else {
+            this.button_42.setText("" + this.board[4][2]);
+        }
+        if (this.board[4][3] == 0) {
+            this.button_43.setText(" ");
+        } else {
+            this.button_43.setText("" + this.board[4][3]);
+        }
+        if (this.board[4][4] == 0) {
+            this.button_44.setText(" ");
+        } else {
+            this.button_44.setText("" + this.board[4][4]);
+        }
+        if (this.board[4][5] == 0) {
+            this.button_45.setText(" ");
+        } else {
+            this.button_45.setText("" + this.board[4][5]);
+        }
+        if (this.board[4][6] == 0) {
+            this.button_46.setText(" ");
+        } else {
+            this.button_46.setText("" + this.board[4][6]);
+        }
+        if (this.board[4][7] == 0) {
+            this.button_47.setText(" ");
+        } else {
+            this.button_47.setText("" + this.board[4][7]);
+        }
+        if (this.board[4][8] == 0) {
+            this.button_48.setText(" ");
+        } else {
+            this.button_48.setText("" + this.board[4][8]);
+        }
+        if (this.board[5][0] == 0) {
+            this.button_50.setText(" ");
+        } else {
+            this.button_50.setText("" + this.board[5][0]);
+        }
+        if (this.board[5][1] == 0) {
+            this.button_51.setText(" ");
+        } else {
+            this.button_51.setText("" + this.board[5][1]);
+        }
+        if (this.board[5][2] == 0) {
+            this.button_52.setText(" ");
+        } else {
+            this.button_52.setText("" + this.board[5][2]);
+        }
+        if (this.board[5][3] == 0) {
+            this.button_53.setText(" ");
+        } else {
+            this.button_53.setText("" + this.board[5][3]);
+        }
+        if (this.board[5][4] == 0) {
+            this.button_54.setText(" ");
+        } else {
+            this.button_54.setText("" + this.board[5][4]);
+        }
+        if (this.board[5][5] == 0) {
+            this.button_55.setText(" ");
+        } else {
+            this.button_55.setText("" + this.board[5][5]);
+        }
+        if (this.board[5][6] == 0) {
+            this.button_56.setText(" ");
+        } else {
+            this.button_56.setText("" + this.board[5][6]);
+        }
+        if (this.board[5][7] == 0) {
+            this.button_57.setText(" ");
+        } else {
+            this.button_57.setText("" + this.board[5][7]);
+        }
+        if (this.board[5][8] == 0) {
+            this.button_58.setText(" ");
+        } else {
+            this.button_58.setText("" + this.board[5][8]);
+        }
+        if (this.board[6][0] == 0) {
+            this.button_60.setText(" ");
+        } else {
+            this.button_60.setText("" + this.board[6][0]);
+        }
+        if (this.board[6][1] == 0) {
+            this.button_61.setText(" ");
+        } else {
+            this.button_61.setText("" + this.board[6][1]);
+        }
+        if (this.board[6][2] == 0) {
+            this.button_62.setText(" ");
+        } else {
+            this.button_62.setText("" + this.board[6][2]);
+        }
+        if (this.board[6][3] == 0) {
+            this.button_63.setText(" ");
+        } else {
+            this.button_63.setText("" + this.board[6][3]);
+        }
+        if (this.board[6][4] == 0) {
+            this.button_64.setText(" ");
+        } else {
+            this.button_64.setText("" + this.board[6][4]);
+        }
+        if (this.board[6][5] == 0) {
+            this.button_65.setText(" ");
+        } else {
+            this.button_65.setText("" + this.board[6][5]);
+        }
+        if (this.board[6][6] == 0) {
+            this.button_66.setText(" ");
+        } else {
+            this.button_66.setText("" + this.board[6][6]);
+        }
+        if (this.board[6][7] == 0) {
+            this.button_67.setText(" ");
+        } else {
+            this.button_67.setText("" + this.board[6][7]);
+        }
+        if (this.board[6][8] == 0) {
+            this.button_68.setText(" ");
+        } else {
+            this.button_68.setText("" + this.board[6][8]);
+        }
+        if (this.board[7][0] == 0) {
+            this.button_70.setText(" ");
+        } else {
+            this.button_70.setText("" + this.board[7][0]);
+        }
+        if (this.board[7][1] == 0) {
+            this.button_71.setText(" ");
+        } else {
+            this.button_71.setText("" + this.board[7][1]);
+        }
+        if (this.board[7][2] == 0) {
+            this.button_72.setText(" ");
+        } else {
+            this.button_72.setText("" + this.board[7][2]);
+        }
+        if (this.board[7][3] == 0) {
+            this.button_73.setText(" ");
+        } else {
+            this.button_73.setText("" + this.board[7][3]);
+        }
+        if (this.board[7][4] == 0) {
+            this.button_74.setText(" ");
+        } else {
+            this.button_74.setText("" + this.board[7][4]);
+        }
+        if (this.board[7][5] == 0) {
+            this.button_75.setText(" ");
+        } else {
+            this.button_75.setText("" + this.board[7][5]);
+        }
+        if (this.board[7][6] == 0) {
+            this.button_76.setText(" ");
+        } else {
+            this.button_76.setText("" + this.board[7][6]);
+        }
+        if (this.board[7][7] == 0) {
+            this.button_77.setText(" ");
+        } else {
+            this.button_77.setText("" + this.board[7][7]);
+        }
+        if (this.board[7][8] == 0) {
+            this.button_78.setText(" ");
+        } else {
+            this.button_78.setText("" + this.board[7][8]);
+        }
+        if (this.board[8][0] == 0) {
+            this.button_80.setText(" ");
+        } else {
+            this.button_80.setText("" + this.board[8][0]);
+        }
+        if (this.board[8][1] == 0) {
+            this.button_81.setText(" ");
+        } else {
+            this.button_81.setText("" + this.board[8][1]);
+        }
+        if (this.board[8][2] == 0) {
+            this.button_82.setText(" ");
+        } else {
+            this.button_82.setText("" + this.board[8][2]);
+        }
+        if (this.board[8][3] == 0) {
+            this.button_83.setText(" ");
+        } else {
+            this.button_83.setText("" + this.board[8][3]);
+        }
+        if (this.board[8][4] == 0) {
+            this.button_84.setText(" ");
+        } else {
+            this.button_84.setText("" + this.board[8][4]);
+        }
+        if (this.board[8][5] == 0) {
+            this.button_85.setText(" ");
+        } else {
+            this.button_85.setText("" + this.board[8][5]);
+        }
+        if (this.board[8][6] == 0) {
+            this.button_86.setText(" ");
+        } else {
+            this.button_86.setText("" + this.board[8][6]);
+        }
+        if (this.board[8][7] == 0) {
+            this.button_87.setText(" ");
+        } else {
+            this.button_87.setText("" + this.board[8][7]);
+        }
+        if (this.board[8][8] == 0) {
+            this.button_88.setText(" ");
+        } else {
+            this.button_88.setText("" + this.board[8][8]);
+        }
+        this.updatePerm();
+    }
+
+    public void clearBoard() {
+        this.button_00.setText(" ");
+        this.button_01.setText(" ");
+        this.button_02.setText(" ");
+        this.button_03.setText(" ");
+        this.button_04.setText(" ");
+        this.button_05.setText(" ");
+        this.button_06.setText(" ");
+        this.button_07.setText(" ");
+        this.button_08.setText(" ");
+        this.button_10.setText(" ");
+        this.button_11.setText(" ");
+        this.button_12.setText(" ");
+        this.button_13.setText(" ");
+        this.button_14.setText(" ");
+        this.button_15.setText(" ");
+        this.button_16.setText(" ");
+        this.button_17.setText(" ");
+        this.button_18.setText(" ");
+        this.button_20.setText(" ");
+        this.button_21.setText(" ");
+        this.button_22.setText(" ");
+        this.button_23.setText(" ");
+        this.button_24.setText(" ");
+        this.button_25.setText(" ");
+        this.button_26.setText(" ");
+        this.button_27.setText(" ");
+        this.button_28.setText(" ");
+        this.button_30.setText(" ");
+        this.button_31.setText(" ");
+        this.button_32.setText(" ");
+        this.button_33.setText(" ");
+        this.button_34.setText(" ");
+        this.button_35.setText(" ");
+        this.button_36.setText(" ");
+        this.button_37.setText(" ");
+        this.button_38.setText(" ");
+        this.button_40.setText(" ");
+        this.button_41.setText(" ");
+        this.button_42.setText(" ");
+        this.button_43.setText(" ");
+        this.button_44.setText(" ");
+        this.button_45.setText(" ");
+        this.button_46.setText(" ");
+        this.button_47.setText(" ");
+        this.button_48.setText(" ");
+        this.button_50.setText(" ");
+        this.button_51.setText(" ");
+        this.button_52.setText(" ");
+        this.button_53.setText(" ");
+        this.button_54.setText(" ");
+        this.button_55.setText(" ");
+        this.button_56.setText(" ");
+        this.button_57.setText(" ");
+        this.button_58.setText(" ");
+        this.button_60.setText(" ");
+        this.button_61.setText(" ");
+        this.button_62.setText(" ");
+        this.button_63.setText(" ");
+        this.button_64.setText(" ");
+        this.button_65.setText(" ");
+        this.button_66.setText(" ");
+        this.button_67.setText(" ");
+        this.button_68.setText(" ");
+        this.button_70.setText(" ");
+        this.button_71.setText(" ");
+        this.button_72.setText(" ");
+        this.button_73.setText(" ");
+        this.button_74.setText(" ");
+        this.button_75.setText(" ");
+        this.button_76.setText(" ");
+        this.button_77.setText(" ");
+        this.button_78.setText(" ");
+        this.button_80.setText(" ");
+        this.button_81.setText(" ");
+        this.button_82.setText(" ");
+        this.button_83.setText(" ");
+        this.button_84.setText(" ");
+        this.button_85.setText(" ");
+        this.button_86.setText(" ");
+        this.button_87.setText(" ");
+        this.button_88.setText(" ");
+    }
+
+    public void printBoard() {
+        int i = 0;
+        while (i < this.board.length) {
+            System.out.println(Arrays.toString(this.board[i]));
+            ++i;
+        }
+    }
+
+    public void selectNum() {
+        this.button_1.setBackground(Color.WHITE);
+        this.button_2.setBackground(Color.WHITE);
+        this.button_3.setBackground(Color.WHITE);
+        this.button_4.setBackground(Color.WHITE);
+        this.button_5.setBackground(Color.WHITE);
+        this.button_6.setBackground(Color.WHITE);
+        this.button_7.setBackground(Color.WHITE);
+        this.button_8.setBackground(Color.WHITE);
+        this.button_9.setBackground(Color.WHITE);
+        if (this.selectedNum == 1) {
+            this.button_1.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 2) {
+            this.button_2.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 3) {
+            this.button_3.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 4) {
+            this.button_4.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 5) {
+            this.button_5.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 6) {
+            this.button_6.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 7) {
+            this.button_7.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 8) {
+            this.button_8.setBackground(Color.LIGHT_GRAY);
+        } else if (this.selectedNum == 9) {
+            this.button_9.setBackground(Color.LIGHT_GRAY);
+        }
+    }
+
+    public boolean checkSquares() {
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        int i = 0;
+        while (i < 9) {
+            int j = 0;
+            while (j < 9) {
+                int r = 0 + i;
+                while (r < 3 + i) {
+                    int c = 0 + j;
+                    while (c < 3 + j) {
+                        int nums = this.board[r][c];
+                        if (arr.contains(nums)) {
+                            return false;
+                        }
+                        arr.add(nums);
+                        ++c;
+                    }
+                    ++r;
+                }
+                arr.clear();
+                j += 3;
+            }
+            i += 3;
+        }
+        return true;
+    }
+
+    public boolean checkRows() {
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        int r = 0;
+        while (r < this.board.length) {
+            int c = 0;
+            while (c < this.board[r].length) {
+                int nums = this.board[r][c];
+                if (arr.contains(nums)) {
+                    return false;
+                }
+                arr.add(nums);
+                ++c;
+            }
+            arr.clear();
+            ++r;
+        }
+        return true;
+    }
+
+    public boolean checkColumns() {
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        int c = 0;
+        while (c < this.board[0].length) {
+            int r = 0;
+            while (r < this.board.length) {
+                int nums = this.board[r][c];
+                if (arr.contains(nums)) {
+                    return false;
+                }
+                arr.add(nums);
+                ++r;
+            }
+            arr.clear();
+            ++c;
+        }
+        return true;
+    }
+
+    private void initialize() {
+        this.frame = new JFrame();
+        this.frame.setResizable(false);
+        this.frame.setBounds(100, 100, 600, 450);
+        this.frame.setDefaultCloseOperation(3);
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[2];
+        gridBagLayout.rowHeights = new int[2];
+        gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+        this.frame.getContentPane().setLayout(gridBagLayout);
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setEnabled(false);
+        splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setResizeWeight(1.0);
+        GridBagConstraints gbc_splitPane = new GridBagConstraints();
+        gbc_splitPane.fill = 1;
+        gbc_splitPane.gridx = 0;
+        gbc_splitPane.gridy = 0;
+        this.frame.getContentPane().add((Component)splitPane, gbc_splitPane);
+        JPanel panel = new JPanel();
+        splitPane.setRightComponent(panel);
+        GridBagLayout gbl_panel = new GridBagLayout();
+        gbl_panel.columnWidths = new int[2];
+        int[] nArray = new int[16];
+        nArray[13] = 29;
+        gbl_panel.rowHeights = nArray;
+        gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+        panel.setLayout(gbl_panel);
+        this.button_1 = new JButton("1");
+        this.button_1.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                Sudoku.this.selectedNum = 1;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_1 = new GridBagConstraints();
+        gbc_button_1.fill = 1;
+        gbc_button_1.insets = new Insets(0, 0, 5, 0);
+        gbc_button_1.gridx = 0;
+        gbc_button_1.gridy = 1;
+        panel.add((Component)this.button_1, gbc_button_1);
+        this.button_2 = new JButton("2");
+        this.button_2.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                Sudoku.this.selectedNum = 2;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_2 = new GridBagConstraints();
+        gbc_button_2.fill = 2;
+        gbc_button_2.insets = new Insets(0, 0, 5, 0);
+        gbc_button_2.gridx = 0;
+        gbc_button_2.gridy = 2;
+        panel.add((Component)this.button_2, gbc_button_2);
+        this.button_3 = new JButton("3");
+        this.button_3.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 3;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_3 = new GridBagConstraints();
+        gbc_button_3.fill = 2;
+        gbc_button_3.insets = new Insets(0, 0, 5, 0);
+        gbc_button_3.gridx = 0;
+        gbc_button_3.gridy = 3;
+        panel.add((Component)this.button_3, gbc_button_3);
+        this.button_4 = new JButton("4");
+        this.button_4.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 4;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_4 = new GridBagConstraints();
+        gbc_button_4.fill = 2;
+        gbc_button_4.insets = new Insets(0, 0, 5, 0);
+        gbc_button_4.gridx = 0;
+        gbc_button_4.gridy = 4;
+        panel.add((Component)this.button_4, gbc_button_4);
+        this.button_5 = new JButton("5");
+        this.button_5.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 5;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_5 = new GridBagConstraints();
+        gbc_button_5.fill = 2;
+        gbc_button_5.insets = new Insets(0, 0, 5, 0);
+        gbc_button_5.gridx = 0;
+        gbc_button_5.gridy = 5;
+        panel.add((Component)this.button_5, gbc_button_5);
+        this.button_6 = new JButton("6");
+        this.button_6.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                Sudoku.this.selectedNum = 6;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_6 = new GridBagConstraints();
+        gbc_button_6.fill = 2;
+        gbc_button_6.insets = new Insets(0, 0, 5, 0);
+        gbc_button_6.gridx = 0;
+        gbc_button_6.gridy = 6;
+        panel.add((Component)this.button_6, gbc_button_6);
+        this.button_7 = new JButton("7");
+        this.button_7.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 7;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_7 = new GridBagConstraints();
+        gbc_button_7.fill = 2;
+        gbc_button_7.insets = new Insets(0, 0, 5, 0);
+        gbc_button_7.gridx = 0;
+        gbc_button_7.gridy = 7;
+        panel.add((Component)this.button_7, gbc_button_7);
+        this.button_8 = new JButton("8");
+        this.button_8.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 8;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_8 = new GridBagConstraints();
+        gbc_button_8.fill = 2;
+        gbc_button_8.insets = new Insets(0, 0, 5, 0);
+        gbc_button_8.gridx = 0;
+        gbc_button_8.gridy = 8;
+        panel.add((Component)this.button_8, gbc_button_8);
+        this.button_9 = new JButton("9");
+        this.button_9.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.selectedNum = 9;
+                Sudoku.this.selectNum();
+            }
+        });
+        GridBagConstraints gbc_button_9 = new GridBagConstraints();
+        gbc_button_9.fill = 2;
+        gbc_button_9.insets = new Insets(0, 0, 5, 0);
+        gbc_button_9.gridx = 0;
+        gbc_button_9.gridy = 9;
+        panel.add((Component)this.button_9, gbc_button_9);
+        JButton btnCheckBoard = new JButton("Check Board");
+        btnCheckBoard.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Sudoku.this.checkBoard();
+            }
+        });
+        this.btnPermanent = new JButton("Set");
+        this.btnPermanent.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Sudoku.this.setPerm();
+                Sudoku.this.updatePerm();
+            }
+        });
+        GridBagConstraints gbc_btnPermanent = new GridBagConstraints();
+        gbc_btnPermanent.fill = 2;
+        gbc_btnPermanent.insets = new Insets(0, 0, 5, 0);
+        gbc_btnPermanent.gridx = 0;
+        gbc_btnPermanent.gridy = 10;
+        panel.add((Component)this.btnPermanent, gbc_btnPermanent);
+        this.btnDepermanent = new JButton("Un-Set");
+        this.btnDepermanent.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Sudoku.this.perm = new int[9][9];
+                Sudoku.this.updatePerm();
+            }
+        });
+        GridBagConstraints gbc_btnDepermanent = new GridBagConstraints();
+        gbc_btnDepermanent.fill = 2;
+        gbc_btnDepermanent.insets = new Insets(0, 0, 5, 0);
+        gbc_btnDepermanent.gridx = 0;
+        gbc_btnDepermanent.gridy = 11;
+        panel.add((Component)this.btnDepermanent, gbc_btnDepermanent);
+        GridBagConstraints gbc_btnCheckBoard = new GridBagConstraints();
+        gbc_btnCheckBoard.fill = 2;
+        gbc_btnCheckBoard.insets = new Insets(0, 0, 5, 0);
+        gbc_btnCheckBoard.gridx = 0;
+        gbc_btnCheckBoard.gridy = 12;
+        panel.add((Component)btnCheckBoard, gbc_btnCheckBoard);
+        this.lblResult = new JLabel("");
+        this.lblResult.setFont(new Font("Tahoma", 1, 20));
+        this.lblResult.setHorizontalAlignment(0);
+        GridBagConstraints gbc_lblResult = new GridBagConstraints();
+        gbc_lblResult.insets = new Insets(0, 0, 5, 0);
+        gbc_lblResult.fill = 1;
+        gbc_lblResult.gridx = 0;
+        gbc_lblResult.gridy = 13;
+        panel.add((Component)this.lblResult, gbc_lblResult);
+        JPanel panel_1 = new JPanel();
+        splitPane.setLeftComponent(panel_1);
+        GridBagLayout gbl_panel_1 = new GridBagLayout();
+        gbl_panel_1.columnWidths = new int[14];
+        gbl_panel_1.rowHeights = new int[14];
+        gbl_panel_1.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+        gbl_panel_1.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+        panel_1.setLayout(gbl_panel_1);
+        this.button_00 = new JButton(" ");
+        this.button_00.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][0] = Sudoku.this.board[0][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_00 = new GridBagConstraints();
+        gbc_button_00.insets = new Insets(0, 0, 5, 5);
+        gbc_button_00.gridx = 1;
+        gbc_button_00.gridy = 1;
+        panel_1.add((Component)this.button_00, gbc_button_00);
+        this.button_01 = new JButton(" ");
+        this.button_01.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][1] = Sudoku.this.board[0][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_01 = new GridBagConstraints();
+        gbc_button_01.insets = new Insets(0, 0, 5, 5);
+        gbc_button_01.gridx = 2;
+        gbc_button_01.gridy = 1;
+        panel_1.add((Component)this.button_01, gbc_button_01);
+        this.button_02 = new JButton(" ");
+        this.button_02.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][2] = Sudoku.this.board[0][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_02 = new GridBagConstraints();
+        gbc_button_02.insets = new Insets(0, 0, 5, 5);
+        gbc_button_02.gridx = 3;
+        gbc_button_02.gridy = 1;
+        panel_1.add((Component)this.button_02, gbc_button_02);
+        this.button_03 = new JButton(" ");
+        this.button_03.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ((Sudoku)Sudoku.this).board[0][3] = Sudoku.this.board[0][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar = new Scrollbar();
+        this.scrollbar.setEnabled(false);
+        GridBagConstraints gbc_scrollbar = new GridBagConstraints();
+        gbc_scrollbar.fill = 3;
+        gbc_scrollbar.gridheight = 3;
+        gbc_scrollbar.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar.gridx = 4;
+        gbc_scrollbar.gridy = 1;
+        panel_1.add((Component)this.scrollbar, gbc_scrollbar);
+        GridBagConstraints gbc_button_03 = new GridBagConstraints();
+        gbc_button_03.insets = new Insets(0, 0, 5, 5);
+        gbc_button_03.gridx = 5;
+        gbc_button_03.gridy = 1;
+        panel_1.add((Component)this.button_03, gbc_button_03);
+        this.button_04 = new JButton(" ");
+        this.button_04.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ((Sudoku)Sudoku.this).board[0][4] = Sudoku.this.board[0][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_04 = new GridBagConstraints();
+        gbc_button_04.insets = new Insets(0, 0, 5, 5);
+        gbc_button_04.gridx = 6;
+        gbc_button_04.gridy = 1;
+        panel_1.add((Component)this.button_04, gbc_button_04);
+        this.button_05 = new JButton(" ");
+        this.button_05.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][5] = Sudoku.this.board[0][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_05 = new GridBagConstraints();
+        gbc_button_05.insets = new Insets(0, 0, 5, 5);
+        gbc_button_05.gridx = 7;
+        gbc_button_05.gridy = 1;
+        panel_1.add((Component)this.button_05, gbc_button_05);
+        this.button_06 = new JButton(" ");
+        this.button_06.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][6] = Sudoku.this.board[0][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_1 = new Scrollbar();
+        this.scrollbar_1.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_1 = new GridBagConstraints();
+        gbc_scrollbar_1.fill = 3;
+        gbc_scrollbar_1.gridheight = 3;
+        gbc_scrollbar_1.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_1.gridx = 8;
+        gbc_scrollbar_1.gridy = 1;
+        panel_1.add((Component)this.scrollbar_1, gbc_scrollbar_1);
+        GridBagConstraints gbc_button_06 = new GridBagConstraints();
+        gbc_button_06.insets = new Insets(0, 0, 5, 5);
+        gbc_button_06.gridx = 9;
+        gbc_button_06.gridy = 1;
+        panel_1.add((Component)this.button_06, gbc_button_06);
+        this.button_07 = new JButton(" ");
+        this.button_07.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][7] = Sudoku.this.board[0][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_07 = new GridBagConstraints();
+        gbc_button_07.insets = new Insets(0, 0, 5, 5);
+        gbc_button_07.gridx = 10;
+        gbc_button_07.gridy = 1;
+        panel_1.add((Component)this.button_07, gbc_button_07);
+        this.button_08 = new JButton(" ");
+        this.button_08.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[0][8] = Sudoku.this.board[0][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_08 = new GridBagConstraints();
+        gbc_button_08.insets = new Insets(0, 0, 5, 5);
+        gbc_button_08.gridx = 11;
+        gbc_button_08.gridy = 1;
+        panel_1.add((Component)this.button_08, gbc_button_08);
+        this.button_10 = new JButton(" ");
+        this.button_10.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][0] = Sudoku.this.board[1][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_10 = new GridBagConstraints();
+        gbc_button_10.insets = new Insets(0, 0, 5, 5);
+        gbc_button_10.gridx = 1;
+        gbc_button_10.gridy = 2;
+        panel_1.add((Component)this.button_10, gbc_button_10);
+        this.button_11 = new JButton(" ");
+        this.button_11.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][1] = Sudoku.this.board[1][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_11 = new GridBagConstraints();
+        gbc_button_11.insets = new Insets(0, 0, 5, 5);
+        gbc_button_11.gridx = 2;
+        gbc_button_11.gridy = 2;
+        panel_1.add((Component)this.button_11, gbc_button_11);
+        this.button_12 = new JButton(" ");
+        this.button_12.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][2] = Sudoku.this.board[1][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_12 = new GridBagConstraints();
+        gbc_button_12.insets = new Insets(0, 0, 5, 5);
+        gbc_button_12.gridx = 3;
+        gbc_button_12.gridy = 2;
+        panel_1.add((Component)this.button_12, gbc_button_12);
+        this.button_13 = new JButton(" ");
+        this.button_13.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][3] = Sudoku.this.board[1][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_13 = new GridBagConstraints();
+        gbc_button_13.insets = new Insets(0, 0, 5, 5);
+        gbc_button_13.gridx = 5;
+        gbc_button_13.gridy = 2;
+        panel_1.add((Component)this.button_13, gbc_button_13);
+        this.button_14 = new JButton(" ");
+        this.button_14.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][4] = Sudoku.this.board[1][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_14 = new GridBagConstraints();
+        gbc_button_14.insets = new Insets(0, 0, 5, 5);
+        gbc_button_14.gridx = 6;
+        gbc_button_14.gridy = 2;
+        panel_1.add((Component)this.button_14, gbc_button_14);
+        this.button_15 = new JButton(" ");
+        this.button_15.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][5] = Sudoku.this.board[1][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_15 = new GridBagConstraints();
+        gbc_button_15.insets = new Insets(0, 0, 5, 5);
+        gbc_button_15.gridx = 7;
+        gbc_button_15.gridy = 2;
+        panel_1.add((Component)this.button_15, gbc_button_15);
+        this.button_16 = new JButton(" ");
+        this.button_16.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][6] = Sudoku.this.board[1][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_16 = new GridBagConstraints();
+        gbc_button_16.insets = new Insets(0, 0, 5, 5);
+        gbc_button_16.gridx = 9;
+        gbc_button_16.gridy = 2;
+        panel_1.add((Component)this.button_16, gbc_button_16);
+        this.button_17 = new JButton(" ");
+        this.button_17.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][7] = Sudoku.this.board[1][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_17 = new GridBagConstraints();
+        gbc_button_17.insets = new Insets(0, 0, 5, 5);
+        gbc_button_17.gridx = 10;
+        gbc_button_17.gridy = 2;
+        panel_1.add((Component)this.button_17, gbc_button_17);
+        this.button_18 = new JButton(" ");
+        this.button_18.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[1][8] = Sudoku.this.board[1][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_18 = new GridBagConstraints();
+        gbc_button_18.insets = new Insets(0, 0, 5, 5);
+        gbc_button_18.gridx = 11;
+        gbc_button_18.gridy = 2;
+        panel_1.add((Component)this.button_18, gbc_button_18);
+        this.button_20 = new JButton(" ");
+        this.button_20.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][0] = Sudoku.this.board[2][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_20 = new GridBagConstraints();
+        gbc_button_20.insets = new Insets(0, 0, 5, 5);
+        gbc_button_20.gridx = 1;
+        gbc_button_20.gridy = 3;
+        panel_1.add((Component)this.button_20, gbc_button_20);
+        this.button_21 = new JButton(" ");
+        this.button_21.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][1] = Sudoku.this.board[2][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_21 = new GridBagConstraints();
+        gbc_button_21.insets = new Insets(0, 0, 5, 5);
+        gbc_button_21.gridx = 2;
+        gbc_button_21.gridy = 3;
+        panel_1.add((Component)this.button_21, gbc_button_21);
+        this.button_22 = new JButton(" ");
+        this.button_22.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][2] = Sudoku.this.board[2][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_22 = new GridBagConstraints();
+        gbc_button_22.insets = new Insets(0, 0, 5, 5);
+        gbc_button_22.gridx = 3;
+        gbc_button_22.gridy = 3;
+        panel_1.add((Component)this.button_22, gbc_button_22);
+        this.button_23 = new JButton(" ");
+        this.button_23.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][3] = Sudoku.this.board[2][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_23 = new GridBagConstraints();
+        gbc_button_23.insets = new Insets(0, 0, 5, 5);
+        gbc_button_23.gridx = 5;
+        gbc_button_23.gridy = 3;
+        panel_1.add((Component)this.button_23, gbc_button_23);
+        this.button_24 = new JButton(" ");
+        this.button_24.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][4] = Sudoku.this.board[2][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_24 = new GridBagConstraints();
+        gbc_button_24.insets = new Insets(0, 0, 5, 5);
+        gbc_button_24.gridx = 6;
+        gbc_button_24.gridy = 3;
+        panel_1.add((Component)this.button_24, gbc_button_24);
+        this.button_25 = new JButton(" ");
+        this.button_25.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][5] = Sudoku.this.board[2][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_25 = new GridBagConstraints();
+        gbc_button_25.insets = new Insets(0, 0, 5, 5);
+        gbc_button_25.gridx = 7;
+        gbc_button_25.gridy = 3;
+        panel_1.add((Component)this.button_25, gbc_button_25);
+        this.button_26 = new JButton(" ");
+        this.button_26.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][6] = Sudoku.this.board[2][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_26 = new GridBagConstraints();
+        gbc_button_26.insets = new Insets(0, 0, 5, 5);
+        gbc_button_26.gridx = 9;
+        gbc_button_26.gridy = 3;
+        panel_1.add((Component)this.button_26, gbc_button_26);
+        this.button_27 = new JButton(" ");
+        this.button_27.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][7] = Sudoku.this.board[2][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_27 = new GridBagConstraints();
+        gbc_button_27.insets = new Insets(0, 0, 5, 5);
+        gbc_button_27.gridx = 10;
+        gbc_button_27.gridy = 3;
+        panel_1.add((Component)this.button_27, gbc_button_27);
+        this.button_28 = new JButton(" ");
+        this.button_28.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[2][8] = Sudoku.this.board[2][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_28 = new GridBagConstraints();
+        gbc_button_28.insets = new Insets(0, 0, 5, 5);
+        gbc_button_28.gridx = 11;
+        gbc_button_28.gridy = 3;
+        panel_1.add((Component)this.button_28, gbc_button_28);
+        this.button_30 = new JButton(" ");
+        this.button_30.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][0] = Sudoku.this.board[3][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_2 = new Scrollbar();
+        this.scrollbar_2.setEnabled(false);
+        this.scrollbar_2.setOrientation(0);
+        GridBagConstraints gbc_scrollbar_2 = new GridBagConstraints();
+        gbc_scrollbar_2.fill = 2;
+        gbc_scrollbar_2.gridwidth = 3;
+        gbc_scrollbar_2.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_2.gridx = 1;
+        gbc_scrollbar_2.gridy = 4;
+        panel_1.add((Component)this.scrollbar_2, gbc_scrollbar_2);
+        this.scrollbar_3 = new Scrollbar();
+        this.scrollbar_3.setEnabled(false);
+        this.scrollbar_3.setOrientation(0);
+        GridBagConstraints gbc_scrollbar_3 = new GridBagConstraints();
+        gbc_scrollbar_3.fill = 2;
+        gbc_scrollbar_3.gridwidth = 3;
+        gbc_scrollbar_3.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_3.gridx = 5;
+        gbc_scrollbar_3.gridy = 4;
+        panel_1.add((Component)this.scrollbar_3, gbc_scrollbar_3);
+        this.scrollbar_4 = new Scrollbar();
+        this.scrollbar_4.setEnabled(false);
+        this.scrollbar_4.setOrientation(0);
+        GridBagConstraints gbc_scrollbar_4 = new GridBagConstraints();
+        gbc_scrollbar_4.fill = 2;
+        gbc_scrollbar_4.gridwidth = 3;
+        gbc_scrollbar_4.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_4.gridx = 9;
+        gbc_scrollbar_4.gridy = 4;
+        panel_1.add((Component)this.scrollbar_4, gbc_scrollbar_4);
+        GridBagConstraints gbc_button_30 = new GridBagConstraints();
+        gbc_button_30.insets = new Insets(0, 0, 5, 5);
+        gbc_button_30.gridx = 1;
+        gbc_button_30.gridy = 5;
+        panel_1.add((Component)this.button_30, gbc_button_30);
+        this.button_31 = new JButton(" ");
+        this.button_31.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][1] = Sudoku.this.board[3][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_31 = new GridBagConstraints();
+        gbc_button_31.insets = new Insets(0, 0, 5, 5);
+        gbc_button_31.gridx = 2;
+        gbc_button_31.gridy = 5;
+        panel_1.add((Component)this.button_31, gbc_button_31);
+        this.button_32 = new JButton(" ");
+        this.button_32.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][2] = Sudoku.this.board[3][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_32 = new GridBagConstraints();
+        gbc_button_32.insets = new Insets(0, 0, 5, 5);
+        gbc_button_32.gridx = 3;
+        gbc_button_32.gridy = 5;
+        panel_1.add((Component)this.button_32, gbc_button_32);
+        this.button_33 = new JButton(" ");
+        this.button_33.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][3] = Sudoku.this.board[3][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_7 = new Scrollbar();
+        this.scrollbar_7.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_7 = new GridBagConstraints();
+        gbc_scrollbar_7.fill = 3;
+        gbc_scrollbar_7.gridheight = 3;
+        gbc_scrollbar_7.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_7.gridx = 4;
+        gbc_scrollbar_7.gridy = 5;
+        panel_1.add((Component)this.scrollbar_7, gbc_scrollbar_7);
+        GridBagConstraints gbc_button_33 = new GridBagConstraints();
+        gbc_button_33.insets = new Insets(0, 0, 5, 5);
+        gbc_button_33.gridx = 5;
+        gbc_button_33.gridy = 5;
+        panel_1.add((Component)this.button_33, gbc_button_33);
+        this.button_34 = new JButton(" ");
+        this.button_34.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][4] = Sudoku.this.board[3][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_34 = new GridBagConstraints();
+        gbc_button_34.insets = new Insets(0, 0, 5, 5);
+        gbc_button_34.gridx = 6;
+        gbc_button_34.gridy = 5;
+        panel_1.add((Component)this.button_34, gbc_button_34);
+        this.button_35 = new JButton(" ");
+        this.button_35.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][5] = Sudoku.this.board[3][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_35 = new GridBagConstraints();
+        gbc_button_35.insets = new Insets(0, 0, 5, 5);
+        gbc_button_35.gridx = 7;
+        gbc_button_35.gridy = 5;
+        panel_1.add((Component)this.button_35, gbc_button_35);
+        this.button_36 = new JButton(" ");
+        this.button_36.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][6] = Sudoku.this.board[3][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_8 = new Scrollbar();
+        this.scrollbar_8.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_8 = new GridBagConstraints();
+        gbc_scrollbar_8.fill = 3;
+        gbc_scrollbar_8.gridheight = 3;
+        gbc_scrollbar_8.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_8.gridx = 8;
+        gbc_scrollbar_8.gridy = 5;
+        panel_1.add((Component)this.scrollbar_8, gbc_scrollbar_8);
+        GridBagConstraints gbc_button_36 = new GridBagConstraints();
+        gbc_button_36.insets = new Insets(0, 0, 5, 5);
+        gbc_button_36.gridx = 9;
+        gbc_button_36.gridy = 5;
+        panel_1.add((Component)this.button_36, gbc_button_36);
+        this.button_37 = new JButton(" ");
+        this.button_37.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][7] = Sudoku.this.board[3][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_37 = new GridBagConstraints();
+        gbc_button_37.insets = new Insets(0, 0, 5, 5);
+        gbc_button_37.gridx = 10;
+        gbc_button_37.gridy = 5;
+        panel_1.add((Component)this.button_37, gbc_button_37);
+        this.button_38 = new JButton(" ");
+        this.button_38.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[3][8] = Sudoku.this.board[3][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_38 = new GridBagConstraints();
+        gbc_button_38.insets = new Insets(0, 0, 5, 5);
+        gbc_button_38.gridx = 11;
+        gbc_button_38.gridy = 5;
+        panel_1.add((Component)this.button_38, gbc_button_38);
+        this.button_40 = new JButton(" ");
+        this.button_40.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][0] = Sudoku.this.board[4][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_40 = new GridBagConstraints();
+        gbc_button_40.insets = new Insets(0, 0, 5, 5);
+        gbc_button_40.gridx = 1;
+        gbc_button_40.gridy = 6;
+        panel_1.add((Component)this.button_40, gbc_button_40);
+        this.button_41 = new JButton(" ");
+        this.button_41.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][1] = Sudoku.this.board[4][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_41 = new GridBagConstraints();
+        gbc_button_41.insets = new Insets(0, 0, 5, 5);
+        gbc_button_41.gridx = 2;
+        gbc_button_41.gridy = 6;
+        panel_1.add((Component)this.button_41, gbc_button_41);
+        this.button_42 = new JButton(" ");
+        this.button_42.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][2] = Sudoku.this.board[4][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_42 = new GridBagConstraints();
+        gbc_button_42.insets = new Insets(0, 0, 5, 5);
+        gbc_button_42.gridx = 3;
+        gbc_button_42.gridy = 6;
+        panel_1.add((Component)this.button_42, gbc_button_42);
+        this.button_43 = new JButton(" ");
+        this.button_43.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][3] = Sudoku.this.board[4][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_43 = new GridBagConstraints();
+        gbc_button_43.insets = new Insets(0, 0, 5, 5);
+        gbc_button_43.gridx = 5;
+        gbc_button_43.gridy = 6;
+        panel_1.add((Component)this.button_43, gbc_button_43);
+        this.button_44 = new JButton(" ");
+        this.button_44.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][4] = Sudoku.this.board[4][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_44 = new GridBagConstraints();
+        gbc_button_44.insets = new Insets(0, 0, 5, 5);
+        gbc_button_44.gridx = 6;
+        gbc_button_44.gridy = 6;
+        panel_1.add((Component)this.button_44, gbc_button_44);
+        this.button_45 = new JButton(" ");
+        this.button_45.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][5] = Sudoku.this.board[4][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_45 = new GridBagConstraints();
+        gbc_button_45.insets = new Insets(0, 0, 5, 5);
+        gbc_button_45.gridx = 7;
+        gbc_button_45.gridy = 6;
+        panel_1.add((Component)this.button_45, gbc_button_45);
+        this.button_46 = new JButton(" ");
+        this.button_46.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][6] = Sudoku.this.board[4][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_46 = new GridBagConstraints();
+        gbc_button_46.insets = new Insets(0, 0, 5, 5);
+        gbc_button_46.gridx = 9;
+        gbc_button_46.gridy = 6;
+        panel_1.add((Component)this.button_46, gbc_button_46);
+        this.button_47 = new JButton(" ");
+        this.button_47.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][7] = Sudoku.this.board[4][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_47 = new GridBagConstraints();
+        gbc_button_47.insets = new Insets(0, 0, 5, 5);
+        gbc_button_47.gridx = 10;
+        gbc_button_47.gridy = 6;
+        panel_1.add((Component)this.button_47, gbc_button_47);
+        this.button_48 = new JButton(" ");
+        this.button_48.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[4][8] = Sudoku.this.board[4][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_48 = new GridBagConstraints();
+        gbc_button_48.insets = new Insets(0, 0, 5, 5);
+        gbc_button_48.gridx = 11;
+        gbc_button_48.gridy = 6;
+        panel_1.add((Component)this.button_48, gbc_button_48);
+        this.button_50 = new JButton(" ");
+        this.button_50.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][0] = Sudoku.this.board[5][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_50 = new GridBagConstraints();
+        gbc_button_50.insets = new Insets(0, 0, 5, 5);
+        gbc_button_50.gridx = 1;
+        gbc_button_50.gridy = 7;
+        panel_1.add((Component)this.button_50, gbc_button_50);
+        this.button_51 = new JButton(" ");
+        this.button_51.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][1] = Sudoku.this.board[5][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_51 = new GridBagConstraints();
+        gbc_button_51.insets = new Insets(0, 0, 5, 5);
+        gbc_button_51.gridx = 2;
+        gbc_button_51.gridy = 7;
+        panel_1.add((Component)this.button_51, gbc_button_51);
+        this.button_52 = new JButton(" ");
+        this.button_52.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][2] = Sudoku.this.board[5][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_52 = new GridBagConstraints();
+        gbc_button_52.insets = new Insets(0, 0, 5, 5);
+        gbc_button_52.gridx = 3;
+        gbc_button_52.gridy = 7;
+        panel_1.add((Component)this.button_52, gbc_button_52);
+        this.button_53 = new JButton(" ");
+        this.button_53.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][3] = Sudoku.this.board[5][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_53 = new GridBagConstraints();
+        gbc_button_53.insets = new Insets(0, 0, 5, 5);
+        gbc_button_53.gridx = 5;
+        gbc_button_53.gridy = 7;
+        panel_1.add((Component)this.button_53, gbc_button_53);
+        this.button_54 = new JButton(" ");
+        this.button_54.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][4] = Sudoku.this.board[5][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_54 = new GridBagConstraints();
+        gbc_button_54.insets = new Insets(0, 0, 5, 5);
+        gbc_button_54.gridx = 6;
+        gbc_button_54.gridy = 7;
+        panel_1.add((Component)this.button_54, gbc_button_54);
+        this.button_55 = new JButton(" ");
+        this.button_55.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][5] = Sudoku.this.board[5][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_55 = new GridBagConstraints();
+        gbc_button_55.insets = new Insets(0, 0, 5, 5);
+        gbc_button_55.gridx = 7;
+        gbc_button_55.gridy = 7;
+        panel_1.add((Component)this.button_55, gbc_button_55);
+        this.button_56 = new JButton(" ");
+        this.button_56.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][6] = Sudoku.this.board[5][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_56 = new GridBagConstraints();
+        gbc_button_56.insets = new Insets(0, 0, 5, 5);
+        gbc_button_56.gridx = 9;
+        gbc_button_56.gridy = 7;
+        panel_1.add((Component)this.button_56, gbc_button_56);
+        this.button_57 = new JButton(" ");
+        this.button_57.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][7] = Sudoku.this.board[5][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_57 = new GridBagConstraints();
+        gbc_button_57.insets = new Insets(0, 0, 5, 5);
+        gbc_button_57.gridx = 10;
+        gbc_button_57.gridy = 7;
+        panel_1.add((Component)this.button_57, gbc_button_57);
+        this.button_58 = new JButton(" ");
+        this.button_58.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[5][8] = Sudoku.this.board[5][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_58 = new GridBagConstraints();
+        gbc_button_58.insets = new Insets(0, 0, 5, 5);
+        gbc_button_58.gridx = 11;
+        gbc_button_58.gridy = 7;
+        panel_1.add((Component)this.button_58, gbc_button_58);
+        this.button_60 = new JButton(" ");
+        this.button_60.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][0] = Sudoku.this.board[6][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_5 = new Scrollbar();
+        this.scrollbar_5.setOrientation(0);
+        this.scrollbar_5.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_5 = new GridBagConstraints();
+        gbc_scrollbar_5.fill = 2;
+        gbc_scrollbar_5.gridwidth = 3;
+        gbc_scrollbar_5.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_5.gridx = 1;
+        gbc_scrollbar_5.gridy = 8;
+        panel_1.add((Component)this.scrollbar_5, gbc_scrollbar_5);
+        this.scrollbar_6 = new Scrollbar();
+        this.scrollbar_6.setOrientation(0);
+        this.scrollbar_6.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_6 = new GridBagConstraints();
+        gbc_scrollbar_6.fill = 2;
+        gbc_scrollbar_6.gridwidth = 3;
+        gbc_scrollbar_6.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_6.gridx = 5;
+        gbc_scrollbar_6.gridy = 8;
+        panel_1.add((Component)this.scrollbar_6, gbc_scrollbar_6);
+        this.scrollbar_9 = new Scrollbar();
+        this.scrollbar_9.setOrientation(0);
+        this.scrollbar_9.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_9 = new GridBagConstraints();
+        gbc_scrollbar_9.fill = 2;
+        gbc_scrollbar_9.gridwidth = 3;
+        gbc_scrollbar_9.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_9.gridx = 9;
+        gbc_scrollbar_9.gridy = 8;
+        panel_1.add((Component)this.scrollbar_9, gbc_scrollbar_9);
+        GridBagConstraints gbc_button_60 = new GridBagConstraints();
+        gbc_button_60.insets = new Insets(0, 0, 5, 5);
+        gbc_button_60.gridx = 1;
+        gbc_button_60.gridy = 9;
+        panel_1.add((Component)this.button_60, gbc_button_60);
+        this.button_61 = new JButton(" ");
+        this.button_61.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][1] = Sudoku.this.board[6][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_61 = new GridBagConstraints();
+        gbc_button_61.insets = new Insets(0, 0, 5, 5);
+        gbc_button_61.gridx = 2;
+        gbc_button_61.gridy = 9;
+        panel_1.add((Component)this.button_61, gbc_button_61);
+        this.button_62 = new JButton(" ");
+        this.button_62.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][2] = Sudoku.this.board[6][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_62 = new GridBagConstraints();
+        gbc_button_62.insets = new Insets(0, 0, 5, 5);
+        gbc_button_62.gridx = 3;
+        gbc_button_62.gridy = 9;
+        panel_1.add((Component)this.button_62, gbc_button_62);
+        this.button_63 = new JButton(" ");
+        this.button_63.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][3] = Sudoku.this.board[6][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_10 = new Scrollbar();
+        this.scrollbar_10.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_10 = new GridBagConstraints();
+        gbc_scrollbar_10.fill = 3;
+        gbc_scrollbar_10.gridheight = 3;
+        gbc_scrollbar_10.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_10.gridx = 4;
+        gbc_scrollbar_10.gridy = 9;
+        panel_1.add((Component)this.scrollbar_10, gbc_scrollbar_10);
+        GridBagConstraints gbc_button_63 = new GridBagConstraints();
+        gbc_button_63.insets = new Insets(0, 0, 5, 5);
+        gbc_button_63.gridx = 5;
+        gbc_button_63.gridy = 9;
+        panel_1.add((Component)this.button_63, gbc_button_63);
+        this.button_64 = new JButton(" ");
+        this.button_64.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][4] = Sudoku.this.board[6][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_64 = new GridBagConstraints();
+        gbc_button_64.insets = new Insets(0, 0, 5, 5);
+        gbc_button_64.gridx = 6;
+        gbc_button_64.gridy = 9;
+        panel_1.add((Component)this.button_64, gbc_button_64);
+        this.button_65 = new JButton(" ");
+        this.button_65.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][5] = Sudoku.this.board[6][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_65 = new GridBagConstraints();
+        gbc_button_65.insets = new Insets(0, 0, 5, 5);
+        gbc_button_65.gridx = 7;
+        gbc_button_65.gridy = 9;
+        panel_1.add((Component)this.button_65, gbc_button_65);
+        this.button_66 = new JButton(" ");
+        this.button_66.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][6] = Sudoku.this.board[6][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        this.scrollbar_11 = new Scrollbar();
+        this.scrollbar_11.setEnabled(false);
+        GridBagConstraints gbc_scrollbar_11 = new GridBagConstraints();
+        gbc_scrollbar_11.fill = 3;
+        gbc_scrollbar_11.gridheight = 3;
+        gbc_scrollbar_11.insets = new Insets(0, 0, 5, 5);
+        gbc_scrollbar_11.gridx = 8;
+        gbc_scrollbar_11.gridy = 9;
+        panel_1.add((Component)this.scrollbar_11, gbc_scrollbar_11);
+        GridBagConstraints gbc_button_66 = new GridBagConstraints();
+        gbc_button_66.insets = new Insets(0, 0, 5, 5);
+        gbc_button_66.gridx = 9;
+        gbc_button_66.gridy = 9;
+        panel_1.add((Component)this.button_66, gbc_button_66);
+        this.button_67 = new JButton(" ");
+        this.button_67.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][7] = Sudoku.this.board[6][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_67 = new GridBagConstraints();
+        gbc_button_67.insets = new Insets(0, 0, 5, 5);
+        gbc_button_67.gridx = 10;
+        gbc_button_67.gridy = 9;
+        panel_1.add((Component)this.button_67, gbc_button_67);
+        this.button_68 = new JButton(" ");
+        this.button_68.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[6][8] = Sudoku.this.board[6][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_68 = new GridBagConstraints();
+        gbc_button_68.insets = new Insets(0, 0, 5, 5);
+        gbc_button_68.gridx = 11;
+        gbc_button_68.gridy = 9;
+        panel_1.add((Component)this.button_68, gbc_button_68);
+        this.button_70 = new JButton(" ");
+        this.button_70.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][0] = Sudoku.this.board[7][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_70 = new GridBagConstraints();
+        gbc_button_70.insets = new Insets(0, 0, 5, 5);
+        gbc_button_70.gridx = 1;
+        gbc_button_70.gridy = 10;
+        panel_1.add((Component)this.button_70, gbc_button_70);
+        this.button_71 = new JButton(" ");
+        this.button_71.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][1] = Sudoku.this.board[7][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_71 = new GridBagConstraints();
+        gbc_button_71.insets = new Insets(0, 0, 5, 5);
+        gbc_button_71.gridx = 2;
+        gbc_button_71.gridy = 10;
+        panel_1.add((Component)this.button_71, gbc_button_71);
+        this.button_72 = new JButton(" ");
+        this.button_72.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][2] = Sudoku.this.board[7][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_72 = new GridBagConstraints();
+        gbc_button_72.insets = new Insets(0, 0, 5, 5);
+        gbc_button_72.gridx = 3;
+        gbc_button_72.gridy = 10;
+        panel_1.add((Component)this.button_72, gbc_button_72);
+        this.button_73 = new JButton(" ");
+        this.button_73.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][3] = Sudoku.this.board[7][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_73 = new GridBagConstraints();
+        gbc_button_73.insets = new Insets(0, 0, 5, 5);
+        gbc_button_73.gridx = 5;
+        gbc_button_73.gridy = 10;
+        panel_1.add((Component)this.button_73, gbc_button_73);
+        this.button_74 = new JButton(" ");
+        this.button_74.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][4] = Sudoku.this.board[7][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_74 = new GridBagConstraints();
+        gbc_button_74.insets = new Insets(0, 0, 5, 5);
+        gbc_button_74.gridx = 6;
+        gbc_button_74.gridy = 10;
+        panel_1.add((Component)this.button_74, gbc_button_74);
+        this.button_75 = new JButton(" ");
+        this.button_75.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][5] = Sudoku.this.board[7][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_75 = new GridBagConstraints();
+        gbc_button_75.insets = new Insets(0, 0, 5, 5);
+        gbc_button_75.gridx = 7;
+        gbc_button_75.gridy = 10;
+        panel_1.add((Component)this.button_75, gbc_button_75);
+        this.button_76 = new JButton(" ");
+        this.button_76.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][6] = Sudoku.this.board[7][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_76 = new GridBagConstraints();
+        gbc_button_76.insets = new Insets(0, 0, 5, 5);
+        gbc_button_76.gridx = 9;
+        gbc_button_76.gridy = 10;
+        panel_1.add((Component)this.button_76, gbc_button_76);
+        this.button_77 = new JButton(" ");
+        this.button_77.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][7] = Sudoku.this.board[7][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_77 = new GridBagConstraints();
+        gbc_button_77.insets = new Insets(0, 0, 5, 5);
+        gbc_button_77.gridx = 10;
+        gbc_button_77.gridy = 10;
+        panel_1.add((Component)this.button_77, gbc_button_77);
+        this.button_78 = new JButton(" ");
+        this.button_78.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[7][8] = Sudoku.this.board[7][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_78 = new GridBagConstraints();
+        gbc_button_78.insets = new Insets(0, 0, 5, 5);
+        gbc_button_78.gridx = 11;
+        gbc_button_78.gridy = 10;
+        panel_1.add((Component)this.button_78, gbc_button_78);
+        this.button_80 = new JButton(" ");
+        this.button_80.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][0] = Sudoku.this.board[8][0] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_80 = new GridBagConstraints();
+        gbc_button_80.insets = new Insets(0, 0, 5, 5);
+        gbc_button_80.gridx = 1;
+        gbc_button_80.gridy = 11;
+        panel_1.add((Component)this.button_80, gbc_button_80);
+        this.button_81 = new JButton(" ");
+        this.button_81.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][1] = Sudoku.this.board[8][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_81 = new GridBagConstraints();
+        gbc_button_81.insets = new Insets(0, 0, 5, 5);
+        gbc_button_81.gridx = 2;
+        gbc_button_81.gridy = 11;
+        panel_1.add((Component)this.button_81, gbc_button_81);
+        this.button_82 = new JButton(" ");
+        this.button_82.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][2] = Sudoku.this.board[8][2] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_82 = new GridBagConstraints();
+        gbc_button_82.insets = new Insets(0, 0, 5, 5);
+        gbc_button_82.gridx = 3;
+        gbc_button_82.gridy = 11;
+        panel_1.add((Component)this.button_82, gbc_button_82);
+        this.button_83 = new JButton(" ");
+        this.button_83.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][3] = Sudoku.this.board[8][3] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_83 = new GridBagConstraints();
+        gbc_button_83.insets = new Insets(0, 0, 5, 5);
+        gbc_button_83.gridx = 5;
+        gbc_button_83.gridy = 11;
+        panel_1.add((Component)this.button_83, gbc_button_83);
+        this.button_84 = new JButton(" ");
+        this.button_84.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][4] = Sudoku.this.board[8][4] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_84 = new GridBagConstraints();
+        gbc_button_84.insets = new Insets(0, 0, 5, 5);
+        gbc_button_84.gridx = 6;
+        gbc_button_84.gridy = 11;
+        panel_1.add((Component)this.button_84, gbc_button_84);
+        this.button_85 = new JButton(" ");
+        this.button_85.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][5] = Sudoku.this.board[8][5] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_85 = new GridBagConstraints();
+        gbc_button_85.insets = new Insets(0, 0, 5, 5);
+        gbc_button_85.gridx = 7;
+        gbc_button_85.gridy = 11;
+        panel_1.add((Component)this.button_85, gbc_button_85);
+        this.button_86 = new JButton(" ");
+        this.button_86.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][6] = Sudoku.this.board[8][6] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_86 = new GridBagConstraints();
+        gbc_button_86.insets = new Insets(0, 0, 5, 5);
+        gbc_button_86.gridx = 9;
+        gbc_button_86.gridy = 11;
+        panel_1.add((Component)this.button_86, gbc_button_86);
+        this.button_87 = new JButton(" ");
+        this.button_87.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][7] = Sudoku.this.board[8][7] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_87 = new GridBagConstraints();
+        gbc_button_87.insets = new Insets(0, 0, 5, 5);
+        gbc_button_87.gridx = 10;
+        gbc_button_87.gridy = 11;
+        panel_1.add((Component)this.button_87, gbc_button_87);
+        this.button_88 = new JButton(" ");
+        this.button_88.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                ((Sudoku)Sudoku.this).board[8][8] = Sudoku.this.board[8][8] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+                Sudoku.this.updateBoard();
+            }
+        });
+        GridBagConstraints gbc_button_88 = new GridBagConstraints();
+        gbc_button_88.insets = new Insets(0, 0, 5, 5);
+        gbc_button_88.gridx = 11;
+        gbc_button_88.gridy = 11;
+        panel_1.add((Component)this.button_88, gbc_button_88);
+        this.createRandomBoard();
+        this.updateBoard();
+    }
+}

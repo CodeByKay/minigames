@@ -1,0 +1,21 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+class Noodles.14
+extends MouseAdapter {
+    Noodles.14() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        if (Noodles.this.turning_changingBlock) {
+            Noodles.this.gameBoard[2][2].rotateClockwise();
+        } else {
+            Noodles.this.gameBoard[2][2].changeOnce();
+        }
+        Noodles.this.updateAllIcon();
+    }
+}

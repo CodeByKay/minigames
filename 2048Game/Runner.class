@@ -1,0 +1,11 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+public class Runner {
+    public static void main(String[] args) {
+        Main gui1 = new Main();
+        gui1.setDefaultCloseOperation(3);
+        gui1.setSize(400, 400);
+        gui1.setVisible(true);
+    }
+}

@@ -1,0 +1,66 @@
+/*
+ * Decompiled with CFR 0.152.
+ * 
+ * Could not load the following classes:
+ *  GUI_Minesweeper
+ */
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+
+/*
+ * Exception performing whole class analysis ignored.
+ */
+private class GUI_Minesweeper.TimeGUI
+extends JFrame {
+    private Thread updater;
+    private boolean running;
+
+    public GUI_Minesweeper.TimeGUI() {
+        super("Time");
+        this.running = true;
+        this.setLayout(new GridLayout(2, 1));
+        this.updater = new Thread(new timer());
+        this.updater.start();
+        this.add(GUI_Minesweeper.access$200((GUI_Minesweeper)GUI_Minesweeper.this));
+        this.add(GUI_Minesweeper.access$300((GUI_Minesweeper)GUI_Minesweeper.this));
+    }
+
+    static /* synthetic */ boolean access$700(GUI_Minesweeper.TimeGUI x0) {
+        return x0.running;
+    }
+
+    static /* synthetic */ boolean access$702(GUI_Minesweeper.TimeGUI x0, boolean x1) {
+        x0.running = x1;
+        return x0.running;
+    }
+
+    /*
+     * Exception performing whole class analysis ignored.
+     */
+    private class timer
+    implements Runnable {
+        private timer() {
+        }
+
+        @Override
+        public void run() {
+            if (GUI_Minesweeper.access$400((GUI_Minesweeper)GUI_Minesweeper.this)) {
+                double elapsed = (double)(System.currentTimeMillis() - GUI_Minesweeper.access$500((GUI_Minesweeper)GUI_Minesweeper.this)) / 1000.0;
+                elapsed = (double)Math.round(elapsed * 100.0) / 100.0;
+                GUI_Minesweeper.access$602((GUI_Minesweeper)GUI_Minesweeper.this, (String)Double.toString(elapsed));
+                int index = GUI_Minesweeper.access$600((GUI_Minesweeper)GUI_Minesweeper.this).indexOf(".");
+                GUI_Minesweeper.access$602((GUI_Minesweeper)GUI_Minesweeper.this, (String)(GUI_Minesweeper.access$600((GUI_Minesweeper)GUI_Minesweeper.this).substring(0, index) + ":" + GUI_Minesweeper.access$600((GUI_Minesweeper)GUI_Minesweeper.this).substring(index + 1, GUI_Minesweeper.access$600((GUI_Minesweeper)GUI_Minesweeper.this).length())));
+                GUI_Minesweeper.access$300((GUI_Minesweeper)GUI_Minesweeper.this).setText(GUI_Minesweeper.access$600((GUI_Minesweeper)GUI_Minesweeper.this));
+            }
+            try {
+                Thread.sleep(100L);
+            }
+            catch (InterruptedException interruptedException) {
+                // empty catch block
+            }
+            if (GUI_Minesweeper.TimeGUI.access$700(TimeGUI.this)) {
+                this.run();
+            }
+        }
+    }
+}

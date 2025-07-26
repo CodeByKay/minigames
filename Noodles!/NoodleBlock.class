@@ -1,0 +1,223 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+public class NoodleBlock {
+    private boolean topConnect;
+    private boolean botConnect;
+    private boolean leftConnect;
+    private boolean rightConnect;
+    private boolean CONNECTED;
+    private String name;
+    private int turned;
+
+    public NoodleBlock(String s) {
+        this.setName(s.replaceAll("[0-9]", ""));
+        this.setBlock(this.name);
+        this.turned = 0;
+    }
+
+    public NoodleBlock() {
+        this.setName("E");
+        this.setBlock(this.name);
+        this.turned = 0;
+    }
+
+    public void setBlock(String s) {
+        switch (s) {
+            case "A": {
+                this.setTop(false);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(true);
+                this.setConnected(false);
+                break;
+            }
+            case "B": {
+                this.setTop(true);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(true);
+                this.setConnected(false);
+                break;
+            }
+            case "C": {
+                this.setTop(true);
+                this.setBottom(false);
+                this.setLeft(false);
+                this.setRight(true);
+                this.setConnected(false);
+                break;
+            }
+            case "D": {
+                this.setTop(false);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(false);
+                this.setConnected(false);
+                break;
+            }
+            case "A!": {
+                this.setTop(false);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(true);
+                this.setConnected(true);
+                break;
+            }
+            case "B!": {
+                this.setTop(true);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(true);
+                this.setConnected(true);
+                break;
+            }
+            case "C!": {
+                this.setTop(true);
+                this.setBottom(false);
+                this.setLeft(false);
+                this.setRight(true);
+                this.setConnected(true);
+                break;
+            }
+            case "D!": {
+                this.setTop(false);
+                this.setBottom(false);
+                this.setLeft(true);
+                this.setRight(false);
+                this.setConnected(true);
+                break;
+            }
+            default: {
+                this.setTop(false);
+                this.setBottom(false);
+                this.setLeft(false);
+                this.setRight(false);
+                this.setConnected(false);
+            }
+        }
+    }
+
+    public void rotateClockwise() {
+        boolean temp = this.rightConnect;
+        this.setRight(this.topConnect);
+        this.setTop(this.leftConnect);
+        this.setLeft(this.botConnect);
+        this.setBottom(temp);
+        ++this.turned;
+        if (this.turned >= 4) {
+            this.turned = 0;
+        }
+    }
+
+    public void rotateRandom() {
+        int rot = (int)(Math.random() * 4.0);
+        int i = 0;
+        while (i < rot) {
+            this.rotateClockwise();
+            ++i;
+        }
+    }
+
+    public void changeOnce() {
+        this.setTurned(0);
+        switch (this.getName()) {
+            case "A": {
+                this.setName("B");
+                break;
+            }
+            case "B": {
+                this.setName("C");
+                break;
+            }
+            case "C": {
+                this.setName("D");
+                break;
+            }
+            case "D": {
+                this.setName("A!");
+                break;
+            }
+            case "A!": {
+                this.setName("B!");
+                break;
+            }
+            case "B!": {
+                this.setName("C!");
+                break;
+            }
+            case "C!": {
+                this.setName("D!");
+                break;
+            }
+            case "D!": {
+                this.setName("A");
+                break;
+            }
+            default: {
+                this.setName("A");
+            }
+        }
+        this.setBlock(this.getName());
+    }
+
+    public boolean getTop() {
+        return this.topConnect;
+    }
+
+    public boolean getBottom() {
+        return this.botConnect;
+    }
+
+    public boolean getLeft() {
+        return this.leftConnect;
+    }
+
+    public boolean getRight() {
+        return this.rightConnect;
+    }
+
+    public boolean isConnected() {
+        return this.CONNECTED;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getTurned() {
+        return this.turned;
+    }
+
+    public void setTop(boolean b) {
+        this.topConnect = b;
+    }
+
+    public void setBottom(boolean b) {
+        this.botConnect = b;
+    }
+
+    public void setLeft(boolean b) {
+        this.leftConnect = b;
+    }
+
+    public void setRight(boolean b) {
+        this.rightConnect = b;
+    }
+
+    public void setConnected(boolean b) {
+        this.CONNECTED = b;
+    }
+
+    public void setName(String s) {
+        this.name = s;
+    }
+
+    public void setTurned(int n) {
+        this.turned = n;
+    }
+
+    public String toString() {
+        return String.valueOf(this.getTurned()) + this.getName();
+    }
+}

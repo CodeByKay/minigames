@@ -1,0 +1,53 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+
+private class Minesweeper.TimeGUI
+extends JFrame {
+    private Thread updater;
+    private boolean running;
+
+    public Minesweeper.TimeGUI() {
+        super("Time");
+        this.running = true;
+        this.setLayout(new GridLayout(2, 1));
+        this.updater = new Thread(new timer());
+        this.updater.start();
+        this.add(Minesweeper.this.flagButton);
+        this.add(Minesweeper.this.time);
+    }
+
+    static /* synthetic */ boolean access$702(Minesweeper.TimeGUI x0, boolean x1) {
+        x0.running = x1;
+        return x0.running;
+    }
+
+    private class timer
+    implements Runnable {
+        private timer() {
+        }
+
+        @Override
+        public void run() {
+            if (Minesweeper.this.firstClick) {
+                double elapsed = (double)(System.currentTimeMillis() - Minesweeper.this.start) / 1000.0;
+                elapsed = (double)Math.round(elapsed * 100.0) / 100.0;
+                Minesweeper.this.s = Double.toString(elapsed);
+                int index = Minesweeper.this.s.indexOf(".");
+                Minesweeper.this.s = Minesweeper.this.s.substring(0, index) + ":" + Minesweeper.this.s.substring(index + 1, Minesweeper.this.s.length());
+                Minesweeper.this.time.setText(Minesweeper.this.s);
+            }
+            try {
+                Thread.sleep(100L);
+            }
+            catch (InterruptedException interruptedException) {
+                // empty catch block
+            }
+            if (TimeGUI.this.running) {
+                this.run();
+            }
+        }
+    }
+}

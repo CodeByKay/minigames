@@ -1,0 +1,66 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+private class Minesweeper.MinesweeperTile {
+    private boolean isMine;
+    private boolean flag;
+    private boolean clicked;
+    private int adjacentMine;
+
+    public Minesweeper.MinesweeperTile() {
+        this.isMine = false;
+        this.adjacentMine = 0;
+        this.clicked = false;
+    }
+
+    public Minesweeper.MinesweeperTile(boolean m) {
+        this.isMine = m;
+        this.adjacentMine = 0;
+        this.clicked = false;
+    }
+
+    public Minesweeper.MinesweeperTile(boolean m, int a) {
+        this.isMine = m;
+        this.adjacentMine = a;
+        this.clicked = false;
+    }
+
+    public void setToMine() {
+        this.isMine = true;
+    }
+
+    public boolean getMine() {
+        return this.isMine;
+    }
+
+    public void alternateFlag() {
+        this.flag = !this.flag;
+    }
+
+    public boolean getFlag() {
+        return this.flag;
+    }
+
+    public boolean getClicked() {
+        return this.clicked;
+    }
+
+    public void setClicked() {
+        this.clicked = true;
+    }
+
+    public int getAdjacent() {
+        return this.adjacentMine;
+    }
+
+    public void addAdjacent() {
+        ++this.adjacentMine;
+    }
+
+    public String toString() {
+        if (this.getMine()) {
+            return "*";
+        }
+        return Integer.toString(this.getAdjacent());
+    }
+}

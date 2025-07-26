@@ -1,0 +1,35 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.DefaultComboBoxModel;
+
+class Noodles.30
+extends MouseAdapter {
+    Noodles.30() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        String s = (String)Noodles.this.gameComboBox.getSelectedItem();
+        try {
+            Noodles.this.deleteBoard(String.valueOf(s) + ".txt");
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Noodles.this.folderNames = new ArrayList<String>(Arrays.asList(Noodles.this.f.list()));
+        int i = 0;
+        while (i < Noodles.this.folderNames.size()) {
+            String fileName = (String)Noodles.this.folderNames.get(i);
+            Noodles.this.folderNames.set(i, fileName.substring(0, fileName.indexOf(".")));
+            ++i;
+        }
+        Noodles.this.folderNames2 = Noodles.this.folderNames.toArray(new String[Noodles.this.folderNames.size()]);
+        Noodles.this.gameComboBox.setModel(new DefaultComboBoxModel<String>(Noodles.this.folderNames2));
+    }
+}

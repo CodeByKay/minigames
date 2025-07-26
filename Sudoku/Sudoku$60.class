@@ -1,0 +1,17 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class Sudoku.60
+implements ActionListener {
+    Sudoku.60() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        ((Sudoku)Sudoku.this).board[5][1] = Sudoku.this.board[5][1] == Sudoku.this.selectedNum ? 0 : Sudoku.this.selectedNum;
+        Sudoku.this.updateBoard();
+    }
+}

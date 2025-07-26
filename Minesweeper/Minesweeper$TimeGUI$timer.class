@@ -1,0 +1,29 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+private class Minesweeper.TimeGUI.timer
+implements Runnable {
+    private Minesweeper.TimeGUI.timer() {
+    }
+
+    @Override
+    public void run() {
+        if (TimeGUI.this.this$0.firstClick) {
+            double elapsed = (double)(System.currentTimeMillis() - TimeGUI.this.this$0.start) / 1000.0;
+            elapsed = (double)Math.round(elapsed * 100.0) / 100.0;
+            TimeGUI.this.this$0.s = Double.toString(elapsed);
+            int index = TimeGUI.this.this$0.s.indexOf(".");
+            TimeGUI.this.this$0.s = TimeGUI.this.this$0.s.substring(0, index) + ":" + TimeGUI.this.this$0.s.substring(index + 1, TimeGUI.this.this$0.s.length());
+            TimeGUI.this.this$0.time.setText(TimeGUI.this.this$0.s);
+        }
+        try {
+            Thread.sleep(100L);
+        }
+        catch (InterruptedException interruptedException) {
+            // empty catch block
+        }
+        if (TimeGUI.this.running) {
+            this.run();
+        }
+    }
+}

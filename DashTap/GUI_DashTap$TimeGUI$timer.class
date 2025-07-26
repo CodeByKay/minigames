@@ -1,0 +1,71 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+private class GUI_DashTap.TimeGUI.timer
+implements Runnable {
+    private GUI_DashTap.TimeGUI.timer() {
+    }
+
+    @Override
+    public void run() {
+        TimeGUI.this.this$0.elapsed = (int)(System.currentTimeMillis() - TimeGUI.this.this$0.start) / 1000;
+        TimeGUI.this.this$0.elapsed = 5 - TimeGUI.this.this$0.elapsed;
+        this.updateTime();
+        if (TimeGUI.this.this$0.elapsed <= 0) {
+            JOptionPane.showMessageDialog(new JFrame(), "You Lose! You reached level " + TimeGUI.this.this$0.gameLevel);
+            System.exit(0);
+        } else {
+            try {
+                Thread.sleep(100L);
+            }
+            catch (InterruptedException interruptedException) {
+                // empty catch block
+            }
+            this.run();
+        }
+    }
+
+    public void updateTime() {
+        if (TimeGUI.this.this$0.elapsed == 5) {
+            TimeGUI.this.this$0.time5.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time4.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time3.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time2.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time1.setBackground(TimeGUI.this.this$0.c);
+        } else if (TimeGUI.this.this$0.elapsed == 4) {
+            TimeGUI.this.this$0.time5.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time4.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time3.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time2.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time1.setBackground(TimeGUI.this.this$0.c);
+        } else if (TimeGUI.this.this$0.elapsed == 3) {
+            TimeGUI.this.this$0.time5.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time4.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time3.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time2.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time1.setBackground(TimeGUI.this.this$0.c);
+        } else if (TimeGUI.this.this$0.elapsed == 2) {
+            TimeGUI.this.this$0.time5.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time4.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time3.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time2.setBackground(TimeGUI.this.this$0.c);
+            TimeGUI.this.this$0.time1.setBackground(TimeGUI.this.this$0.c);
+        } else if (TimeGUI.this.this$0.elapsed == 1) {
+            TimeGUI.this.this$0.time5.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time4.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time3.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time2.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time1.setBackground(TimeGUI.this.this$0.c);
+        } else if (TimeGUI.this.this$0.elapsed == 0) {
+            TimeGUI.this.this$0.time5.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time4.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time3.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time2.setBackground(Color.WHITE);
+            TimeGUI.this.this$0.time1.setBackground(Color.WHITE);
+        }
+    }
+}

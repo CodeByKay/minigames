@@ -1,0 +1,25 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+
+class Noodles.29
+extends MouseAdapter {
+    Noodles.29() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        String s = (String)Noodles.this.gameComboBox.getSelectedItem();
+        try {
+            Noodles.this.setBoard(s);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        Noodles.this.numMoves = -1;
+        Noodles.this.updateAllIcon();
+    }
+}

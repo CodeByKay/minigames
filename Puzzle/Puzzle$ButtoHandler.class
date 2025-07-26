@@ -1,0 +1,19 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
+private class Puzzle.ButtoHandler
+implements ActionListener {
+    private Puzzle.ButtoHandler() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton temp = (JButton)e.getSource();
+        Puzzle.this.switchWithNull(Puzzle.this.getTileRow(temp), Puzzle.this.getTileCol(temp));
+        Puzzle.this.updateBoard();
+    }
+}

@@ -1,0 +1,35 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+private class Puzzle.ButtonListener
+implements KeyListener {
+    private Puzzle.ButtonListener() {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == 37) {
+            Puzzle.this.run("LEFT");
+        } else if (key == 39) {
+            Puzzle.this.run("RIGHT");
+        } else if (key == 38) {
+            Puzzle.this.run("UP");
+        } else if (key == 40) {
+            Puzzle.this.run("DOWN");
+        } else if (key == 8) {
+            // empty if block
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+}

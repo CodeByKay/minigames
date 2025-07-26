@@ -1,0 +1,19 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+static class Sudoku.1
+implements Runnable {
+    Sudoku.1() {
+    }
+
+    @Override
+    public void run() {
+        try {
+            Sudoku window = new Sudoku();
+            window.frame.setVisible(true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

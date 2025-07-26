@@ -1,0 +1,550 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+public class Puzzle
+extends JFrame {
+    private BufferedImage[][] board = new BufferedImage[4][4];
+    private int moves = 0;
+    private ArrayList<String> undo = new ArrayList();
+    private JButton tile0;
+    private JButton tile1;
+    private JButton tile2;
+    private JButton tile3;
+    private JButton tile4;
+    private JButton tile5;
+    private JButton tile6;
+    private JButton tile7;
+    private JButton tile8;
+    private JButton tile9;
+    private JButton tile10;
+    private JButton tile11;
+    private JButton tile12;
+    private JButton tile13;
+    private JButton tile14;
+    private JButton tile15;
+    private JLabel textMove;
+    private JLabel numMove;
+    private BufferedImage[] splitImages;
+    private File imageFile;
+    private BufferedImage pic;
+
+    public static void main(String[] args) {
+        Puzzle game = new Puzzle();
+        game.setDefaultCloseOperation(3);
+        game.setSize(400, 400);
+        game.setVisible(true);
+    }
+
+    public Puzzle() {
+        super("Puzzle");
+        this.setLayout(new GridLayout(4, 4, 1, 1));
+        int numPic = (int)(Math.random() * 5.0);
+        switch (numPic) {
+            case 0: {
+                this.imageFile = new File("puzzle1.png");
+                break;
+            }
+            case 1: {
+                this.imageFile = new File("puzzle2.png");
+                break;
+            }
+            case 2: {
+                this.imageFile = new File("puzzle3.png");
+                break;
+            }
+            case 3: {
+                this.imageFile = new File("puzzle4.png");
+                break;
+            }
+            case 4: {
+                this.imageFile = new File("puzzle5.png");
+            }
+        }
+        try {
+            this.pic = ImageIO.read(this.imageFile);
+            this.splitImages = this.splitImages(this.pic);
+        }
+        catch (IOException e) {
+            System.out.println("File to Image Error.");
+        }
+        this.shuffleImages();
+        ButtonListener listener = new ButtonListener();
+        this.addKeyListener(listener);
+        this.setFocusable(true);
+        this.tile0 = new JButton("");
+        this.tile1 = new JButton("");
+        this.tile2 = new JButton("");
+        this.tile3 = new JButton("");
+        this.tile4 = new JButton("");
+        this.tile5 = new JButton("");
+        this.tile6 = new JButton("");
+        this.tile7 = new JButton("");
+        this.tile8 = new JButton("");
+        this.tile9 = new JButton("");
+        this.tile10 = new JButton("");
+        this.tile11 = new JButton("");
+        this.tile12 = new JButton("");
+        this.tile13 = new JButton("");
+        this.tile14 = new JButton("");
+        this.tile15 = new JButton("");
+        this.textMove = new JLabel("Moves: ");
+        this.numMove = new JLabel(Integer.toString(this.moves));
+        ButtoHandler handler = new ButtoHandler();
+        this.tile0.addActionListener(handler);
+        this.tile1.addActionListener(handler);
+        this.tile2.addActionListener(handler);
+        this.tile3.addActionListener(handler);
+        this.tile4.addActionListener(handler);
+        this.tile5.addActionListener(handler);
+        this.tile6.addActionListener(handler);
+        this.tile7.addActionListener(handler);
+        this.tile8.addActionListener(handler);
+        this.tile9.addActionListener(handler);
+        this.tile10.addActionListener(handler);
+        this.tile11.addActionListener(handler);
+        this.tile12.addActionListener(handler);
+        this.tile13.addActionListener(handler);
+        this.tile14.addActionListener(handler);
+        this.tile15.addActionListener(handler);
+        this.tile0.setFocusable(false);
+        this.tile1.setFocusable(false);
+        this.tile2.setFocusable(false);
+        this.tile3.setFocusable(false);
+        this.tile4.setFocusable(false);
+        this.tile5.setFocusable(false);
+        this.tile6.setFocusable(false);
+        this.tile7.setFocusable(false);
+        this.tile8.setFocusable(false);
+        this.tile9.setFocusable(false);
+        this.tile10.setFocusable(false);
+        this.tile11.setFocusable(false);
+        this.tile12.setFocusable(false);
+        this.tile13.setFocusable(false);
+        this.tile14.setFocusable(false);
+        this.tile15.setFocusable(false);
+        this.add(this.tile0);
+        this.add(this.tile1);
+        this.add(this.tile2);
+        this.add(this.tile3);
+        this.add(this.tile4);
+        this.add(this.tile5);
+        this.add(this.tile6);
+        this.add(this.tile7);
+        this.add(this.tile8);
+        this.add(this.tile9);
+        this.add(this.tile10);
+        this.add(this.tile11);
+        this.add(this.tile12);
+        this.add(this.tile13);
+        this.add(this.tile14);
+        this.add(this.tile15);
+        MoveGUI subGUI = new MoveGUI();
+        subGUI.setDefaultCloseOperation(1);
+        subGUI.setSize(100, 75);
+        subGUI.setLocation(800, 0);
+        subGUI.setVisible(true);
+        finalImage subGUI2 = new finalImage();
+        subGUI2.setDefaultCloseOperation(1);
+        subGUI2.setSize(400, 400);
+        subGUI2.setLocation(400, 0);
+        subGUI2.setVisible(true);
+        this.updateBoard();
+    }
+
+    public BufferedImage[] splitImages(BufferedImage b) {
+        int hi4 = b.getHeight() / 4;
+        BufferedImage[] split = new BufferedImage[]{b.getSubimage(0, 0, hi4, hi4), b.getSubimage(hi4 * 1, 0, hi4, hi4), b.getSubimage(hi4 * 2, 0, hi4, hi4), b.getSubimage(hi4 * 3, 0, hi4, hi4), b.getSubimage(0, hi4, hi4, hi4), b.getSubimage(hi4 * 1, hi4, hi4, hi4), b.getSubimage(hi4 * 2, hi4, hi4, hi4), b.getSubimage(hi4 * 3, hi4, hi4, hi4), b.getSubimage(0, hi4 * 2, hi4, hi4), b.getSubimage(hi4 * 1, hi4 * 2, hi4, hi4), b.getSubimage(hi4 * 2, hi4 * 2, hi4, hi4), b.getSubimage(hi4 * 3, hi4 * 2, hi4, hi4), b.getSubimage(0, hi4 * 3, hi4, hi4), b.getSubimage(hi4 * 1, hi4 * 3, hi4, hi4), b.getSubimage(hi4 * 2, hi4 * 3, hi4, hi4), null};
+        return split;
+    }
+
+    public void shuffleImages() {
+        int index = 0;
+        for (int row = 0; row < this.board.length; ++row) {
+            for (int col = 0; col < this.board[row].length; ++col) {
+                this.board[row][col] = this.splitImages[index];
+                ++index;
+            }
+        }
+        for (int i = 0; i < 1000; ++i) {
+            int f = (int)(Math.random() * 4.0);
+            if (f == 0) {
+                if (!this.canShiftLeft()) continue;
+                this.shiftLeft();
+                this.undo.add("L");
+                continue;
+            }
+            if (f == 1) {
+                if (!this.canShiftRight()) continue;
+                this.shiftRight();
+                this.undo.add("R");
+                continue;
+            }
+            if (f == 2) {
+                if (!this.canShiftUp()) continue;
+                this.shiftUp();
+                this.undo.add("U");
+                continue;
+            }
+            if (f != 3 || !this.canShiftDown()) continue;
+            this.shiftDown();
+            this.undo.add("D");
+        }
+    }
+
+    public void updateBoard() {
+        BufferedImage[] temp = new BufferedImage[16];
+        int index = 0;
+        for (int r = 0; r < this.board.length; ++r) {
+            for (int c = 0; c < this.board[r].length; ++c) {
+                temp[index] = this.board[r][c];
+                ++index;
+            }
+        }
+        for (int i = 0; i < temp.length; ++i) {
+            if (temp[i] != null) continue;
+            try {
+                temp[i] = ImageIO.read(new File("NULL.png"));
+                continue;
+            }
+            catch (IOException u) {
+                System.out.println("Null Image Error.");
+            }
+        }
+        this.tile0.setIcon(new ImageIcon(temp[0]));
+        this.tile1.setIcon(new ImageIcon(temp[1]));
+        this.tile2.setIcon(new ImageIcon(temp[2]));
+        this.tile3.setIcon(new ImageIcon(temp[3]));
+        this.tile4.setIcon(new ImageIcon(temp[4]));
+        this.tile5.setIcon(new ImageIcon(temp[5]));
+        this.tile6.setIcon(new ImageIcon(temp[6]));
+        this.tile7.setIcon(new ImageIcon(temp[7]));
+        this.tile8.setIcon(new ImageIcon(temp[8]));
+        this.tile9.setIcon(new ImageIcon(temp[9]));
+        this.tile10.setIcon(new ImageIcon(temp[10]));
+        this.tile11.setIcon(new ImageIcon(temp[11]));
+        this.tile12.setIcon(new ImageIcon(temp[12]));
+        this.tile13.setIcon(new ImageIcon(temp[13]));
+        this.tile14.setIcon(new ImageIcon(temp[14]));
+        this.tile15.setIcon(new ImageIcon(temp[15]));
+        this.numMove.setText(Integer.toString(this.moves));
+    }
+
+    public void run(String s) {
+        if (s.equals("LEFT") && this.canShiftLeft()) {
+            this.shiftLeft();
+            this.undo.add("L");
+            ++this.moves;
+        } else if (s.equals("RIGHT") && this.canShiftRight()) {
+            this.shiftRight();
+            this.undo.add("R");
+            ++this.moves;
+        } else if (s.equals("UP") && this.canShiftUp()) {
+            this.shiftUp();
+            this.undo.add("U");
+            ++this.moves;
+        } else if (s.equals("DOWN") && this.canShiftDown()) {
+            this.shiftDown();
+            this.undo.add("D");
+            ++this.moves;
+        }
+        this.updateBoard();
+        if (this.boardComplete()) {
+            this.gameWin();
+        }
+    }
+
+    public int getNullRow() {
+        for (int r = 0; r < this.board.length; ++r) {
+            for (int c = 0; c < this.board[r].length; ++c) {
+                if (this.board[r][c] != null) continue;
+                return r;
+            }
+        }
+        System.out.println("getNullRow Error.");
+        return -1;
+    }
+
+    public int getNullCol() {
+        for (int r = 0; r < this.board.length; ++r) {
+            for (int c = 0; c < this.board[r].length; ++c) {
+                if (this.board[r][c] != null) continue;
+                return c;
+            }
+        }
+        System.out.println("getNullCol Error.");
+        return -1;
+    }
+
+    public int getTileCol(JButton j) {
+        if (j == this.tile0) {
+            return 0;
+        }
+        if (j == this.tile1) {
+            return 1;
+        }
+        if (j == this.tile2) {
+            return 2;
+        }
+        if (j == this.tile3) {
+            return 3;
+        }
+        if (j == this.tile4) {
+            return 0;
+        }
+        if (j == this.tile5) {
+            return 1;
+        }
+        if (j == this.tile6) {
+            return 2;
+        }
+        if (j == this.tile7) {
+            return 3;
+        }
+        if (j == this.tile8) {
+            return 0;
+        }
+        if (j == this.tile9) {
+            return 1;
+        }
+        if (j == this.tile10) {
+            return 2;
+        }
+        if (j == this.tile11) {
+            return 3;
+        }
+        if (j == this.tile12) {
+            return 0;
+        }
+        if (j == this.tile13) {
+            return 1;
+        }
+        if (j == this.tile14) {
+            return 2;
+        }
+        if (j == this.tile15) {
+            return 3;
+        }
+        System.out.println("getTileCol Error.");
+        return -1;
+    }
+
+    public int getTileRow(JButton j) {
+        if (j == this.tile0) {
+            return 0;
+        }
+        if (j == this.tile1) {
+            return 0;
+        }
+        if (j == this.tile2) {
+            return 0;
+        }
+        if (j == this.tile3) {
+            return 0;
+        }
+        if (j == this.tile4) {
+            return 1;
+        }
+        if (j == this.tile5) {
+            return 1;
+        }
+        if (j == this.tile6) {
+            return 1;
+        }
+        if (j == this.tile7) {
+            return 1;
+        }
+        if (j == this.tile8) {
+            return 2;
+        }
+        if (j == this.tile9) {
+            return 2;
+        }
+        if (j == this.tile10) {
+            return 2;
+        }
+        if (j == this.tile11) {
+            return 2;
+        }
+        if (j == this.tile12) {
+            return 3;
+        }
+        if (j == this.tile13) {
+            return 3;
+        }
+        if (j == this.tile14) {
+            return 3;
+        }
+        if (j == this.tile15) {
+            return 3;
+        }
+        System.out.println("getTileRow Error.");
+        return -1;
+    }
+
+    public boolean adjacentToNull(int r, int c) {
+        int nullr = this.getNullRow();
+        int nullc = this.getNullCol();
+        if (Math.abs(nullr - r) == 0 && Math.abs(nullc - c) == 0) {
+            return true;
+        }
+        if (Math.abs(nullr - r) == 0 && Math.abs(nullc - c) == 1) {
+            return true;
+        }
+        return Math.abs(nullr - r) == 1 && Math.abs(nullc - c) == 0;
+    }
+
+    public void switchWithNull(int r, int c) {
+        if (this.adjacentToNull(r, c)) {
+            this.board[this.getNullRow()][this.getNullCol()] = this.board[r][c];
+            this.board[r][c] = null;
+            ++this.moves;
+        }
+    }
+
+    public boolean canShiftLeft() {
+        int col = this.getNullCol();
+        return col != 0;
+    }
+
+    public boolean canShiftRight() {
+        int col = this.getNullCol();
+        return col != 3;
+    }
+
+    public boolean canShiftUp() {
+        int row = this.getNullRow();
+        return row != 0;
+    }
+
+    public boolean canShiftDown() {
+        int row = this.getNullRow();
+        return row != 3;
+    }
+
+    public void shiftLeft() {
+        int row = this.getNullRow();
+        int col = this.getNullCol();
+        this.board[row][col] = this.board[row][col - 1];
+        this.board[row][col - 1] = null;
+    }
+
+    public void shiftRight() {
+        int row = this.getNullRow();
+        int col = this.getNullCol();
+        this.board[row][col] = this.board[row][col + 1];
+        this.board[row][col + 1] = null;
+    }
+
+    public void shiftUp() {
+        int row = this.getNullRow();
+        int col = this.getNullCol();
+        this.board[row][col] = this.board[row - 1][col];
+        this.board[row - 1][col] = null;
+    }
+
+    public void shiftDown() {
+        int row = this.getNullRow();
+        int col = this.getNullCol();
+        this.board[row][col] = this.board[row + 1][col];
+        this.board[row + 1][col] = null;
+    }
+
+    public boolean boardComplete() {
+        int index = 0;
+        for (int r = 0; r < this.board.length; ++r) {
+            for (int c = 0; c < this.board[r].length; ++c) {
+                if (this.board[r][c] == this.splitImages[index++]) continue;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void gameWin() {
+        JOptionPane.showMessageDialog(new JFrame(), "You finished the puzzle! Moves: " + this.moves);
+        System.exit(0);
+    }
+
+    private class ButtoHandler
+    implements ActionListener {
+        private ButtoHandler() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton temp = (JButton)e.getSource();
+            Puzzle.this.switchWithNull(Puzzle.this.getTileRow(temp), Puzzle.this.getTileCol(temp));
+            Puzzle.this.updateBoard();
+        }
+    }
+
+    private class ButtonListener
+    implements KeyListener {
+        private ButtonListener() {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == 37) {
+                Puzzle.this.run("LEFT");
+            } else if (key == 39) {
+                Puzzle.this.run("RIGHT");
+            } else if (key == 38) {
+                Puzzle.this.run("UP");
+            } else if (key == 40) {
+                Puzzle.this.run("DOWN");
+            } else if (key == 8) {
+                // empty if block
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+    }
+
+    private class finalImage
+    extends JFrame {
+        private JLabel background;
+
+        public finalImage() {
+            super("What It Looks Like");
+            this.background = new JLabel(new ImageIcon(Puzzle.this.pic));
+            this.setLayout(new FlowLayout());
+            this.background.setVerticalAlignment(1);
+            this.add(this.background);
+        }
+    }
+
+    private class MoveGUI
+    extends JFrame {
+        public MoveGUI() {
+            super("Moves");
+            this.setLayout(new FlowLayout());
+            this.add(Puzzle.this.textMove);
+            this.add(Puzzle.this.numMove);
+        }
+    }
+}

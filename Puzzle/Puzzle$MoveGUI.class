@@ -1,0 +1,15 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
+import java.awt.FlowLayout;
+import javax.swing.JFrame;
+
+private class Puzzle.MoveGUI
+extends JFrame {
+    public Puzzle.MoveGUI() {
+        super("Moves");
+        this.setLayout(new FlowLayout());
+        this.add(Puzzle.this.textMove);
+        this.add(Puzzle.this.numMove);
+    }
+}
